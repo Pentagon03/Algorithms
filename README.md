@@ -1,4 +1,7 @@
 # Algorithms
-+Data Structures
 
-1. Segment Tree 3 Different Implementations
+## Data Structures
+Segment Tree
+## Math
+
+## Miscellaneous
