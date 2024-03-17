@@ -3,6 +3,7 @@
 ## Data Structures
 Segment Tree
 ## Math
+DiscreteLogarithm_Fast
 
 ## Strings
 Manacher(Palindrome)
