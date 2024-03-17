@@ -4,6 +4,9 @@
 Segment Tree
 ## Math
 
+## Strings
+Manacher(Palindrome)
+
 ## Geometry
 https://codeforces.com/contest/1936/submission/249350779
 
