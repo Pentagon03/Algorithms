@@ -4,6 +4,7 @@ find dlog s.t pow(base, dlog) mod p == val
 use dlog(base, val, p) for prime p
 use phollig_hellman(base, val, m) for every modulo m (possibly not prime)
 */
+// using pii = pair<int,int>;
 int get_random_int(int l,int r) {
     static random_device rd;
     return uniform_int_distribution<int>(l,r)(rd);
@@ -90,7 +91,7 @@ int dlog(int base, int val, int p,int ord = -1){
         s.emplace_back(x,v);
         x = 1LL * x * base % p;
     }
-    sort(all(s));
+    sort(begin(s), end(s));
     x = val;
     int t = powmod(base, p-1-B, p);
     for(int u=0;u<B;u++){
