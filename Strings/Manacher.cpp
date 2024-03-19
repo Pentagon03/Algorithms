@@ -7,7 +7,8 @@ Longest palindrome of s: max(d)
 number of palindrome substrings: sum((d[i]+1)/2)
 reference: https://00ad-8e71-00ff-055d.tistory.com/91
 */
-vector<int> manacher(string s){
+template<typename T>
+vector<int> manacher(T s){
     int n = size(s);
     s.resize(2 * n - 1);
     for(int i = n - 1; i; i--){
