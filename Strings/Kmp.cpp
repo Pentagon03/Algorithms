@@ -1,3 +1,7 @@
+/*
+getPi: get Failure function(Pi) of pattern p
+kmp: get occurence of pattern p in string s
+*/
 template<typename T>
 vector<int> getPi(const T&p){
     vector<int> pi(size(p));
