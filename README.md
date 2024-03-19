@@ -6,6 +6,7 @@ Segment Tree
 DiscreteLogarithm_Fast
 ## Strings
 Manacher(Palindrome)
+
 KMP(Pattern Matching)
 ## Geometry
 https://codeforces.com/contest/1936/submission/249350779
