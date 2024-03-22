@@ -19,7 +19,8 @@ struct RMQ {
 		}
 	}
 	T query(int a, int b) {
-		assert(a < b); // or return inf if a == b
+		assert(a <= b); // or return inf if a > b
+		++b;
 		// __builtin_clz(1) - __builtin_clz(b - a);
 		int dep = 31 - __builtin_clz(b - a);
 		return f(jmp[dep][a], jmp[dep][b - (1 << dep)]);
