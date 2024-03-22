@@ -10,7 +10,7 @@ reference: https://github.com/kth-competitive-programming/kactl/blob/main/conten
 template<typename T, class Func = function<T(const T&, const T&)>>
 struct RMQ {
 	vector<vector<T>> jmp;
-    Func f;
+	Func f;
 	RMQ(const vector<T>& V, Func g = std::min<T,T>) : jmp(1, V), f(g) {
 		for (int pw = 1, k = 1; pw * 2 <= size(V); pw *= 2, ++k) {
 			jmp.emplace_back(size(V) - pw * 2 + 1);
