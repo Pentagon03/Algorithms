@@ -10,6 +10,7 @@ Manacher(Palindrome)
 KMP(Pattern Matching)
 ## Geometry
 Geometry_All (Point, Line, Polygon)
+
 https://codeforces.com/contest/1936/submission/249350779
 
 https://victorlecomte.com/cp-geo.pdf
