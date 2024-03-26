@@ -129,4 +129,5 @@ namespace comb {
         if (m < k || k < 0) return 0;
         return fac(m) * invfac(k) * invfac(m - k);
     }
-} // namespace comb
+} 
+// using namespace comb
