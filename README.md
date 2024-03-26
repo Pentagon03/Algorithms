@@ -1,5 +1,5 @@
 # Algorithms
-
+Notice: There are ideas and implementations that I don't own.
 ## Data Structures
 Segment Tree
 ## Math
