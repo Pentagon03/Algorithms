@@ -1,3 +1,7 @@
+/*
+Modint Implementation and Combination
+Reference: https://codeforces.com/blog/entry/127439 Problem E
+*/
 template<class T>
 constexpr T power(T a, ll b) {
     T res = 1;
