@@ -4,8 +4,16 @@ Notice: There are ideas and implementations that I don't own.
 These codes are for problem solving and internet-based competitions.
 ## Data Structures
 Segment Tree
+## Flow
+Bipartite Matching
 ## Math
 DiscreteLogarithm_Fast
+
+ModInt, Combination
+
+Extended GCD
+
+Linear Sieve (Multiplicative Functions)
 ## Strings
 Manacher(Palindrome)
 
