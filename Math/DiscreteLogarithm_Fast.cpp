@@ -3,6 +3,7 @@ Fast Discrete Logarithm using Phollig-hellman
 find dlog s.t pow(base, dlog) mod p == val
 use dlog(base, val, p) for prime p
 use phollig_hellman(base, val, m) for every modulo m (possibly not prime)
+Reference: https://rkm0959.tistory.com/187
 */
 // using pii = pair<int,int>;
 int get_random_int(int l,int r) {
