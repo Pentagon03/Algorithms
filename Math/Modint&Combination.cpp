@@ -87,10 +87,9 @@ struct MInt {
     }
 };
  
- 
+constexpr int MOD = 1e9 + 7;
+using Z = MInt<MOD>;
 namespace comb {
-    constexpr int MOD = 1e9 + 7;
-    using Z = MInt<MOD>;
     int n = 0;
     std::vector<Z> _fac = {1};
     std::vector<Z> _invfac = {1};
