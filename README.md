@@ -1,5 +1,7 @@
 # Algorithms
 Notice: There are ideas and implementations that I don't own.
+
+These codes are for problem solving and internet-based competitions.
 ## Data Structures
 Segment Tree
 ## Math
