@@ -1,15 +1,8 @@
-/*
-Bipartite Matching structure.
-max_matching
-get_max_matching
-get_min_vertex_cover
-get_max_independent_set
-*/
 struct BipartiteMatching{
     vector<int> vis, A, B;
     vector<vector<int>> g;
     int pv;
-    BipartiteMatching(int n,int m):g(n),A(n,-1), vis(m,0), B(m,-1){};
+    BipartiteMatching(int n,int m):pv(0), g(n),A(n,-1), vis(m,0), B(m,-1){};
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
