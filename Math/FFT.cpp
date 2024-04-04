@@ -63,7 +63,7 @@ namespace FFT{
         vector<T> res(n);
         int SZ = 0;
         for (int i=0;i<n;i++) {
-            res[i] = T(fa[i].real()+(fa[i].real()>0?0.5:-0.5));
+            res[i] = round(fa[i].real());
             if(res[i]!=0) SZ=i+1;
         }
         //res.resize(SZ); // Use this for size opt. min(SZ,N) can be an alternative
