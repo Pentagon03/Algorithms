@@ -3,7 +3,7 @@ Edge Disjoint BCC
 We are dividing BCC into set of edges.
 Each BCC doesn't have any articulation point.
 Use init(n) at the very first, if needed
-test: https://www.acmicpc.net/problem/11266
+test: https://www.acmicpc.net/problem/11266, https://www.acmicpc.net/problem/4222
 */
 namespace EdgeDisjointBCC{
     vector<int> g[N];
@@ -11,7 +11,6 @@ namespace EdgeDisjointBCC{
         g[a].push_back(b);
         g[b].push_back(a);
     }
-
     int dfn[N], low[N], pv;
     void dfs(int x,int p = 0){
         dfn[x] = low[x] = ++pv;
