@@ -28,7 +28,7 @@ namespace SCC{
         S.clear(); vis.clear();
         scnt = 0;
     }
-    void get_SCC(int n){
+    void get_scc(int n){
         vis.assign(n+1, false);
         for(int i=1;i<=n;i++) if(!vis[i]) dfs(i, false);
         vis.assign(n+1, false);
