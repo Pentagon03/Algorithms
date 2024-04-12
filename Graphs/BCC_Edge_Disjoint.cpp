@@ -3,6 +3,7 @@ Edge Disjoint BCC
 We are dividing BCC into set of edges.
 Each BCC doesn't have any articulation point.
 Use init(n) at the very first, if needed
+test: https://www.acmicpc.net/problem/11266
 */
 namespace EdgeDisjointBCC{
     vector<int> g[N];
