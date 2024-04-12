@@ -28,7 +28,7 @@ namespace EdgeDisjointBCC{
     vector<int> bcc[N];
     void color(int x,int col = 0){
         vis[x] = true;
-        if(col) bcc[x].push_back(col);
+        if(col) bcc[x].push_back(col); // when col = 0, this is root
         for(int nx:g[x]) if(!vis[nx]){
             if(low[nx] < dfn[x]) color(nx, col); 
             else{
