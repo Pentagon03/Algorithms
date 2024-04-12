@@ -15,9 +15,7 @@ namespace SCC{
         vis[v] = true;
         auto&G = !rev ? g: gR;
         if(rev) scc[v] = scnt;
-        for(auto nxt:G[v])
-            if(!vis[nxt])
-                dfs(nxt, rev);
+        for(auto nxt:G[v]) if(!vis[nxt]) dfs(nxt, rev);
         if(!rev) S.push_back(v);
     }
     vector<vector<int>> SCCs;
