@@ -44,7 +44,7 @@ namespace SCC{
         }
         SCCs.clear();
     }
-    void get_SCC(int n){
+    void get_scc(int n){
         for(int i=1;i<=n;i++)if(!dfn[i]) dfs(i);
         SCCs.resize(scnt + 1);
         for(int i=1;i<=n;i++) SCCs[scc[i]].push_back(i);
