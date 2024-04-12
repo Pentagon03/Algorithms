@@ -34,8 +34,10 @@ namespace EdgeDisjointBCC{
             }
         }
     }
+    vector<int> cutVertices;
     void get_bcc(int n){
         for(int i=1;i<=n;i++) if(!dfn[i]) dfs(i, 0);
         for(int i=1;i<=n;i++) if(!vis[i]) color(i, 0);
+        for(int i=1;i<=n;i++) if(size(bcc[i])>1) cutVertices.push_back(i);
     }
 } using namespace EdgeDisjointBCC;
