@@ -1,9 +1,13 @@
 # Algorithms
-Notice: There are ideas and implementations that I don't own.
+Warning: There are ideas and implementations that I don't own. Some are exactly same. Go to the reference links for the creator.
 
 These codes are for problem solving and internet-based competitions.
 ## Data Structures
 Segment Tree
+
+RMQ
+
+Line Container
 ## Flow
 Bipartite Matching
 ## Math
