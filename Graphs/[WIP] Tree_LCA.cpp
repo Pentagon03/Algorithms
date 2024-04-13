@@ -6,7 +6,7 @@ void dfs_lca(int x,int p,int d){
     par[0][x] = p;
     for(int i=1;par[i-1][x];i++)
         par[i][x] = par[i-1][par[i-1][x]];
-    for(auto [nxt, w]: g[x])
+    for(auto nxt: g[x])
         if(nxt != p)
             dfs_lca(nxt, x, d+1);
 }
