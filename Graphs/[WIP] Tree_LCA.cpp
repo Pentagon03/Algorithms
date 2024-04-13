@@ -1,7 +1,7 @@
-const int N = 1e5 + 7, MXH = 18;
+const int MXH = 18;
 int par[MXH][N], dep[N];
 vector<int> g[N];
-void dfs_lca(int x,int p,int d){
+void dfs_lca(int x,int p=0,int d=0){
     dep[x] = d;
     par[0][x] = p;
     for(int i=1;par[i-1][x];i++)
