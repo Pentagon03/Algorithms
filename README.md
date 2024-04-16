@@ -2,6 +2,9 @@
 Warning: There are ideas and implementations that I don't own. Some are exactly same. Go to the reference links for the creator.
 
 These codes are for problem solving and internet-based competitions.
+
+# TODO
+2-sat
 ## Data Structures
 Segment Tree
 
