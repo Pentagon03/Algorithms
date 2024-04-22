@@ -16,7 +16,7 @@ struct LineContainer : multiset<Line, less<>> {
     // (for doubles, use inf = 1/.0, div(a,b) = a/b)
     static const ll inf = LLONG_MAX;
     ll div(ll a, ll b){ // floored division
-        return a / b - (a ^ b < 0 && a % b);
+        return a / b - ((a ^ b) < 0 && a % b);
     }
     bool apply(iterator x, iterator y){
         if(y == end()){
