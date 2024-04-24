@@ -5,6 +5,20 @@ These codes are for problem solving and internet-based competitions.
 
 # TODO
 2-sat
+
+Lazy Segment Tree + Segment Tree Beats
+
+Max flow, Min cut
+
+MCMF
+
+FFT, NTT
+
+Djikstra
+
+Convex Hull
+
+Dnc Opt
 ## Data Structures
 Segment Tree
 
@@ -13,6 +27,12 @@ RMQ
 Line Container
 ## Flow
 Bipartite Matching
+## Graph
+SCC (Kosaraju, Tarjan)
+
+BCC
+
+LCA
 ## Math
 DiscreteLogarithm_Fast
 
