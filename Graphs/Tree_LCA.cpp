@@ -1,5 +1,6 @@
 /*
-provides bunch of good functions for LCA
+provides bunch of functions for Tree LCA
+use 'reset' for multiple testcases
 */
 namespace LCA{
     const int MXH = 18;
@@ -24,6 +25,8 @@ namespace LCA{
                 dfs_lca(nxt, x, d+1);
     }
     int up(int x,int d){
+        assert(d >= 0);
+        if(d==0) return x;
         for(int i=MXH-1;i>=0;i--)
             if((d>>i) & 1)
                 x = par[i][x];
