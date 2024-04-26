@@ -1,20 +1,19 @@
 /*
 Line container for dynamic CHT 
 y = kx + m
-qry: gives maximum value for given x, upper hull
-reference: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/LineContainer.h
+qry: gives minimum value for given x, Lower hull
 find 2 of (//chg here) to change minimum / maximum properties.
+for minimum: k > o.k, (x->m<y->m?inf:-inf)
+for maximum: k < o.k, (x->m>y->m?inf:-inf)
+for doubles, change all (ll -> double), (inf -> 1/.0), (div(a,b) = a/b)
+reference: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/LineContainer.h
 */
 struct Line{
     mutable ll k, m, p;
-    // we know that there will be only 'integer' queries
-    // Upper Hull
-    bool operator<(const Line& o) const{return k < o.k;} // chg here
-    // only for integer coordinates
+    bool operator<(const Line& o) const{return k > o.k;} // chg here
     bool operator<(ll x) const {return p < x;}
 };
 struct LineContainer : multiset<Line, less<>> {
-    // (for doubles, use inf = 1/.0, div(a,b) = a/b)
     static const ll inf = LLONG_MAX;
     ll div(ll a, ll b){ // floored division
         return a / b - ((a ^ b) < 0 && a % b);
@@ -24,16 +23,19 @@ struct LineContainer : multiset<Line, less<>> {
             x->p = inf;
             return false;
         }
-        if(x->k == y->k) x->p = (x->m > y->m?inf:-inf); // chg here, bigger m
+        if(x->k == y->k) x->p = (x->m<y->m?inf:-inf); // chg here
         else x->p = div(y->m - x->m, x->k - y->k);
         return x->p >= y->p;
     }
-    void add(ll k, ll m){
-        auto z = insert({k, m, -inf}), y = z++, x = y;
+    bool add(ll k, ll m){
+        auto z = insert({k, m, -inf}), y = z++, x = y; 
         while(apply(y, z)) z = erase(z);
-        if(x != begin() && apply(--x, y)) apply(x, y = erase(y));
-        while((y=x) != begin() && (--x)->p >= y->p)
-            apply(x, erase(y));
+        if(x != begin() && apply(--x, y)){
+            apply(x, y = erase(y));
+            return false;
+        }
+        while((y=x) != begin() && (--x)->p >= y->p) apply(x, erase(y));
+        return true;
     }
     ll qry(ll x){
         assert(!empty());
