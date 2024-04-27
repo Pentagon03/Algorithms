@@ -7,7 +7,6 @@ for minimum: k > o.k, x->m > y->m
 for maximum: k < o.k, x->m < y->m
 for doubles, change all (ll -> double), (inf -> 1/.0), (div(a,b) = a/b)
 reference: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/LineContainer.h
-TLE: http://boj.kr/7720ff556442480281b04821028631e8
 */
 struct Line{
     mutable ll k, m, p;
@@ -76,7 +75,8 @@ struct LineContainer : multiset<Line, less<>> {
     }
     ll qry(ll x){
         assert(!empty());
-        auto l = lower_bound(x); assert(l != end());
+        auto l = lower_bound(x); 
+        assert(l != end());
         return l->k * x + l->m;
     }
 };
