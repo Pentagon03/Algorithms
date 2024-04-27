@@ -1,7 +1,7 @@
 /*
 Modified Line container for dynamic CHT
 y = kx + m
-qry: gives minimum value for given x, Lower hull
+qry: gives minimum value for given x, upper hull
 find bool operator< (const Line& o) to change minimum / maximum properties.
 for minimum: k > o.k, x->m > y->m
 for maximum: k < o.k, x->m < y->m
