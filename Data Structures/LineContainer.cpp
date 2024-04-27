@@ -16,7 +16,7 @@ struct Line{
 struct LineContainer : multiset<Line, less<>> {
     void print_it(iterator it){fprintf(stderr, "%dth %lld %lld %lld\n",(int)distance(begin(),it), it->k, it->m, it->p);}
     void print(){
-        fprintf(stderr, "size: %d\n", size());
+        fprintf(stderr, "size: %d\n", (int)size());
         for(auto it = begin(); it != end(); it++)
             print_it(it);
     }
