@@ -14,7 +14,7 @@ struct Line{
     bool operator<(ll x) const {return p < x;}
 };
 struct LC : multiset<Line, less<>> {
-    void print_it(iterator it){fprintf(stderr, "%dth %lld %lld %lld\n",(int)distance(begin(),it), it->k, it->m, it->p);}
+    void print_it(iterator it){fprintf(stderr, "[%d] %lld %lld %lld\n",(int)distance(begin(),it), it->k, it->m, it->p);}
     void print(){
         fprintf(stderr, "size: %d\n", (int)size());
         for(auto it = begin(); it != end(); it++)
