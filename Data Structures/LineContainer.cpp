@@ -13,7 +13,7 @@ struct Line{
     bool operator<(const Line& o) const{return k!=o.k?k>o.k:m>o.m;} // chg here
     bool operator<(ll x) const {return p < x;}
 };
-struct LineContainer : multiset<Line, less<>> {
+struct LC : multiset<Line, less<>> {
     void print_it(iterator it){fprintf(stderr, "%dth %lld %lld %lld\n",(int)distance(begin(),it), it->k, it->m, it->p);}
     void print(){
         fprintf(stderr, "size: %d\n", (int)size());
