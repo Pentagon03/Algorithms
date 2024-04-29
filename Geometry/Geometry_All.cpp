@@ -29,13 +29,13 @@ namespace Geometry{
         bool operator<=(Point p) const {return *this == p || *this < p;}
         bool operator>(Point p) const {return !sign(p.x-x) ? y > p.y : x > p.x;}
         bool operator>=(Point p) const {return *this == p || *this > p;}
-        C norm() const {return std::hypot(x, y);}
+        double norm() const {return std::hypot(x, y);}
         C norm2() const{return x*x + y*y;}
-        C arg() const{ return atan2(y, x);}
+        double arg() const{ return atan2(y, x);}
         Point perpendicular() const{ return Point(-y, x);}
         // returns a vector with norm r and having same direction
         Point unit() const{
-            C k = norm();
+            double k = norm();
             if(!sign(k)) return *this;
             return (*this) / k;
         }
@@ -44,7 +44,7 @@ namespace Geometry{
     istream &operator>>(istream &in, Point &p) { return in >> p.x >> p.y; }
     ostream &operator<<(ostream &out, Point &p) { return out << "(" << p.x << "," << p.y << ")"; }
     C dot(Point a, Point b){return a.x*b.x + a.y*b.y;}
-    C dist(Point a, Point b){return (b-a).norm();}
+    double dist(Point a, Point b){return (b-a).norm();}
     C dist2(Point a, Point b){return (b-a).norm2();}
     C cross(Point a, Point b){return a.x*b.y - a.y*b.x;}
     C cross(Point a, Point b, Point c){return cross(b-a, c-a);}
@@ -55,17 +55,17 @@ namespace Geometry{
         if(sign(cross(a,b))) return sign(cross(a,b))>0;
         return a.norm2() < b.norm2();
     }
-    C area_signed(Point a, Point b, Point c){
+    double area_signed(Point a, Point b, Point c){
         if(dist(b,c)<EPS) return 0; 
         return cross(a,b,c) / 2;
     } 
-    C area(Point a, Point b, Point c){return abs(area_signed(a,b,c));}
+    double area(Point a, Point b, Point c){return abs(area_signed(a,b,c));}
 
     struct Line{
         Point s,e;
         Line(Point s=O,Point e=O):s(s),e(e){}
         friend istream& operator>> (istream& is, Line& l){Point a, b; cin>>a>>b; l = Line(a,b); return is;}
-        C length() const{return dist(s,e);}
+        double length() const{return dist(s,e);}
         C length2() const{return dist2(s,e);}
         bool is_on_line(Point x) const{return !ccw(s,e,x) && min(s,e)<=x && x<=max(s,e);}
         friend bool chk_inter(Line p, Line q){
@@ -93,11 +93,11 @@ namespace Geometry{
             if(t1 == 0 && t2 == 0)
                 return parrallel_inter(p,q);
             b-=a; d-=c;
-            C t = cross(c-a,d) / cross(b,d);
+            double t = cross(c-a,d) / cross(b,d);
             return a + b*t;
         }
-        friend inline C dist_signed(Line a,Point x){ return cross(a.s, a.e, x)/a.length();}
-        friend inline C dist(Line a,Point x){ return abs(dist_signed(a,x));}
+        friend inline double dist_signed(Line a,Point x){ return cross(a.s, a.e, x)/a.length();}
+        friend inline double dist(Line a,Point x){ return abs(dist_signed(a,x));}
     };
     //compute intersection of line through points a and b with
     //circle centered at c with radius r > 0
@@ -117,12 +117,12 @@ namespace Geometry{
         return ret;
     }
 
-    C sector_signed(Point c, C r, Point a, Point b){
+    double sector_signed(Point c, C r, Point a, Point b){
         if(ccw(c, a, b) == 0) return 0;
         a -= c; b -= c;
         return r * r * atan2(cross(a,b), dot(a,b)) / 2;
     }
-    C sector(Point c, C r, Point a, Point b){
+    double sector(Point c, C r, Point a, Point b){
         return abs(sector_signed(c, r, a, b));
     }
 
@@ -142,6 +142,30 @@ namespace Geometry{
         dn.insert(dn.end(),++up.rbegin(),--up.rend());
         return dn;
     }
+
+    pair<Point,Point> find_farthest(const Polygon&v){
+        vector<Point> ch = getCH(v);
+        int n = ch.size();
+        C ans = 0; Point ans1,ans2;
+        int id = 1;
+        auto upd = [&](int a,int b){
+            auto val = dist(ch[a], ch[b]);
+            if(ans< val){
+                ans1 = ch[a];
+                ans2 = ch[b];
+                ans = val;
+            }
+        };
+        for(int i=0;i<n;i++){
+            while(ccw(O,ch[i+1]-ch[i],ch[(id+1)%n]-ch[id])>0){
+                upd(i,id);
+                id++; if(id==n) id = 0;
+            }
+            upd(i,id);
+        }
+        return {ans1, ans2};
+    }
+
     bool point_in_polygon_naive(const Polygon& h,const Point& p){
         // strictly inner
         int s = ccw(h[0],h[1],p);
