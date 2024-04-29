@@ -20,8 +20,9 @@ namespace Geometry{
         Point operator+=(Point p){return *this = (*this + p);}
         Point operator*(C c) const {return Point(x * c, y * c);}
         Point operator*=(C c){return *this = ((*this) * c);}
-        friend Point operator*(const C& c, Point p){return Point(c * p.x, c * p.y);}
+        friend Point operator*(const C& c, Point p){return p*c;}
         Point operator/(C c) const {return Point(x / c, y / c);}
+        Point operator/=(C c) {return *this = (*this / c);}
         bool operator==(Point p) const {return !sign(p.x-x) && !sign(p.y-y);}
         bool operator!=(Point p) const {return !(*this == p);}
         bool operator<(Point p) const {return !sign(p.x-x) ? y < p.y : x < p.x;}
@@ -33,11 +34,10 @@ namespace Geometry{
         C arg() const{ return atan2(y, x);}
         Point perpendicular() const{ return Point(-y, x);}
         // returns a vector with norm r and having same direction
-        Point unit(C r = 1.0) const{
+        Point unit() const{
             C k = norm();
             if(!sign(k)) return *this;
-            r /= k;
-            return (*this) * r;
+            return (*this) / k;
         }
     };
     const Point O = Point(0,0), FAIL = Point(INF, INF);
