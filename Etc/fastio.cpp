@@ -2,10 +2,21 @@
  * FASTIO
  * https://github.com/Pentagon03/Algorithms/blob/master/Etc/fastio.cpp
  * Just use as if we use cin, cout. + u dont have to get rid of cin.tie(0)->sync_with_stdio(0);
- * Or manually. ex) int a=3; string b = "hello"; _in.scan(a,b); int z = _in.geti();
+ * call cout.setprecision(prec) for double precision. default is 6
+ * __int128_t -> input or print is ok
+ * you can call numeric_limits min/max // most implementations can't input or output numeric_limits<int>::min();
+ * cin.geti() , cin.geti<ll>(), cin.getline() all works.
  * Special function: vector, pair input/output => vector<int> v(3); cin>>v; // Works!
- * Default floating point length is 6
- */
+ * 
+ * TEST
+    static const __uint128_t UINT128_MAX =__uint128_t(__int128_t(-1L));
+    static const __int128_t INT128_MAX = UINT128_MAX >> 1;
+    static const __int128_t INT128_MIN = -INT128_MAX - 1;
+    __int128_t x; 
+    cin >> x; // works
+    cout<< x << '\n'; // works
+    cout<< INT128_MIN << '\n'; // works
+**/
 #define FASTIO 1
 #if FASTIO
 constexpr int SIZ = 1<<20;
@@ -41,16 +52,21 @@ class _IN{
         inline void scan(long double&f){string t; scan(t); f=stold(t);}
         template<typename T=int> inline T geti(){
             char c; scan(c);
-            T res=0; bool f=1;
-            if(c=='-') f=0, c=read();
-            while(c>='0'&& c<='9') res=res*10+(c-'0'), c=read();
-            return f?res:-res;
+            T res=0; bool f = true;
+            if(c=='-') f = false, c=read();
+            while(c>='0'&& c<='9'){
+                res = (res << 3) + (res << 1); 
+                c -= '0'; res += f ? c : -c;
+                c = read();
+            }
+            return res;
         }
-        inline void getline(string&s){
-            s.clear(); char c = read();
+        inline string getline(){
+            string s; char c = read();
             for(;c!='\n' && !isEnd(c); c = read()) s.push_back(c);
             if(__GETLINE_FLAG__) __END_FLAG__ = true;
             if(isEnd(c)) __GETLINE_FLAG__ =  true;
+            return s;
         }
         template<typename T1,typename T2> inline void scan(pair<T1,T2>&p){scan(p.first);scan(p.second);}
         template<typename T> inline void scan(T&n){ n = geti<T>(); }
@@ -58,33 +74,47 @@ class _IN{
         template<typename T, typename... Args> inline void scan(T&n, Args&...args){
             scan(n); scan(args...);
         }
-        struct tmp{void sync_with_stdio(int _){}}_t;
-        tmp* tie(int _){return &_t;}
+        struct _tmp{void sync_with_stdio(int _){}}_t;
+        _tmp* tie(int _){return &_t;}
 } _in;
 class _OUT{
     private:
-    char buf[SIZ+1],*p=buf, tmp[21];
+    char buf[SIZ+1],*p=buf, tmp[42];
+    int prec = 6;
     public:
         explicit operator bool(){return true;}
         inline void flush(){fwrite(buf,1,p-buf,stdout); p=buf;}
-        inline void mark(const char c){{if(p==buf+SIZ) flush();} *p++=c; }
-        inline void mark(const char*s){for(int i=0;s[i];i++) mark(s[i]); }
-        inline void mark(const string&s){for(char c:s) mark(c);}
-        inline void mark(const float f){mark(to_string(f));}
-        inline void mark(const double f){mark(to_string(f));}
-        inline void mark(const long double f){mark(to_string(f));}
-        template<typename T> inline void mark(const vector<T>&v){for(auto k:v) mark(k), mark(' ');}
-        template<typename T1,typename T2> inline void mark(const pair<T1,T2>&p){mark(p.first); mark(' '); mark(p.second);}
-        template<typename T> inline void mark(T ans){
-            if(ans<0) mark('-'),ans*=-1;
+        inline void print(const char c){{if(p==buf+SIZ) flush();} *p++=c; }
+        inline void print(const char*s){for(int i=0;s[i];i++) print(s[i]); }
+        inline void print(const string&s){for(char c:s) print(c);}
+        // floating point precision
+        inline void setprecision(int precision){prec=precision;}
+        inline void print(const long double f){
+            std::stringstream stream;
+            stream << std::fixed << std::setprecision(prec) << f;
+            print(stream.str());
+        }
+        inline void print(const double f){print((long double)f);}
+        inline void print(const float f){print((long double)f);}
+        template<typename T> inline void print(const vector<T>&v){for(auto k:v) print(k), print(' ');}
+        template<typename T1,typename T2> inline void print(const pair<T1,T2>&p){print(p.first); print(' '); print(p.second);}
+        // we assume T is integer
+        template<typename T> inline void print(T ans){
+            bool is_minimum = (ans<0) && ((ans<<1) >= 0); // check whether this is the minimum of data type
+            if(ans<0){
+                print('-');
+                if(is_minimum) ans = ~ans;
+                else ans *= -1;
+            }
             int cnt=0;
             do tmp[cnt++]=(ans%10)+'0', ans/=10; while(ans>0);
-            for(;cnt--;) mark(tmp[cnt]);
+            if(is_minimum) ++tmp[0]; // we assume this is not 9, in-fact, c++ integer type {min}'s last digit is always '8'
+            for(;cnt;) print(tmp[--cnt]);
         }
         ~_OUT(){flush();}
 } _out;
 template<typename T> _IN& operator>> (_IN&in, T&i){in.scan(i); return in; }
-template<typename T> _OUT& operator<< (_OUT&out, T i){out.mark(i); return out; }
+template<typename T> _OUT& operator<< (_OUT&out, T i){out.print(i); return out; }
 #define cin _in
 #define cout _out
 
