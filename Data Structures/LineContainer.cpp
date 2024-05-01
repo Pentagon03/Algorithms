@@ -20,7 +20,7 @@ struct LC : multiset<Line, less<>> {
         for(auto it = begin(); it != end(); it++)
             print_it(it);
     }
-    static const ll inf = LLONG_MAX;
+    static const ll inf = numeric_limits<ll>::max();
     ll div(ll a, ll b){ // floored division
         return a / b - ((a ^ b) < 0 && a % b);
     }
