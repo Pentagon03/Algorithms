@@ -22,7 +22,7 @@
 constexpr int SIZ = 1<<20;
 class _IN{
     private:
-        char buf[SIZ+1],*p=buf;
+        char buf[SIZ+1], *p=buf;
         int __END_FLAG__{}, __GETLINE_FLAG__{};
     public:
         explicit operator bool(){return !__END_FLAG__;}
@@ -33,9 +33,7 @@ class _IN{
             if(isEnd(*p)) {
                 buf[fread(buf,sizeof(char),SIZ,stdin)] = 0; 
                 p = buf;
-                if(isEnd(*p)){
-                    return '\0';
-                }
+                if(isEnd(*p)) return '\0';
             };
             return *p++;
         }
@@ -52,11 +50,12 @@ class _IN{
         inline void scan(long double&f){string t; scan(t); f=stold(t);}
         template<typename T=int> inline T geti(){
             char c; scan(c);
-            T res=0; bool f = true;
-            if(c=='-') f = false, c=read();
+            T res=0; bool sign = true;
+            if(c=='-') sign = false, c=read();
+            else if(c == '+') c = read();
             while(c>='0'&& c<='9'){
                 res = (res << 3) + (res << 1); 
-                c -= '0'; res += f ? c : -c;
+                c -= '0'; res += sign ? c : -c;
                 c = read();
             }
             return res;
@@ -100,7 +99,7 @@ class _OUT{
         template<typename T1,typename T2> inline void print(const pair<T1,T2>&p){print(p.first); print(' '); print(p.second);}
         // we assume T is integer
         template<typename T> inline void print(T ans){
-            bool is_minimum = (ans<0) && ((ans<<1) >= 0); // check whether this is the minimum of data type
+            bool is_minimum = (ans<0) && ((ans<<1) == 0); // check whether this is the minimum of data type
             if(ans<0){
                 print('-');
                 if(is_minimum) ans = ~ans;
