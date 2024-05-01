@@ -4,13 +4,15 @@ Warning: There are ideas and implementations that I don't own. Some are exactly 
 These codes are for problem solving and internet-based competitions.
 
 # TODO
+**snippet_generator.py**
+
 2-sat
 
 Lazy Segment Tree + Segment Tree Beats
 
-Max flow, Min cut
+Max flow, Min cut (Atcoder style)
 
-MCMF
+MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)
 
 FFT, NTT
 
