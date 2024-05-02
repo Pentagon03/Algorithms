@@ -14,10 +14,10 @@ constexpr T power(T a, ll b) {
 }
  
 template<int P>
-struct Mint {
+struct modint {
     int x;
-    constexpr Mint() : x{} {}
-    constexpr Mint(ll x) : x{norm(x % P)} {}
+    constexpr modint() : x{} {}
+    constexpr modint(ll x) : x{norm(x % P)} {}
     
     constexpr int norm(int x) const {
         if (x < 0) x += P;
@@ -26,75 +26,74 @@ struct Mint {
     }
     constexpr int val() const {return x;}
     explicit constexpr operator int() const {return x;}
-    constexpr Mint operator-() const {
-        Mint res;
+    constexpr modint operator-() const {
+        modint res;
         res.x = norm(P - x);
         return res;
     }
-    constexpr Mint inv() const {
+    constexpr modint inv() const {
         assert(x != 0);
         return power(*this, P - 2);
     }
-    constexpr Mint &operator*=(Mint rhs) {
+    constexpr modint &operator*=(modint rhs) {
         x = 1LL * x * rhs.x % P;
         return *this;
     }
-    constexpr Mint &operator+=(Mint rhs) {
+    constexpr modint &operator+=(modint rhs) {
         x = norm(x + rhs.x);
         return *this;
     }
-    constexpr Mint &operator-=(Mint rhs) {
+    constexpr modint &operator-=(modint rhs) {
         x = norm(x - rhs.x);
         return *this;
     }
-    constexpr Mint &operator/=(Mint rhs) {
+    constexpr modint &operator/=(modint rhs) {
         return *this *= rhs.inv();
     }
-    friend constexpr Mint operator*(Mint lhs, Mint rhs) {
-        Mint res = lhs;
+    friend constexpr modint operator*(modint lhs, modint rhs) {
+        modint res = lhs;
         res *= rhs;
         return res;
     }
-    friend constexpr Mint operator+(Mint lhs, Mint rhs) {
-        Mint res = lhs;
+    friend constexpr modint operator+(modint lhs, modint rhs) {
+        modint res = lhs;
         res += rhs;
         return res;
     }
-    friend constexpr Mint operator-(Mint lhs, Mint rhs) {
-        Mint res = lhs;
+    friend constexpr modint operator-(modint lhs, modint rhs) {
+        modint res = lhs;
         res -= rhs;
         return res;
     }
-    friend constexpr Mint operator/(Mint lhs, Mint rhs) {
-        Mint res = lhs;
+    friend constexpr modint operator/(modint lhs, modint rhs) {
+        modint res = lhs;
         res /= rhs;
         return res;
     }
-    friend constexpr std::istream &operator>>(std::istream &is, Mint &a) {
+    friend constexpr std::istream &operator>>(std::istream &is, modint &a) {
         ll v;
         is >> v;
-        a = Mint(v);
+        a = modint(v);
         return is;
     }
-    friend constexpr std::ostream &operator<<(std::ostream &os, const Mint &a) {
+    friend constexpr std::ostream &operator<<(std::ostream &os, const modint &a) {
         return os << a.val();
     }
-    friend constexpr bool operator==(Mint lhs, Mint rhs) {
+    friend constexpr bool operator==(modint lhs, modint rhs) {
         return lhs.val() == rhs.val();
     }
-    friend constexpr bool operator!=(Mint lhs, Mint rhs) {
+    friend constexpr bool operator!=(modint lhs, modint rhs) {
         return lhs.val() != rhs.val();
     }
 };
  
 template<int P>
 struct comb {
-    using Z = Mint<P>;
+    using Z = modint<P>;
     int n = 0;
     std::vector<Z> _fac = {1};
     std::vector<Z> _invfac = {1};
     std::vector<Z> _inv = {0};
-    
     void init(int m) {
         if (m <= n) return;
         _fac.resize(m + 1);
