@@ -21,6 +21,8 @@ Djikstra
 Convex Hull
 
 Dnc Opt
+
+Custom Hasher
 ## Data Structures
 Segment Tree
 
