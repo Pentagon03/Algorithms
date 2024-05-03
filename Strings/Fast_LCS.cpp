@@ -3,7 +3,7 @@ Get LCS(Longest Common Subsequence) of string A, B in O(|A|(|B|/|W|)), where |W|
 We use bitset opt and Hirschberg's Algorithm for recovering
 used unsigned long long arrays for bitset implementation
 IMPORTANT:  set base variables below before using
-MXN: max length of string B
+MXN: max size of string B
 MX_ALP: number of possible alphabets
 BASE_ALP: the minimum ascii value among all alphabets
 reference: https://github.com/infossm/infossm.github.io/blob/master/_posts/2019-09-13-lcs-with-bitset.md
@@ -25,7 +25,7 @@ namespace FAST_LCS{
 
     #include<immintrin.h>
     vector<int> getLCSdp(const string &A,const string &B){
-        int n=A.length(),m=B.length(),ans=0;
+        int n=A.size(),m=B.size(),ans=0;
         int siz = (m>>6)+1;
 
         // Init
@@ -46,7 +46,7 @@ namespace FAST_LCS{
         return v;
     }
     std::string getLCS(const string &A,const string &B){ // recover actual LCS of A and B using Hirschberg's Algorithm
-        int n = A.length(), m = B.length();
+        int n = A.size(), m = B.size();
         string ans = "";
         if(!m) return ans;
         if(n==1){
