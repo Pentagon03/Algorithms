@@ -123,7 +123,25 @@ struct comb {
         return _inv[m].val();
     }
     int binom(int m, int k) {
-        if (m < k || k < 0) return 0;
+        if (m < 0 || m < k || k < 0) return 0;
         return (Z(fac(m)) * invfac(k) * invfac(m - k)).val();
+    }
+    using ull = long long;
+    std::vector<vector<ull>> bm = {{1}}; // we don't care overflow
+    void init_ull(int m){
+        int n = bm.size() - 1;
+        if(m <= n) return;
+        bm.resize(m+1);
+        for(int i = n + 1; i <= m; i++){
+            bm[i].resize(i+1);
+            bm[i][0] = bm[i][i] = 1;
+            for(int j = 1; j < i; j++)
+                bm[i][j] = bm[i-1][j] + bm[i-1][j-1];
+        }
+    }
+    ull binom_ull(int m,int k){
+        if (m < 0 || m < k || k < 0) return 0;
+        init_ull(m);
+        return bm[m][k];
     }
 };
