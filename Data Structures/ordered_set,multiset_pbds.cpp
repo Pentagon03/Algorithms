@@ -1,3 +1,13 @@
+/*
+ordered set and ordered multiset inheritted by gnu policy-based-structures
+that you can calculate index of variable, and k-th element in O(log n)
+reference: https://codeforces.com/blog/entry/11080
+
+for making into templates, you should use
+typename parent_ordered_set<T>::iterator
+and change a lot functions to (f => parent_ordered_set<T>::f)
+so I just rather chose to use "using Typename = int;"
+*/
 // ORDERED_SET START
 #include "ext/pb_ds/assoc_container.hpp"
 using namespace __gnu_pbds;
