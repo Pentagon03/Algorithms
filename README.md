@@ -49,6 +49,8 @@ Linear Sieve (Multiplicative Functions)
 Manacher(Palindrome)
 
 KMP(Pattern Matching)
+
+Fast LCS using bitset
 ## Geometry
 Geometry_All (Point, Line, Polygon)
 
