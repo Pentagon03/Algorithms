@@ -1,3 +1,7 @@
+/*
+Binary indexed Tree
+set your operation function op
+*/
 template<typename T = int>
 struct BIT{
     int n; vector<T> t;
