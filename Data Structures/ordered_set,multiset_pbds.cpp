@@ -1,8 +1,10 @@
 /*
 ordered set and ordered multiset inheritted by gnu policy-based-structures
-that you can calculate index of variable, and k-th element in O(log n)
+kth_element(idx): get iterator of idx-th element. O(log |size|) => ex) {0,1,3,6,7}, auto it = kth_element(3); cout<< (*it); // prints 6
+index(value): return index of lower bound of value. O(log |size|) => int idx = index(5); // lower bound is 6, so idx = 3;
 reference: https://codeforces.com/blog/entry/11080
-code help: frozenca (https://github.com/frozenca)
+source: me
+code help(class inherittence): frozenca (https://github.com/frozenca)
 */
 
 // ORDERED_SET START
