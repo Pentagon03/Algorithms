@@ -1,5 +1,5 @@
 # Algorithms
-Warning: There are ideas and implementations that I don't own. Some are exactly same. Go to the reference links for the creator.
+Warning: There are ideas and implementations that I don't own. Some are almost exactly same. Go to the reference links for the original creator.
 
 These codes are for problem solving and internet-based competitions.
 
