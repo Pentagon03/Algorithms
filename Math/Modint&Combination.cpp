@@ -87,7 +87,7 @@ struct modint {
     }
 };
  
-template<int P>
+template<int P,unsigned long long UP = (1ULL<<63)-1>
 struct comb {
     using Z = modint<P>;
     int n = 0;
@@ -126,7 +126,7 @@ struct comb {
         if (m < 0 || m < k || k < 0) return 0;
         return (Z(fac(m)) * invfac(k) * invfac(m - k)).val();
     }
-    using ull = long long;
+    using ull = unsigned long long;
     std::vector<vector<ull>> bm = {{1}}; // we don't care overflow
     void init_ull(int m){
         int n = bm.size() - 1;
@@ -136,7 +136,7 @@ struct comb {
             bm[i].resize(i+1);
             bm[i][0] = bm[i][i] = 1;
             for(int j = 1; j < i; j++)
-                bm[i][j] = bm[i-1][j] + bm[i-1][j-1];
+                bm[i][j] = min(bm[i-1][j] + bm[i-1][j-1], UP);
         }
     }
     ull binom_ull(int m,int k){
