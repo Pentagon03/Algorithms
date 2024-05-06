@@ -2,7 +2,7 @@
 Find Stronly Connected Components
 Tarjan's algorithm
 O(V+E)
-test: https://atcoder.jp/contests/practice2/submissions/53205556
+test: https://atcoder.jp/contests/practice2/submissions/53205875
 latest version: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/SCC_Tarjan.cpp
 */
 struct scc_graph{
@@ -38,16 +38,17 @@ struct scc_graph{
             scnt++;
         }
     }
-    void get_scc_id(){
+    void _get_scc(){
+        called = true;
         for(int i=0;i<n;i++) if(!dfsn[i]) dfs(i);
         for(int&k: id) k = (scnt-1) - k;
     }
     vi scc_id(){
-        if(!called) get_scc_id();
+        if(!called) _get_scc();
         return id;
     }
     vector<vi> scc(){
-        if(!called) get_scc_id();
+        if(!called) _get_scc();
         groups.resize(scnt);
         vi counts(scnt);
         for(int k: id) ++counts[k];
