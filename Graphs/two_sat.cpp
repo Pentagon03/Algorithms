@@ -67,7 +67,7 @@ struct two_sat{
     int n;
     vector<bool> ans;
     vector<vi> g;
-    two_sat(int _n=0):n(_n),ans(n),g(2*n){}
+    two_sat(int _n=0):n(_n),g(2*n){}
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
@@ -109,11 +109,15 @@ struct two_sat{
     bool satisfiable() {
         scc_graph scc(g);
         auto id = scc.scc_id();
+        ans.resize(n);
         for(int i = 0; i < n; i++){
             if(id[2*i] == id[2*i+1]) return false;
             ans[i] = id[2*i+1] > id[2*i];
         }
         return true;
     }
-    vector<bool> answer(){return ans;}
+    vector<bool> answer(){
+        if(ans.size() == 0) satisfiable();
+        return ans;
+    }
 };
