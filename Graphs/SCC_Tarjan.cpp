@@ -2,51 +2,50 @@
 Find Stronly Connected Components
 Tarjan's algorithm
 O(V+E)
-use init(n) at the very first, if needed.
-test: https://www.acmicpc.net/problem/2150
+test: https://atcoder.jp/contests/practice2/submissions/53194393
 */
-namespace SCC{
-    vector<int> g[N];
-    int dfn[N], low[N], pv;
+struct scc_graph{
+    using vi = vector<int>;
+    int n;
+    vector<vi> g, groups;
+    vi dfsn, low, stk, scc_id;
+    vector<bool> in_stk;
+    int time, scnt;
+    scc_graph(int _n):n(_n), g(_n), groups(_n), dfsn(_n), low(_n), scc_id(_n), in_stk(_n), time(0), scnt(0){}
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
-    stack<int> stk; bool in_stk[N];
-    int scc[N], scnt;
     void dfs(int x){
-        dfn[x] = low[x] = ++pv;
-        stk.push(x); in_stk[x] = true;
+        dfsn[x] = low[x] = ++time;
+        stk.push_back(x); in_stk[x] = true;
         for(int nx:g[x]){
-            if(!dfn[nx]){
+            if(!dfsn[nx]){
                 dfs(nx);
                 low[x] = min(low[x], low[nx]);
             }else if(in_stk[nx]){
                 // dfs(nx) didnt end, so dfn[nx] == low[nx]
-                low[x] = min(low[x], dfn[nx]);
+                low[x] = min(low[x], dfsn[nx]);
             }
         }
-        if(low[x] == dfn[x]){
-            ++scnt;
+        if(low[x] == dfsn[x]){
             int y; do{
-                y = stk.top(); stk.pop();
+                y = stk.back(); stk.pop_back();
                 in_stk[y] = false;
-                scc[y] = scnt;
+                scc_id[y] = scnt;
             }while(y != x);
+            scnt++;
         }
     }
-    vector<vector<int>> SCCs;
-    void init(int n){
-        pv = scnt = 0;
-        stack<int>().swap(stk);
-        for(int i=1;i<=n;i++){
-            g[i].clear();
-            dfn[i] = low[i] = in_stk[i] = scc[i] = 0;
+    vector<vi> scc(){
+        for(int i=0;i<n;i++)if(!dfsn[i]) dfs(i);
+        groups.resize(scnt);
+        vi counts(scnt);
+        for(int i=0;i<n;i++){
+            scc_id[i] = (scnt-1) - scc_id[i];
+            counts[scc_id[i]]++;
         }
-        SCCs.clear();
+        for(int i=0;i<scnt;i++) groups[i].reserve(counts[i]);
+        for(int i=0;i<n;i++) groups[scc_id[i]].push_back(i);
+        return groups;
     }
-    void get_scc(int n){
-        for(int i=1;i<=n;i++)if(!dfn[i]) dfs(i);
-        SCCs.resize(scnt + 1);
-        for(int i=1;i<=n;i++) SCCs[scc[i]].push_back(i);
-    }
-} using namespace SCC;
+};
