@@ -3,12 +3,16 @@ Find Stronly Connected Components
 Kosaraju's algorithm
 O(V+E)
 use init(n) at the very first, if needed.
-test: https://www.acmicpc.net/problem/2150
+test: https://atcoder.jp/contests/practice2/submissions/53194190
 */
-namespace SCC{
-    vector<int> g[N], gR[N], S;
+struct scc_graph{
+    using vi = vector<int>;
+    int n, scnt;
+    bool called;
+    vector<vi> g, gR, groups;
     vector<bool> vis;
-    int scc[N], scnt;
+    vi S, scc_id;
+    scc_graph(int _n):n(_n), scnt(0), called(false), g(_n), gR(_n), scc_id(_n), vis(_n){}
     void add_edge(int a,int b){
         g[a].push_back(b);
         gR[b].push_back(a);
@@ -16,25 +20,25 @@ namespace SCC{
     void dfs(int v, bool rev = false){
         vis[v] = true;
         auto&G = !rev ? g: gR;
-        if(rev) scc[v] = scnt;
+        if(rev) scc_id[v] = scnt;
         for(auto nxt:G[v])
             if(!vis[nxt])
                 dfs(nxt, rev);
         if(!rev) S.push_back(v);
     }
-    vector<vector<int>> SCCs;
-    void init(int n){
-        for(int i=1;i<=n;i++) g[i].clear(), gR[i].clear(), scc[i] = 0;
-        S.clear(); vis.clear();
-        scnt = 0;
+    vector<vi> scc(){
+        assert(!called);
+        called = true;
+        for(int i=0;i<n;i++) if(!vis[i]) dfs(i, false);
+        vis.assign(n, false);
+        reverse(S.begin(), S.end());
+        // S in topological order
+        for(int x: S) if(!vis[x]) dfs(x, true), scnt++;
+        vi counts(scnt);
+        for(int i=0;i<n;i++) counts[scc_id[i]]++;
+        groups.resize(scnt);
+        for(int i=0;i<scnt;i++) groups[i].reserve(counts[i]);
+        for(int i=0;i<n;i++) groups[scc_id[i]].push_back(i);
+        return groups;
     }
-    void get_scc(int n){
-        vis.assign(n+1, false);
-        for(int i=1;i<=n;i++) if(!vis[i]) dfs(i, false);
-        vis.assign(n+1, false);
-        reverse(all(S));
-        for(int x: S) if(!vis[x]) ++scnt, dfs(x, true);
-        SCCs.resize(scnt + 1);
-        for(int i=1;i<=n;i++) SCCs[scc[i]].push_back(i);
-    }
-} using namespace SCC;
+};
