@@ -11,7 +11,7 @@ struct scc_graph{
     vector<vi> g, gR, groups;
     vector<bool> vis;
     vi S, scc_id;
-    scc_graph(int _n):n(_n), scnt(0), called(false), g(_n), gR(_n), scc_id(_n), vis(_n){}
+    scc_graph(int _n=0):n(_n), scnt(0), called(false), g(_n), gR(_n), scc_id(_n), vis(_n){}
     void add_edge(int a,int b){
         g[a].push_back(b);
         gR[b].push_back(a);
