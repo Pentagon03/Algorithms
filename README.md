@@ -6,7 +6,7 @@ These codes are for problem solving and internet-based competitions.
 # TODO
 **snippet_generator.py**
 
-2-sat
+~~2-sat~~
 
 Lazy Segment Tree + Segment Tree Beats
 
@@ -37,6 +37,8 @@ SCC (Kosaraju, Tarjan)
 BCC
 
 LCA
+
+two_sat
 ## Math
 DiscreteLogarithm_Fast
 
