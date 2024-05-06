@@ -94,8 +94,18 @@ struct two_sat{
         g.emplace_back(); g.emplace_back();
         return n++;
     }
+    void atMostOneNaive(const vector<pair<int,bool>>& v){
+        if(v.size() <= 1) return;
+        for(int i=0;i<v.size();i++)
+            for(int j=i+1;j<v.size();j++)
+                add_clause(v[i].first, !v[i].second, v[j].first, !v[j].second);
+    }
     void atMostOne(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
+        if(v.size() <= 4){
+            atMostOneNaive(v);
+            return;
+        }
         auto [cur, a] = v[0]; cur = idx(cur, !a);
         for(int i=2;i<v.size();i++){
             int next = addVar();  next = idx(next, true);
@@ -123,3 +133,68 @@ struct two_sat{
         return ans;
     }
 };
+
+const int N = 7 + 1e5, mod = (int)1e9 + 7;
+
+
+/*
+요약: 
+1. 0인 것과 아닌 것 구별 -> 2-sat 필요 없음
+2. a,b,c를 각각 0.5, 1, 2로 두고 2-sat. atmostone naive로 해도 충분함.
+*/
+void _main(){
+    int n, m; cin>>n>>m;
+    two_sat ts(n*3);
+    vector<bool> not0(n);
+    for(int i=0;i<m;i++){
+        int a, b; cin>>a>>b; --a; --b;
+        char c; cin>>c;
+        if(c == 'x') continue;
+        not0[a] = not0[b] = true;
+        a *= 3; b *= 3;
+        if(c == '-'){ // < 1
+            ts.add_clause(a+0, true, a+1, true);
+            ts.add_clause(b+0, true, b+1, true);
+            ts.add_clause(a+1, false, b+1, false);
+        }
+        else if(c == '+'){ // > 1
+            ts.add_clause(a+2, true, a+1, true);
+            ts.add_clause(b+2, true, b+1, true);
+            ts.add_clause(a+1, false, b+1, false);
+        }
+        else if(c == '='){ // = 0
+            ts.is_equal(a+1, true, b+1, true);
+            ts.is_equal(a+0, true, b+2, true);
+            ts.is_equal(a+2, true, b+0, true);
+        }
+    }
+    for(int i=0;i<n;i++){
+        if(not0[i]){
+            vector<pair<int,bool>> v;
+            for(int j=0;j<3;j++)
+                v.emplace_back(3*i+j, true);
+            ts.atMostOne(v);
+        }
+    }
+    bool res = ts.satisfiable();
+    assert(res && "answer should exist");
+    auto ans = ts.answer();
+    for(int i=0;i<n;i++){
+        if(!not0[i]){
+            cout<<"x";
+            continue;
+        }
+        int y, cnt = 0;
+        for(int j=0;j<3;j++){
+            if(ans[3*i+j]){
+                y = j;
+                ++cnt;
+            }
+        }
+        assert(cnt <= 1 && "at most 1");
+        if(cnt == 0) y = 1;
+        if(y == 0) cout<<"-";
+        if(y == 1) cout<<"=";
+        if(y == 2) cout<<"+";
+    }
+}
