@@ -14,9 +14,7 @@ struct scc_graph{
     vector<bool> in_stk;
     scc_graph(int _n=0):n(_n), time(0), scnt(0), called(false), g(n), groups(n), dfsn(n), low(n), stk(0), id(n), in_stk(n){}
     scc_graph(const vector<vi>&_g){*this = scc_graph(_g.size()); g = _g;}
-    void add_edge(int a,int b){
-        g[a].push_back(b);
-    }
+    inline void add_edge(int a,int b){g[a].push_back(b);}
     void dfs(int x){
         dfsn[x] = low[x] = ++time;
         stk.push_back(x); in_stk[x] = true;
@@ -68,28 +66,19 @@ struct two_sat{
     vector<bool> ans;
     vector<vi> g;
     two_sat(int _n=0):n(_n),g(2*n){}
-    void add_edge(int a,int b){
-        g[a].push_back(b);
-    }
-    // 2x + 0: false
-    // 2x + 1: true
-    inline int to_idx(int i, bool a){return 2*i+a;}
-    // (x OR y)
-    void add_clause(int x,int y){
-        assert(0 <= x < 2 * n && "x in range");
-        assert(0 <= y < 2 * n && "y in range");
-        add_edge(x^1, y);
-        add_edge(y^1, x);
-    }
-    void is_equal(int x,int y){
-        add_clause(x, y^1);
-        add_clause(x^1, y);
-    }
+    inline void add_edge(int a,int b){ g[a].push_back(b);}
+    // 2x + 0: false, 2x + 1: true
+    // inline int to_idx(int i, bool a){return 2*i+a;}
     // (i = a OR j = b)
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
         assert(0 <= j && j < n && "j in range");
-        add_clause(to_idx(i, a), to_idx(j, b));
+        i = 2 * i + a; j = 2 * j + b;
+        add_edge(i^1, j); add_edge(j^1, i);
+    }
+    void is_equal(int i, bool a, int j, bool b){
+        add_clause(i, a, j, !b);
+        add_clause(i, !a, j, b);
     }
     int addVar(){
         g.emplace_back(); g.emplace_back();
