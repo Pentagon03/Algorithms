@@ -58,7 +58,9 @@ struct scc_graph{
 /*
 two_sat
 there should be scc_graph struct on top: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/SCC_Tarjan.cpp
-test: https://atcoder.jp/contests/practice2/submissions/53205929
+reference1: https://github.com/kth-competitive-programming/kactl/blob/main/content/graph/2sat.h
+reference2: https://atcoder.github.io/ac-library/production/document_en/twosat.html
+test: https://atcoder.jp/contests/practice2/submissions/53206694
 */
 struct two_sat{
     using vi = vector<int>;
@@ -66,14 +68,22 @@ struct two_sat{
     vector<bool> ans;
     vector<vi> g;
     two_sat(int _n=0):n(_n),g(2*n){}
-    inline void add_edge(int a,int b){ g[a].push_back(b);}
+    inline void add_edge(int a,int b){
+        assert(a < 2*n && b < 2*n && 2*n == g.size() && "graph size");
+        g[a].push_back(b);
+    }
     // 2x + 0: false, 2x + 1: true
-    // inline int to_idx(int i, bool a){return 2*i+a;}
+    inline int idx(int i, bool a){return 2*i+a;}
     // (i = a OR j = b)
+    void add_clause(int x,int y){
+        assert(0 <= x && x < 2*n && "x in range");
+        assert(0 <= y && y < 2*n && "y in range");
+        add_edge(x^1, y); add_edge(y^1, x);
+    }
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
         assert(0 <= j && j < n && "j in range");
-        i = 2 * i + a; j = 2 * j + b;
+        i = idx(i, a); j = idx(j, b);
         add_edge(i^1, j); add_edge(j^1, i);
     }
     void is_equal(int i, bool a, int j, bool b){
@@ -84,16 +94,19 @@ struct two_sat{
         g.emplace_back(); g.emplace_back();
         return n++;
     }
-    void atMostOne(const vi& v){
+    void atMostOne(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
-        int cur = v[0];
-        for(int i=1;i<v.size();i++){
-            int next = addVar();
-            add_edge(cur, v[i]^1); // yi-1 -> ~xi
-            add_edge(cur, next); // yi-1 -> yi
-            add_edge(v[i], next); // xi -> yi
-            next = cur;
+        auto [cur, a] = v[0]; cur = idx(cur, !a);
+        for(int i=2;i<v.size();i++){
+            int next = addVar();  next = idx(next, true);
+            auto [x, b] = v[i]; x = idx(x, b);
+            add_clause(cur, x^1);
+            add_clause(cur, next);
+            add_clause(x^1, next);
+            cur = next^1;
         }
+        auto [nxt, b] = v[1]; nxt = idx(nxt, b);
+        add_clause(cur, nxt ^ 1);
     }
     bool satisfiable() {
         scc_graph scc(g);
