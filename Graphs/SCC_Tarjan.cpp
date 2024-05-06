@@ -2,7 +2,7 @@
 Find Stronly Connected Components
 Tarjan's algorithm
 O(V+E)
-test: https://atcoder.jp/contests/practice2/submissions/53194393
+test: https://atcoder.jp/contests/practice2/submissions/53194543
 */
 struct scc_graph{
     using vi = vector<int>;
@@ -11,7 +11,8 @@ struct scc_graph{
     vi dfsn, low, stk, scc_id;
     vector<bool> in_stk;
     int time, scnt;
-    scc_graph(int _n):n(_n), g(_n), groups(_n), dfsn(_n), low(_n), scc_id(_n), in_stk(_n), time(0), scnt(0){}
+    bool called = false;
+    scc_graph(int _n):n(_n), g(_n), groups(_n), dfsn(_n), low(_n), scc_id(_n), in_stk(_n), time(0), scnt(0), called(false){}
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
@@ -37,6 +38,8 @@ struct scc_graph{
         }
     }
     vector<vi> scc(){
+        assert(!called && "This should be called once");
+        called = true;
         for(int i=0;i<n;i++)if(!dfsn[i]) dfs(i);
         groups.resize(scnt);
         vi counts(scnt);
