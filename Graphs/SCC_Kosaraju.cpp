@@ -26,7 +26,7 @@ struct scc_graph{
         if(!rev) S.push_back(v);
     }
     vector<vi> scc(){
-        assert(!called);
+        assert(!called && "This should be called once");
         called = true;
         for(int i=0;i<n;i++) if(!vis[i]) dfs(i, false);
         vis.assign(n, false);
