@@ -13,7 +13,7 @@ struct scc_graph{
     vi dfsn, low, stk, id;
     vector<bool> in_stk;
     scc_graph(int _n=0):n(_n), time(0), scnt(0), called(false), g(n), groups(n), dfsn(n), low(n), stk(0), id(n), in_stk(n){}
-    scc_graph(vector<vi>&_g){*this = scc_graph(_g.size()); g = _g;}
+    scc_graph(const vector<vi>&_g){*this = scc_graph(_g.size()); g = _g;}
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
