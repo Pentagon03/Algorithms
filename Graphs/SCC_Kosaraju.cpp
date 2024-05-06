@@ -2,7 +2,6 @@
 Find Stronly Connected Components
 Kosaraju's algorithm
 O(V+E)
-use init(n) at the very first, if needed.
 test: https://atcoder.jp/contests/practice2/submissions/53194190
 */
 struct scc_graph{
