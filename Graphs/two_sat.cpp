@@ -81,6 +81,10 @@ struct two_sat{
         add_edge(x^1, y);
         add_edge(y^1, x);
     }
+    void is_equal(int x,int y){
+        add_clause(x, y^1);
+        add_clause(x^1, y);
+    }
     // (i = a OR j = b)
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
