@@ -16,13 +16,12 @@ struct two_sat{
         assert(a < 2*n && b < 2*n && 2*n == g.size() && "graph size");
         g[a].push_back(b);
     }
-    vector<pii> stk;
     // 2x + 0: false, 2x + 1: true
     inline int idx(int i, bool a){return 2*i+a;}
     // (i = a OR j = b)
     vector<pii> stk; // optional
     void add_clause(int x,int y){
-        // stk.emplace_back(x, y); // optional
+        stk.emplace_back(x, y); // optional
         add_edge(x^1, y); add_edge(y^1, x);
     }
     void pop_clause(){
