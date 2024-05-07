@@ -9,7 +9,7 @@ struct scc_graph{
     using vi = vector<int>;
     int n, time, scnt;
     bool called;
-    vector<vi> g, groups;
+    vector<vi> g;
     vi dfsn, low, id, stk;
     vector<bool> in_stk;
     scc_graph(int _n=0):n(_n), called(false), g(n){}
@@ -50,7 +50,7 @@ struct scc_graph{
     }
     vector<vi> scc(){
         if(!called) _get_scc();
-        groups = vector<vi>(scnt);
+        vector<vi> groups(scnt);
         vi counts(scnt);
         for(int k: id) ++counts[k];
         for(int i=0;i<scnt;i++) groups[i].reserve(counts[i]);
