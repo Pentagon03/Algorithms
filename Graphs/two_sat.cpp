@@ -22,7 +22,7 @@ struct two_sat{
     }
     // (i = a OR j = b)
     void add_clause(int x,int y){
-        stk.emplace_back(x, y); // optional
+        // stk.emplace_back(x, y); // optional
         scc.add_edge(x^1, y); scc.add_edge(y^1, x);
     }
     void add_clause(int i, bool a, int j, bool b){
