@@ -2,7 +2,7 @@
 Find Stronly Connected Components
 Tarjan's algorithm
 O(V+E)
-test: https://atcoder.jp/contests/practice2/submissions/53205875
+test: https://atcoder.jp/contests/practice2/submissions/53219246
 latest version: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/SCC_Tarjan.cpp
 */
 struct scc_graph{
@@ -10,14 +10,10 @@ struct scc_graph{
     int n, time, scnt;
     bool called;
     vector<vi> g, groups;
-    vi dfsn, low, stk, id;
+    vi dfsn, low, id, stk;
     vector<bool> in_stk;
-    scc_graph(int _n=0, bool new_graph=true):n(_n), time(0), scnt(0), called(false), groups(n), dfsn(n), low(n), stk(0), id(n), in_stk(n){
-        if(new_graph) g = vector<vi>(n);
-    }
-    void add_edge(int a,int b){
-        g[a].push_back(b);
-    }
+    scc_graph(int _n=0):n(_n), called(false), g(n){}
+    void add_edge(int a,int b){ g[a].push_back(b);}
     void dfs(int x){
         dfsn[x] = low[x] = ++time;
         stk.push_back(x); in_stk[x] = true;
@@ -39,8 +35,12 @@ struct scc_graph{
             scnt++;
         }
     }
+    void reset(){called = false;}
     void _get_scc(){
         called = true;
+        dfsn = low = id = vector<int>(n); stk = vector<int>();
+        in_stk = vector<bool>(n); 
+        time = scnt = 0;
         for(int i=0;i<n;i++) if(!dfsn[i]) dfs(i);
         for(int&k: id) k = (scnt-1) - k;
     }
@@ -50,7 +50,7 @@ struct scc_graph{
     }
     vector<vi> scc(){
         if(!called) _get_scc();
-        groups.resize(scnt);
+        groups = vector<vi>(scnt);
         vi counts(scnt);
         for(int k: id) ++counts[k];
         for(int i=0;i<scnt;i++) groups[i].reserve(counts[i]);
