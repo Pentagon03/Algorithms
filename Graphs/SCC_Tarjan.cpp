@@ -7,7 +7,7 @@ latest version: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/SCC_
 */
 struct scc_graph{
     using vi = vector<int>;
-    int n, time, scnt;
+    int n, pv, scnt;
     bool called;
     vector<vi> g;
     vi dfsn, low, id, stk;
@@ -15,7 +15,7 @@ struct scc_graph{
     scc_graph(int _n=0):n(_n), called(false), g(n){}
     void add_edge(int a,int b){ g[a].push_back(b);}
     void dfs(int x){
-        dfsn[x] = low[x] = ++time;
+        dfsn[x] = low[x] = ++pv;
         stk.push_back(x); in_stk[x] = true;
         for(int nx:g[x]){
             if(!dfsn[nx]){
@@ -40,7 +40,7 @@ struct scc_graph{
         called = true;
         dfsn = low = id = vector<int>(n); stk = vector<int>();
         in_stk = vector<bool>(n); 
-        time = scnt = 0;
+        pv = scnt = 0;
         for(int i=0;i<n;i++) if(!dfsn[i]) dfs(i);
         for(int&k: id) k = (scnt-1) - k;
     }
