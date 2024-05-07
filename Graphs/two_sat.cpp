@@ -16,19 +16,24 @@ struct two_sat{
         assert(a < 2*n && b < 2*n && 2*n == g.size() && "graph size");
         g[a].push_back(b);
     }
+    vector<pii> stk;
     // 2x + 0: false, 2x + 1: true
     inline int idx(int i, bool a){return 2*i+a;}
     // (i = a OR j = b)
+    vector<pii> stk; // optional
     void add_clause(int x,int y){
-        assert(0 <= x && x < 2*n && "x in range");
-        assert(0 <= y && y < 2*n && "y in range");
+        // stk.emplace_back(x, y); // optional
         add_edge(x^1, y); add_edge(y^1, x);
+    }
+    void pop_clause(){
+        assert(stk.size() > 0 && "stk not empty");
+        auto[x,y] = stk.back(); stk.pop_back();
+        g[x^1].pop_back(); g[y^1].pop_back();
     }
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
         assert(0 <= j && j < n && "j in range");
-        i = idx(i, a); j = idx(j, b);
-        add_edge(i^1, j); add_edge(j^1, i);
+        add_clause(idx(i, a), idx(j, b));
     }
     void is_equal(int i, bool a, int j, bool b){
         add_clause(i, a, j, !b);
