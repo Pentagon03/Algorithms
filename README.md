@@ -6,63 +6,41 @@ These codes are for problem solving and internet-based competitions.
 # TODO
 **snippet_generator.py**
 
-~~2-sat~~
-
 Lazy Segment Tree + Segment Tree Beats
 
 Max flow, Min cut (Atcoder style)
 
-MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)
-
-FFT, NTT
-
-Djikstra
-
-Convex Hull
-
-Dnc Opt
-
-Custom Hasher
+MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)  
+FFT, NTT  
+Djikstra  
+Convex Hull  
+Dnc Opt  
+Custom Hasher  
 ## Data Structures
-Segment Tree
-
-RMQ
-
-Line Container
+Segment Tree  
+RMQ  
+Line Container  
 ## Flow
 Bipartite Matching
 ## Graph
 SCC (Kosaraju, Tarjan)
-
-BCC
-
-LCA
-
-two_sat
+BCC  (Edge distinct, Vertex Distinct)
+LCA  
+two_sat  
 ## Math
-DiscreteLogarithm_Fast
-
-ModInt, Combination
-
-Extended GCD
-
-Linear Sieve (Multiplicative Functions)
+DiscreteLogarithm_Fast(Phollig-Hellman)  
+ModInt, Combination  
+Extended GCD  
+Linear Sieve (Multiplicative Functions)  
 ## Strings
-Manacher(Palindrome)
-
-KMP(Pattern Matching)
-
-Fast LCS using bitset
+Manacher(Palindrome)  
+KMP(Pattern Matching)  
+Fast LCS using bitset  
 ## Geometry
-Geometry_All (Point, Line, Polygon)
-
+Geometry_All (Point, Line, Polygon)  
 https://codeforces.com/contest/1936/submission/249350779
-
-https://victorlecomte.com/cp-geo.pdf
-
+https://victorlecomte.com/cp-geo.pdf  
 ## Miscellaneous
-
 # References
-https://github.com/the-tourist/algo/tree/master
-
-https://github.com/kth-competitive-programming/kactl
+https://github.com/the-tourist/algo/tree/master  
+https://github.com/kth-competitive-programming/kactl  
