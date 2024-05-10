@@ -74,5 +74,5 @@ if __name__ == "__main__":
     if opts.console:
         print(output)
     else:
-        with open('combined.cpp', 'w', encoding='UTF-8') as f:
+        with open('_combined.cpp', 'w', encoding='UTF-8') as f:
             f.write(output)
