@@ -30,8 +30,8 @@ const ll linf = (ll)4e18 + 7;
 
 const int N = 7 + 1e5, mod = (int)1e9 + 7;
 
-/*
-요약: 
+/*요약
+
 */
 void _main(){
     

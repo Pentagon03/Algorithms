@@ -1,0 +1,22 @@
+/*
+put "ext_gcd and inv" here
+https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
+*/
+/*
+Chinese Remainder Theorem
+reference: https://cp-algorithms.com/algebra/chinese-remainder-theorem.html
+*/
+struct cong{ll a, m;};
+// (a, m) -> a mod m
+ll crt(const vector<cong> &cgv) {
+    // assume all mods are coprime each other
+    ll M = 1;
+    for (const auto& cg : cgv) M *= cg.m;
+    ll ans = 0;
+    for (auto [a_i, m_i]: cgv) {
+        ll M_i = M / m_i;
+        ll N_i = inv(M_i, m_i);
+        ans = (ans + a_i * M_i % M * N_i) % M;
+    }
+    return ans;
+}
