@@ -7,7 +7,6 @@ ll ext_gcd(ll a, ll b, ll& x, ll& y) {
     if(b != 0) g = ext_gcd(b, a%b, y, x), y -= a/b*x; 
     return g;
 }
-
 // return x that a * x = 1 mod m
 ll inv(ll a, ll m){
     ll x, y; 
