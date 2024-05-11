@@ -3,13 +3,14 @@ put "ext_gcd and inv" here
 https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
 */
 /*
-Chinese Remainder Theorem
+Chinese Remainder Theorem when only it's pairwise coprime
 reference: https://cp-algorithms.com/algebra/chinese-remainder-theorem.html
 */
 struct cong{ll a, m;};
 // (a, m) -> a mod m
-ll crt(const vector<cong> &cgv) {
+cong crt(const vector<cong> &cgv) {
     // assume all mods are coprime each other
+    if(cgv.size() == 1) return cgv[0];
     ll M = 1;
     for (const auto& cg : cgv) M *= cg.m;
     ll ans = 0;
@@ -18,5 +19,5 @@ ll crt(const vector<cong> &cgv) {
         ll N_i = inv(M_i, m_i);
         ans = (ans + a_i * M_i % M * N_i) % M;
     }
-    return ans;
+    return cong{ans, M};
 }
