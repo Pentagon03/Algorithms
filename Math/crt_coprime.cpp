@@ -2,6 +2,7 @@
 put "ext_gcd and inv" here
 https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
 */
+
 /*
 Chinese Remainder Theorem when only it's pairwise coprime
 reference: https://cp-algorithms.com/algebra/chinese-remainder-theorem.html

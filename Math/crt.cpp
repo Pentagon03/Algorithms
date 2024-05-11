@@ -2,6 +2,7 @@
 put extended gcd here
 https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
 */
+
 /*
 CRT that can handle every case
 reference: https://qoj.ac/submission/30536
