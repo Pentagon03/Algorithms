@@ -8,9 +8,14 @@ for maximum: k < o.k, x->m < y->m
 for doubles, change all (ll -> double), (inf -> 1/.0), (div(a,b) = a/b)
 reference: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/LineContainer.h
 */
+#define MIN_VALUE
 struct Line{
     mutable ll k, m, p;
-    bool operator<(const Line& o) const{return k!=o.k?k>o.k:m>o.m;} // chg here
+    #ifdef MIN_VALUE
+    bool operator<(const Line& o) const{return k!=o.k?k>o.k:m>o.m;}
+    #else
+    bool operator<(const Line& o) const{return k!=o.k?k<o.k:m<o.m;}
+    #endif
     bool operator<(ll x) const {return p < x;}
 };
 struct LC : multiset<Line, less<>> {
