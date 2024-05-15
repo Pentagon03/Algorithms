@@ -11,12 +11,14 @@ reference: https://github.com/kth-competitive-programming/kactl/blob/main/conten
 #define MIN_VALUE
 struct Line{
     mutable ll k, m, p;
+    // int cnt; // additional info
     #ifdef MIN_VALUE
     bool operator<(const Line& o) const{return k!=o.k?k>o.k:m>o.m;}
     #else
     bool operator<(const Line& o) const{return k!=o.k?k<o.k:m<o.m;}
     #endif
     bool operator<(ll x) const {return p < x;}
+    ll f(ll x) const{return k * x + m;}
 };
 struct LC : multiset<Line, less<>> {
     void print_it(iterator it){fprintf(stderr, "[%d] %lld %lld %lld\n",(int)distance(begin(),it), it->k, it->m, it->p);}
@@ -36,18 +38,17 @@ struct LC : multiset<Line, less<>> {
         else x->p = div(y->m - x->m, x->k - y->k);
         return x->p >= y->p;
     }
-    bool add(ll k, ll m){
-        Line t{k, m, -inf};
-        auto z = insert(t), y = z++, x = y; 
-        if(z!=end() && k == z->k) return erase(y), false;
+    bool add(const Line &t){
+        auto y = insert(t), z = next(y), x = y; 
+        if(z!=end() && y->k == z->k) return erase(y), false;
         while(apply(y, z)) z = erase(z);
         if(x != begin() && apply(--x, y)) return apply(x, y = erase(y)), false;
         while((y=x) != begin() && (--x)->p >= y->p) apply(x, erase(y));
         return true;
     }
-    ll qry(ll x){
+    Line qry(ll x){
         assert(!empty());
         auto l = lower_bound(x); assert(l != end());
-        return l->k * x + l->m;
+        return *l;
     }
 };
