@@ -29,7 +29,7 @@ struct LC : multiset<Line, less<>> {
     }
     static const ll inf = numeric_limits<ll>::max();
     inline ll div(ll a, ll b){ // floored division
-        return a / b - ((a ^ b) < 0 && a % b);
+        return a / b - (a % b < 0);
     }
     bool apply(iterator x, iterator y){
         assert(x != end() && next(x) == y);
