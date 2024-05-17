@@ -1,6 +1,6 @@
 // return g, assigns x, y that a * x + b * y = g
 ll ext_gcd(ll a, ll b, ll& x, ll& y) {
-    assert(a>=0 && b>=0); // it actually works when a<0 or b<0
+    // assert(a>=0 && b>=0); // it actually works when a<0 or b<0
     ll g = a;
     x = 1; y = 0;
     // note that x and y are swapped
