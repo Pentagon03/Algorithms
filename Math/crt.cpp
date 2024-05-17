@@ -10,8 +10,7 @@ reference: https://qoj.ac/submission/30536
 struct cong{ll a, m;};
 cong crt_merge(const cong &c1, const cong &c2){
     auto[xa, xm] = c1; auto[ya, ym] = c2;
-    ll x, y;
-    auto g = ext_gcd(xm, ym, x, y);
+    auto [g,x,y] = ext_gcd(xm, ym);
     // xm * x + ym * y = g;
     if((ya-xa) % g != 0) return cong{-1,0};
     ll ga = (ya-xa)/g;
