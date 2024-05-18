@@ -1,5 +1,6 @@
 /*
 Fast Discrete Logarithm using Phollig-hellman
+https://github.com/Pentagon03/Algorithms/blob/master/Math/DiscreteLogarithm_Fast.cpp
 find dlog s.t pow(base, dlog) mod p == val
 use dlog(base, val, p) for prime p
 use phollig_hellman(base, val, m) for every modulo m (possibly not prime)
@@ -83,6 +84,7 @@ namespace DiscreteLog{
         base %= p; val %= p;
         if(val == 1) return 0;
         if(base == val) return 1;
+        if(base == 0) return -1;
         // const int B = sqrt(get_order(base,p)) + 1;
         if(ord == -1) ord = get_order(base, p);
         const int B = sqrt(ord) + 2;
@@ -123,7 +125,8 @@ namespace DiscreteLog{
     }
     
     int pohlig_hellman(int base,int val,int p){
-        base %= p; val %= p;
+        if((base %= p) < 0) base += p;
+        if((val %= p) < 0) val += p;
         if(val == 1) return 0;
         if(base == val) return 1;
         if(base == 0) return -1;
