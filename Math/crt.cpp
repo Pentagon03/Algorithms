@@ -7,7 +7,8 @@ https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
 CRT that can handle every case
 reference: https://qoj.ac/submission/30536
 */
-struct cong{ll a, m;};
+// using lll = __int128_t;
+struct cong{ll a, m;}; // a mod m
 cong crt_merge(const cong &c1, const cong &c2){
     auto[xa, xm] = c1; auto[ya, ym] = c2;
     auto [g,x,y] = ext_gcd(xm, ym);

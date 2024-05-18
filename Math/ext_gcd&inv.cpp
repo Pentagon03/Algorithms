@@ -29,7 +29,7 @@ bool do_smth(ll a, ll b, ll s){
     assert(a!=0 && b!=0 && "a and b should be non-zero");
     lll t1 = x / b, t2 = y / a;
     x -= b * t1; y += a * t1;
-    for(ll i = -t1; i<=t2; x += b, y -= a, i++){
+    for(ll i=-t1;i<=t2; x += b, y -= a, i++){
         if(x>=0 && y>=0){
             // do smth
         }
