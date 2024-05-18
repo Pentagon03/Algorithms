@@ -6,9 +6,9 @@ returns {g, x, y} that a * x + b * y = g = gcd(a,b)
 struct tll{ll g, x, y;};
 tll ext_gcd(ll a, ll b) {
     // assert(a>=0 && b>=0); // it actually works when a<0 or b<0
-    if(!b) return tll{1, 0, a};
+    if(!b) return tll{a, 1, 0};
     auto[g,x,y] = ext_gcd(b, a%b);
-    return tll{y, x-a/b*y, g};
+    return tll{g, y, x-a/b*y};
 }
 
 // ADDITIONAL //
@@ -26,13 +26,12 @@ bool do_smth(ll a, ll b, ll s){
     if(s % g != 0) return false;
     a /= g; b /= g; s /= g;
     x *= s; y *= s;
-    assert(a!=0 && b!=0 && "a and b should be non-zero");
     lll t1 = x / b, t2 = y / a;
     x -= b * t1; y += a * t1;
-    for(ll i=-t1;i<=t2; x += b, y -= a, i++){
+    for(ll i = -t1; i<=t2; x += b, y -= a, i++){
         if(x>=0 && y>=0){
             // do smth
         }
     }
-    return true
+    return true;
 }

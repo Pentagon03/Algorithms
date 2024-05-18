@@ -1,12 +1,10 @@
 /*
-put extended gcd here
-https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
-*/
-
-/*
 CRT that can handle every case
 reference: https://qoj.ac/submission/30536
 */
+
+// PUT EXT_GCD HERE: https://github.com/Pentagon03/Algorithms/blob/master/Math/ext_gcd%26inv.cpp
+
 // using lll = __int128_t;
 struct cong{ll a, m;}; // a mod m
 cong crt_merge(const cong &c1, const cong &c2){
