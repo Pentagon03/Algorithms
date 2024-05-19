@@ -12,6 +12,7 @@ struct BIT{
         for(p+=2;p<=n;p+=p&-p) op(t[p], v);
     }
     T qry(int p){
+        assert(p+2 <= n);
         T res = 0;
         for(p+=2;p>0;p-=p&-p) op(res, t[p]);
         return res;
