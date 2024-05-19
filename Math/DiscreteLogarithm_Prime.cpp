@@ -1,9 +1,7 @@
 /*
-Fast Discrete Logarithm using Phollig-hellman
-https://github.com/Pentagon03/Algorithms/blob/master/Math/DiscreteLogarithm_Fast.cpp
+Fast Discrete Logarithm for Prime mods using Phollig-hellman
+use phollig_hellman(base, val, p) for prime p
 find dlog s.t pow(base, dlog) mod p == val
-use dlog(base, val, p) for prime p
-use phollig_hellman(base, val, m) for every modulo m (possibly not prime)
 Reference: https://rkm0959.tistory.com/187
 */
 namespace DiscreteLog{
@@ -14,7 +12,7 @@ namespace DiscreteLog{
     }
     
     inline int powmod(int x,int n,int mod=inf){
-        int ans=1;
+        int ans=1
         for(;n;n>>=1){
             if(n&1) ans=1LL*ans*x%mod;
             x=1LL*x*x%mod;
@@ -36,8 +34,8 @@ namespace DiscreteLog{
         return div;
     }
     
-    int get_order(int g,int p){
-        if(gcd(g,p) != 1) return -1;
+    int get_order_prime(int g,int p){ 
+        assert(gcd(g, p) == 1);
         if(g==1) return 1;
         int pm = p-1;
         vector<pii> div = get_divisor(pm);
@@ -50,7 +48,7 @@ namespace DiscreteLog{
     }
     
     bool is_primitive(int g, int p){
-        // return get_order(g,p) == p-1;
+        // return get_order_prime(g,p) == p-1;
         int pm = p-1;
         vector<pii> div = get_divisor(pm);
         for(auto[pi,cnt]:div)
@@ -85,8 +83,8 @@ namespace DiscreteLog{
         if(val == 1) return 0;
         if(base == val) return 1;
         if(base == 0) return -1;
-        // const int B = sqrt(get_order(base,p)) + 1;
-        if(ord == -1) ord = get_order(base, p);
+        // const int B = sqrt(get_order_prime(base,p)) + 1;
+        if(ord == -1) ord = get_order_prime(base, p);
         const int B = sqrt(ord) + 2;
         vector<pii> s;
         int x = 1;
@@ -131,7 +129,7 @@ namespace DiscreteLog{
         if(base == val) return 1;
         if(base == 0) return -1;
         vector<pii> div;
-        int pm = get_order(base, p);
+        int pm = get_order_prime(base, p);
         div = get_divisor(pm);
         int ans = 0, m = 1;
         for(auto[pi, ei]: div){
