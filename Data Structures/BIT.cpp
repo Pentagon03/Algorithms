@@ -12,7 +12,7 @@ struct BIT{
     }
     T qry(int p){
         T res = 0;
-        for(p+=1;p>0;p-=p&-p) op(res, t[p]);
+        for(p+=3;p>0;p-=p&-p) op(res, t[p]);
         return res;
     }
 };
