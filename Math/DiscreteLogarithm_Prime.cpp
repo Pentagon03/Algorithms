@@ -12,7 +12,7 @@ namespace DiscreteLog{
     }
     
     inline int powmod(int x,int n,int mod=inf){
-        int ans=1
+        int ans=1;
         for(;n;n>>=1){
             if(n&1) ans=1LL*ans*x%mod;
             x=1LL*x*x%mod;
