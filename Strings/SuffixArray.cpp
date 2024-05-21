@@ -1,9 +1,12 @@
 /*
 Suffix array and LCP construction
-reference: https://cp-algorithms.com/string/suffix-array.html
+SA: suffix들을 사전 순으로 정렬해놓은 배열
+LCP: Longest Common Prefix의 길이, 다만 인접한 것들만 봄
+이제 LCP(i) Suffix array에서 i번째와 i+1번째 최대 긴 Prefix의 길이.
 string s; cin>>s;
 auto sfa = suffix_array_construction(s);
 auto lcp = lcp_construction(s, sfa);
+reference: https://cp-algorithms.com/string/suffix-array.html
 */
 vector<int> sort_cyclic_shifts(string const& s) {
     int n = s.size();
@@ -45,7 +48,7 @@ vector<int> sort_cyclic_shifts(string const& s) {
                 ++classes;
             cn[p[i]] = classes - 1;
         }
-        if(cn[p[n-1]] == n-1) break;
+        if(cn[p[n-1]] == n-1) break; // we found every distinct suffixes
         c.swap(cn);
     }
     return p;
@@ -66,7 +69,7 @@ vector<int> lcp_construction(string const& s, vector<int> const& p) {
         rank[p[i]] = i;
 
     int k = 0;
-    vector<int> lcp(n-1, 0);
+    vector<int> lcp(n, 0); // segfault issue
     for (int i = 0; i < n; i++) {
         if (rank[i] == n - 1) {
             k = 0;
