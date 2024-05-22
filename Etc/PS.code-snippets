@@ -1,11 +1,11 @@
 {
-	"C++ solve": {
+	"solve": {
 		"prefix": "solve",
 		"scope": "cpp",
 		"body": [
 		  "#define LLHACK",
 		  "/*Solution",
-		  "https://acmicpc.net/problem/${TM_FILENAME_BASE}",
+		  "https://acmicpc.net/problem/Template",
 		  "1. 문제부터 정확히 읽는다.",
 		  "2. 안 풀리면 naive 풀이 짜고 관찰한다.",
 		  "3. 구현 틀렸으면 stress test 짠다.",
@@ -14,6 +14,7 @@
 		  "#pragma GCC optimize(\"Ofast,unroll-loops\")",
 		  "#include\"bits/stdc++.h\"",
 		  "using namespace std;",
+		  "int cur_tc;",
 		  "#define nl '\\n'",
 		  "#define sp ' '",
 		  "#define dbg(i) cerr<<#i<<sp<<i<<endl",
@@ -25,7 +26,10 @@
 		  "#define int ll",
 		  "#endif",
 		  "using pii = pair<int,int>;",
-		  "int cur_tc;",
+		  "// __builtin_clzll(x), __builtin_ctzll(x), __builtin_popcountll(x)",
+		  "int lsb(int x){return __builtin_clz(x);}",
+		  "int msb(int x){return 31 - __builtin_ctz(x);}",
+		  "int popcnt(int x){return __builtin_popcount(x);}",
 		  "std::mt19937_64 gen(time(NULL));",
 		  "ll randint(ll l, ll r) { std::uniform_int_distribution<ll> dist(l, r); return dist(gen);}",
 		  "template<class T1,class T2>bool updmax(T1&l,T2 r){return (l<r?(l=r),true: false);}",
@@ -34,9 +38,8 @@
 		  "const ll linf = (ll)4e18 + 7;",
 		  "",
 		  "const int N = 7 + 1e5, mod = (int)1e9 + 7;",
-		  "",
 		  "/*요약",
-		  "$0",
+		  "",
 		  "*/",
 		  "void _main(){",
 		  "    ",
@@ -51,7 +54,7 @@
 		  "    return 0;",
 		  "}"
 		],
-		"description": "C++ main"
+		"description": "solve"
 	},
 	"C++ vectorization (ofast)": {
 	  "prefix": "ofast",

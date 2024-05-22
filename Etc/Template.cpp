@@ -9,6 +9,7 @@ https://acmicpc.net/problem/Template
 #pragma GCC optimize("Ofast,unroll-loops")
 #include"bits/stdc++.h"
 using namespace std;
+int cur_tc;
 #define nl '\n'
 #define sp ' '
 #define dbg(i) cerr<<#i<<sp<<i<<endl
@@ -20,7 +21,10 @@ using ll = long long;
 #define int ll
 #endif
 using pii = pair<int,int>;
-int cur_tc;
+// __builtin_clzll(x), __builtin_ctzll(x), __builtin_popcountll(x)
+int lsb(int x){return __builtin_clz(x);}
+int msb(int x){return 31 - __builtin_ctz(x);}
+int popcnt(int x){return __builtin_popcount(x);}
 std::mt19937_64 gen(time(NULL));
 ll randint(ll l, ll r) { std::uniform_int_distribution<ll> dist(l, r); return dist(gen);}
 template<class T1,class T2>bool updmax(T1&l,T2 r){return (l<r?(l=r),true: false);}
@@ -29,7 +33,6 @@ const int inf = (int)1e9 + 7;
 const ll linf = (ll)4e18 + 7;
 
 const int N = 7 + 1e5, mod = (int)1e9 + 7;
-
 /*요약
 
 */

@@ -3,6 +3,8 @@ Suffix array and LCP construction
 SA: suffix들을 사전 순으로 정렬해놓은 배열
 LCP: Longest Common Prefix의 길이, 다만 인접한 것들만 봄
 이제 LCP(i) Suffix array에서 i번째와 i+1번째 최대 긴 Prefix의 길이.
+AWARE: string shouldn't character same as additional char for cyclic shift. -> char(1) in our case
+if you want to make longer ones to latter, make it char(255) rather than char(1) and erase prev(end()) rather than begin() (think of it..)
 string s; cin>>s;
 auto sfa = suffix_array_construction(s);
 auto lcp = lcp_construction(s, sfa);
@@ -55,7 +57,7 @@ vector<int> sort_cyclic_shifts(string const& s) {
 }
 
 vector<int> suffix_array_construction(string s) {
-    s += "$";
+    s += char(1);
     vector<int> sorted_shifts = sort_cyclic_shifts(s);
     sorted_shifts.erase(sorted_shifts.begin());
     return sorted_shifts;
@@ -82,4 +84,8 @@ vector<int> lcp_construction(string const& s, vector<int> const& p) {
         if (k) k--;
     }
     return lcp;
+}
+
+vector<int> lcp_construction(string const& s){
+    return lcp_construction(s, suffix_array_construction(s));
 }
