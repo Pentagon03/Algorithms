@@ -8,6 +8,9 @@ if you want to make longer ones to latter, make it char(255) rather than char(1)
 string s; cin>>s;
 auto sfa = suffix_array_construction(s);
 auto lcp = lcp_construction(s, sfa);
+sfa[i]: ith lexicographically small suffix
+lcp[i]: longest common prefix between sfa[i-1] and sfa[i]
+(lcp[0] == 0)
 reference: https://cp-algorithms.com/string/suffix-array.html
 */
 vector<int> sort_cyclic_shifts(string const& s) {
@@ -80,7 +83,7 @@ vector<int> lcp_construction(string const& s, vector<int> const& p) {
         int j = p[rank[i] + 1];
         while (i + k < n && j + k < n && s[i+k] == s[j+k])
             k++;
-        lcp[rank[i]] = k;
+        lcp[rank[i] + 1] = k;
         if (k) k--;
     }
     return lcp;
