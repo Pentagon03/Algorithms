@@ -54,7 +54,7 @@
 		  "    for(cur_tc=1;cur_tc<=tc;++cur_tc) _main();",
 		  "    return 0;",
 		  "}",
-		  "https://github.com/Pentagon03/Algorithms",
+		  "// https://github.com/Pentagon03/Algorithms",
 		],
 		"description": "solve"
 	},

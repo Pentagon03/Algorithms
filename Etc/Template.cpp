@@ -1,6 +1,6 @@
 #define LLHACK
 /*Solution
-https://acmicpc.net/problem/Template
+Problem: Template
 1. 문제부터 정확히 읽는다.
 2. 안 풀리면 naive 풀이 짜고 관찰한다.
 3. 구현 틀렸으면 stress test 짠다.
@@ -49,3 +49,4 @@ signed main(){
     for(cur_tc=1;cur_tc<=tc;++cur_tc) _main();
     return 0;
 }
+// https://github.com/Pentagon03/Algorithms
