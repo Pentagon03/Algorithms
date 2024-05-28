@@ -2,8 +2,8 @@
 /*Solution
 Problem: Template
 1. 문제부터 정확히 읽는다.
-2. 안 풀리면 naive 풀이 짜고 관찰한다.
-3. 구현 틀렸으면 stress test 짠다.
+2. 문제의 본질을 관찰해라. 수단과 방법을 가리지 말고.
+3. 잘 안되면 세수라도 하고 오거나 stress test를 짠다.
 화이팅
 */
 #pragma GCC optimize("Ofast,unroll-loops")
@@ -33,7 +33,7 @@ const int inf = (int)1e9 + 7;
 const ll linf = (ll)4e18 + 7;
 
 const int N = 7 + 1e5, mod = (int)1e9 + 7;
-/*요약
+/*요약: 문제의 본질을 본다
 
 */
 void _main(){
