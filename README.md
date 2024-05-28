@@ -5,14 +5,14 @@ These codes are for problem solving and internet-based competitions.
 
 # TODO
 **snippet_generator.py**  
-Custom Hasher
-Max flow, Min cut (Atcoder style)
+Custom Hasher  
+Max flow, Min cut (Atcoder style)  
 MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)  
-FFT, NTT
-Half Plane Intersection
+FFT, NTT  
+Half Plane Intersection  
 Lazy Segment Tree + Segment Tree Beats  
 Dnc Opt  
-KMP
+KMP  
 Convex Hull  
 Djikstra  
 
