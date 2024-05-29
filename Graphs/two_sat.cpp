@@ -31,6 +31,7 @@ struct two_sat{
         assert(0 <= j && j < n && "j in range");
         add_clause(idx(i, a), idx(j, b));
     }
+    // ((i == a) == (j == b))
     void is_equal(int i, bool a, int j, bool b){
         add_clause(i, a, j, !b);
         add_clause(i, !a, j, b);
