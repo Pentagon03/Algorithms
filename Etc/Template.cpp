@@ -32,10 +32,11 @@ template<class T1,class T2>bool updmin(T1&l,T2 r){return (l>r?(l=r),true: false)
 const int inf = (int)1e9 + 7;
 const ll linf = (ll)4e18 + 7;
 
-const int N = 7 + 1e5, mod = (int)1e9 + 7;
 /*요약: 문제의 본질을 본다
 
 */
+const int N = 7 + 1e5, mod = (int)1e9 + 7;
+
 void _main(){
     
 }
