@@ -5,8 +5,12 @@ These codes are for problem solving and internet-based competitions.
 
 # TODO
 **snippet_generator.py**  
-Custom Hasher  
-Max flow, Min cut (Atcoder style)  
+**debug.h**  
+Segment Tree Lazy Propagation  
+Segment Tree Beats  
+Custom Hasher(Rabin Karp)  
+Max Flow, Min Cut (Atcoder style)  
+Min Cost Flow (Atcoder Style)
 MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)  
 FFT, NTT  
 Half Plane Intersection  

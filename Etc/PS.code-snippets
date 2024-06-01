@@ -1,4 +1,32 @@
 {
+	"simple": {
+		"prefix": "simple",
+		"body": [
+		  "#pragma GCC optimize(\"Ofast,unroll-loops\")",
+		  "#include\"bits/stdc++.h\"",
+		  "using namespace std;",
+		  "#define nl '\\n'",
+		  "#define sp ' '",
+		  "#define dbg(i) if(!_dbg||_dbg==cur_tc)cerr<<#i<<sp<<i<<endl;",
+		  "#define dbgs(...) fprintf(stderr, __VA_ARGS__)",
+		  "#define all(v) (v).begin(),(v).end()",
+		  "#define int int64_t",
+		  "",
+		  "signed main(){",
+		  "    cin.tie(0)->sync_with_stdio(0);",
+		  "    cin.exceptions(ios::badbit | ios::failbit);",
+		  "    // cout<<fixed<<setprecision(15);",
+		  "    int tc = 1, _dbg = 0;",
+		  "    // cin >> tc;",
+		  "    auto solve_tc = [&](int cur_tc){",
+		  "        $0",
+		  "    };",
+		  "    for(int i=1;i<=tc;i++) solve_tc(i);",
+		  "    return 0;",
+		  "}"
+		],
+		"description": "main"
+	},
 	"solve": {
 		"prefix": "solve",
 		"scope": "cpp",
