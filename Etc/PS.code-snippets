@@ -1,5 +1,5 @@
 {
-	"simple": {
+	"simple c++": {
 		"prefix": "simple",
 		"body": [
 		  "#pragma GCC optimize(\"Ofast,unroll-loops\")",
@@ -7,26 +7,27 @@
 		  "using namespace std;",
 		  "#define nl '\\n'",
 		  "#define sp ' '",
-		  "#define dbg(i) if(!_dbg||_dbg==cur_tc)cerr<<#i<<sp<<i<<endl;",
-		  "#define dbgs(...) fprintf(stderr, __VA_ARGS__)",
 		  "#define all(v) (v).begin(),(v).end()",
-		  "#define int int64_t",
+		  "int _dbg, cur_tc;",
+		  "#define dbg(i) if(!_dbg||_dbg==cur_tc)cerr<<#i<<sp<<i<<endl;",
+		  "#define dbgs(...) if(!_dbg||_dbg==cur_tc)fprintf(stderr, __VA_ARGS__)",
+		  "using ll = int64_t;",
+		  "#define int ll",
 		  "",
-		  "signed main(){",
-		  "    cin.tie(0)->sync_with_stdio(0);",
-		  "    cin.exceptions(ios::badbit | ios::failbit);",
+		  "int32_t main(){",
+		  "    cin.tie(0)->sync_with_stdio(0); cin.exceptions(ios::badbit | ios::failbit);",
 		  "    // cout<<fixed<<setprecision(15);",
-		  "    int tc = 1, _dbg = 0;",
+		  "    int tc = 1;",
 		  "    // cin >> tc;",
-		  "    auto solve_tc = [&](int cur_tc){",
+		  "    auto solve_tc = [&](){",
 		  "        $0",
 		  "    };",
-		  "    for(int i=1;i<=tc;i++) solve_tc(i);",
+		  "    for(cur_tc=1;cur_tc<=tc;cur_tc++) solve_tc();",
 		  "    return 0;",
 		  "}"
 		],
-		"description": "main"
-	},
+		"description": "simple c++"
+	  },
 	"solve": {
 		"prefix": "solve",
 		"scope": "cpp",
