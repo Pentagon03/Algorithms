@@ -1,16 +1,13 @@
 /*
 Convex Hull Trick Container
-for doubles, change all (ll -> double), (div(a,b) = a/b)
 concave (max value)이면 k 오름차순 삽입 강제되어야 함.
 convex (min value)이면 k 내림차순 삽입 강제되어야 함.
-typename P: point의 자료형임.
-만약에 모든 쿼리가 ll로 들어오면 P = ll, INF = (ll)1e18 이렇게 두면 됨.
-struct Line에서 div를 floored division으로 교체해주자.
-double 쿼리가 들어오는 경우 그대로 쓰면 됨.
+typename P: point의 자료형임. 기본은 ll
+for doubles, change all (ll -> double), (div(l,r) = l/r)
 */
 // #define MIN_VALUE
-static constexpr double INF = numeric_limits<double>::max(); // change it for int
-template<typename P = double>
+static constexpr ll INF = numeric_limits<ll>::max(); // change it for int
+template<typename P = int64_t>
 struct Line{
     ll k, m; // kx + m
     // int idx; // additional info
@@ -23,14 +20,14 @@ struct Line{
     friend inline P inter(const Line&l, const Line&r){
         assert(l.k != r.k);
         auto div = [&](P l, P r)->P{
-            // return l / r - (l % r < 0); // int: floored division
-            return l / r;
+            return l / r - (l % r < 0); // int: floored division
+            // return l / r;
         };
         return div(l.m-r.m, r.k-l.k);
     }
-    template<typename T> T f(T x){return k * x + m;}
+    P f(P x){return k * x + m;}
 };
-template<typename P = double>
+template<typename P = int64_t>
 struct CHT{
     using L = Line<P>;
     vector<L> stk;
@@ -52,8 +49,10 @@ struct CHT{
     // x가 증가하는 순서로 들어올 때, amortized O(1)
     L qry(P x){
         assert(n > 0 && "n should be positive");
-        p = min(n-1,p);
-        while(p<n-1 && stk[p].p < x) p++;
+        p = min(p, n-1);
+        while(p > 0 && !(stk[p-1].p < x)) p--;
+        while(p < n-1 && stk[p].p < x) p++;
+        assert(x <= stk[p].p);
         return stk[p];
     }
     // returns idx ; x의 순서를 모름, 이분탐색, O(log N)
