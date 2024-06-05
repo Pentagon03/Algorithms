@@ -53,7 +53,7 @@ class _IN{
             T res=0; bool sign = true;
             if(c=='-') sign = false, c=read();
             else if(c == '+') c = read();
-            while(c>='0'&& c<='9'){
+            while('0'<=c && c<='9'){
                 res = (res << 3) + (res << 1); 
                 c -= '0'; res += sign ? c : -c;
                 c = read();
@@ -75,6 +75,7 @@ class _IN{
         }
         struct _tmp{void sync_with_stdio(int _){}}_t;
         _tmp* tie(int _){return &_t;}
+        void exceptions(bool b){}
 } _in;
 class _OUT{
     private:

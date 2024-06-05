@@ -1,6 +1,6 @@
 {
 	"simple c++": {
-		"prefix": "simple",
+		"prefix": "sim",
 		"body": [
 		  "#pragma GCC optimize(\"Ofast,unroll-loops\")",
 		  "#include\"bits/stdc++.h\"",
