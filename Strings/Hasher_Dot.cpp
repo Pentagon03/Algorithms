@@ -15,7 +15,9 @@ struct Hasher_Dot{
             magic[i] = uniform_int_distribution<hash_t>(0ull,~0ull)(gen);
         sz = n;
     }
-    hash_t hash(const string& s){
+    // vector, string, whatever
+    template<typename T> 
+    hash_t hash(const T& s){
         int n = s.size();
         if(n > sz) extend(n);
         hash_t h = 0;
