@@ -20,7 +20,7 @@ struct Line{
     friend inline P inter(const Line&l, const Line&r){
         assert(l.k != r.k);
         auto div = [&](P l, P r)->P{
-            return l / r - (l % r < 0); // int: floored division
+            return l / r - ((l^r) < 0 && l % r); // int: floored division
             // return l / r;
         };
         return div(l.m-r.m, r.k-l.k);
