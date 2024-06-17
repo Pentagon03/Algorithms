@@ -5,7 +5,7 @@ These codes are for problem solving and internet-based competitions.
 
 # TODO
 **snippet_generator.py**  
-**debug.h**  
+Union Find
 Segment Tree Lazy Propagation  
 Segment Tree Beats  
 Custom Hasher(Rabin Karp)  
@@ -13,13 +13,13 @@ Max Flow, Min Cut (Atcoder style)
 Min Cost Flow (Atcoder Style)
 MCMF (Atcoder style + that passes https://www.acmicpc.net/problem/14424)  
 FFT, NTT  
-Half Plane Intersection  
-Lazy Segment Tree + Segment Tree Beats  
+Half Plane Intersection
 Dnc Opt  
 KMP  
 Convex Hull  
 Djikstra  
-
+# Good
+debug.h  
 ## Data Structures
 Segment Tree  
 RMQ  
