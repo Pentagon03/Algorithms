@@ -11,7 +11,7 @@
 using namespace std;
 using ll = int64_t; int cur_tc;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
-#define all(v) (v).begin(),(v).end()
+#define ALL(v) (v).begin(),(v).end()
 #define INIT(v, x) memset(v, x, sizeof v)
 #define nl '\n'
 #define sp ' '
