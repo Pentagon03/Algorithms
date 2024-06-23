@@ -5,7 +5,7 @@ set your operation function op
 template<typename T = int>
 struct BIT{
     int n; vector<T> t;
-    BIT(int _n=0):n(_n+4),t(_n+5){}
+    BIT(int _n=0):n(_n+4),t(n+1){}
     void op(T &l,T r){l += r;}
     void upd(int p,T v){
         assert(p+2 <= n);
