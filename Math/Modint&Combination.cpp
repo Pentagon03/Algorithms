@@ -12,7 +12,7 @@ constexpr T power(T a, ll b) {
     }
     return res;
 }
- 
+
 template<int P>
 struct modint {
     int x;
@@ -86,7 +86,7 @@ struct modint {
         return lhs.val() != rhs.val();
     }
 };
- 
+
 template<int P,unsigned long long UP = (1ULL<<63)-1>
 struct comb {
     using Z = modint<P>;
