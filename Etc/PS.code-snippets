@@ -26,7 +26,7 @@
 		"",
 		"",
 		"int32_t main(){",
-			
+		"    cin.tie(0)->sync_with_stdio(0); cin.exceptions(ios::badbit | ios::failbit);",
 		"    // cout<<fixed<<setprecision(15);",
 		"    int tc = 1;",
 		"    cin >> tc;",
