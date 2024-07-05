@@ -5,7 +5,8 @@
 		"body": [
 		"#include\"bits/stdc++.h\"",
 		"// put headers before define",
-		"#ifndef ONLINE_JUDGE",
+		"// g++ -std=c++20 -D LOCAL",
+		"#ifdef LOCAL",
 		"#define Pentagon03",
 		"#include<Pentagon03/debug.h>",
 		"#else",
