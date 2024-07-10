@@ -1,5 +1,21 @@
+/*
+// shorter benq version
+template<typename T, typename = void> struct is_iterable : false_type {};
+template<typename T> struct is_iterable<T, void_t<decltype(begin(declval<T>())),decltype(end(declval<T>()))>> : true_type {};
+template<typename T> typename enable_if<is_iterable<T>::value&&!is_same<T, string>::value,ostream&>::type operator<<(ostream &cout, T const &v);
+template<typename A, typename B> ostream& operator<<(ostream &cout, pair<A, B> const &p) { return cout << "(" << p.f << ", " << p.s << ")"; }
+template<typename T> typename enable_if<is_iterable<T>::value&&!is_same<T, string>::value,ostream&>::type operator<<(ostream &cout, T const &v) {
+    cout << "["; 
+    for (auto it = v.begin(); it != v.end();) {
+        cout << *it;
+        if (++it != v.end()) cout << ", ";
+    }
+    return cout << "]";
+}
+*/
 // Source = https://codeforces.com/blog/entry/125435
 #ifndef DEBUG_TEMPLATE_CPP
+
 #define DEBUG_TEMPLATE_CPP
 #include <bits/stdc++.h>
 // #define cerr cout
@@ -107,6 +123,7 @@ namespace __DEBUG_UTIL__
     }
 
 }
+
 #ifndef ONLINE_JUDGE
 #define debug(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printer(#__VA_ARGS__, __VA_ARGS__)
 #define debugArr(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printerArr(#__VA_ARGS__, __VA_ARGS__)
@@ -114,10 +131,13 @@ namespace __DEBUG_UTIL__
 #define debug(...)
 #define debugArr(...)
 #endif
+
 #ifdef Pentagon03
 #define dbg(...) std::cerr<<"tc"<<cur_tc<<" > "; debug(__VA_ARGS__)
 #define dbgArr(...) std::cerr<<"tc"<<cur_tc<<" > "; debugArr(__VA_ARGS__)
 #else
-#define dbg(...) cerr<<"123";
+#define dbg(...) debug(__VA_ARGS__)
+#define dbgArr(...) debugArr(__VA_ARGS__)
 #endif
+
 #endif
