@@ -132,7 +132,7 @@ namespace __DEBUG_UTIL__
 #define debugArr(...)
 #endif
 
-#ifdef Pentagon03
+#ifdef LOCAL
 #define dbg(...) std::cerr<<"tc"<<cur_tc<<" > "; debug(__VA_ARGS__)
 #define dbgArr(...) std::cerr<<"tc"<<cur_tc<<" > "; debugArr(__VA_ARGS__)
 #else
