@@ -2,6 +2,7 @@
 // put headers before define
 // g++ -std=c++20 -D LOCAL
 #ifdef LOCAL
+#define Pentagon03
 #include<Pentagon03/debug.h>
 #else
 #define dbg(...) 

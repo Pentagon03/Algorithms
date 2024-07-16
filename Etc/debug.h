@@ -124,7 +124,7 @@ namespace __DEBUG_UTIL__
 
 }
 
-#ifndef ONLINE_JUDGE
+#ifdef LOCAL
 #define debug(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printer(#__VA_ARGS__, __VA_ARGS__)
 #define debugArr(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printerArr(#__VA_ARGS__, __VA_ARGS__)
 #else
@@ -132,7 +132,7 @@ namespace __DEBUG_UTIL__
 #define debugArr(...)
 #endif
 
-#ifdef LOCAL
+#ifdef Pentagon03
 #define dbg(...) std::cerr<<"tc"<<cur_tc<<" > "; debug(__VA_ARGS__)
 #define dbgArr(...) std::cerr<<"tc"<<cur_tc<<" > "; debugArr(__VA_ARGS__)
 #else
