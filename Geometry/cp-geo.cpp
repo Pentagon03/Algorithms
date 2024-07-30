@@ -1,31 +1,31 @@
 // from: https://codeforces.com/contest/1936/submission/249350779
-namespace geometry { 
-    // https://victorlecomte.com/cp-geo.pdf
-    const double inf = 1e100;
-    const double eps = 1e-9;
-    const double PI = acos((double) -1.0);
-    int sign(double x) { return (x > eps) - (x < -eps); }
+namespace geometry { // https://victorlecomte.com/cp-geo.pdf
+    using ld = double;
+    const ld inf = 1e100;
+    const ld eps = 1e-9;
+    const ld PI = acos((ld) -1.0);
+    int sign(ld x) { return (x > eps) - (x < -eps); }
     // # POINT START
     struct PT {
-        double x, y;
+        ld x, y;
         PT() { x = 0, y = 0; }
-        PT(double x, double y) : x(x), y(y) {}
+        PT(ld x, ld y) : x(x), y(y) {}
         PT(const PT &p) : x(p.x), y(p.y) {}
         PT operator+(const PT &a) const { return PT(x + a.x, y + a.y); }
         PT operator-(const PT &a) const { return PT(x - a.x, y - a.y); }
-        PT operator*(const double a) const { return PT(x * a, y * a); }
-        friend PT operator*(const double &a, const PT &b) { return PT(a * b.x, a * b.y); }
-        PT operator/(const double a) const { return PT(x / a, y / a); }
+        PT operator*(const ld a) const { return PT(x * a, y * a); }
+        friend PT operator*(const ld &a, const PT &b) { return PT(a * b.x, a * b.y); }
+        PT operator/(const ld a) const { return PT(x / a, y / a); }
         bool operator==(PT a) const { return sign(a.x - x) == 0 && sign(a.y - y) == 0; }
         bool operator!=(PT a) const { return !(*this == a); }
         bool operator<(PT a) const { return sign(a.x - x) == 0 ? y < a.y : x < a.x; }
         bool operator>(PT a) const { return sign(a.x - x) == 0 ? y > a.y : x > a.x; }
-        double norm() { return sqrt(x * x + y * y); }
-        double norm2() { return x * x + y * y; }
+        ld norm() { return sqrt(x * x + y * y); }
+        ld norm2() { return x * x + y * y; }
         PT perp() { return PT(-y, x); }
-        double arg() { return atan2(y, x); }
-        PT truncate(double r) { // returns a vector with norm r and having same direction
-            double k = norm();
+        ld arg() { return atan2(y, x); }
+        PT truncate(ld r) { // returns a vector with norm r and having same direction
+            ld k = norm();
             if (!sign(k)) return *this;
             r /= k;
             return PT(x * r, y * r);
@@ -33,27 +33,27 @@ namespace geometry {
     };
     istream &operator>>(istream &in, PT &p) { return in >> p.x >> p.y; }
     ostream &operator<<(ostream &out, PT &p) { return out << "(" << p.x << "," << p.y << ")"; }
-    inline double dot(PT a, PT b) { return a.x * b.x + a.y * b.y; }
-    inline double dist2(PT a, PT b) { return dot(a - b, a - b); }
-    inline double dist(PT a, PT b) { return sqrt(dot(a - b, a - b)); }
-    inline double cross(PT a, PT b) { return a.x * b.y - a.y * b.x; }
-    inline double cross2(PT a, PT b, PT c) { return cross(b - a, c - a); }
+    inline ld dot(PT a, PT b) { return a.x * b.x + a.y * b.y; }
+    inline ld dist2(PT a, PT b) { return dot(a - b, a - b); }
+    inline ld dist(PT a, PT b) { return sqrt(dot(a - b, a - b)); }
+    inline ld cross(PT a, PT b) { return a.x * b.y - a.y * b.x; }
+    inline ld cross2(PT a, PT b, PT c) { return cross(b - a, c - a); }
     inline int orientation(PT a, PT b, PT c) { return sign(cross(b - a, c - a)); }
     PT perp(PT a) { return PT(-a.y, a.x); }
     PT rotateccw90(PT a) { return PT(-a.y, a.x); }
     PT rotatecw90(PT a) { return PT(a.y, -a.x); }
-    PT rotateccw(PT a, double t) { return PT(a.x * cos(t) - a.y * sin(t), a.x * sin(t) + a.y * cos(t)); }
-    PT rotatecw(PT a, double t) { return PT(a.x * cos(t) + a.y * sin(t), -a.x * sin(t) + a.y * cos(t)); }
-    double SQ(double x) { return x * x; }
-    double rad_to_deg(double r) { return (r * 180.0 / PI); }
-    double deg_to_rad(double d) { return (d * PI / 180.0); }
-    void rad_normalize(double &ang) { // use division if ang is arbitrally big or small
+    PT rotateccw(PT a, ld t) { return PT(a.x * cos(t) - a.y * sin(t), a.x * sin(t) + a.y * cos(t)); }
+    PT rotatecw(PT a, ld t) { return PT(a.x * cos(t) + a.y * sin(t), -a.x * sin(t) + a.y * cos(t)); }
+    ld SQ(ld x) { return x * x; }
+    ld rad_to_deg(ld r) { return (r * 180.0 / PI); }
+    ld deg_to_rad(ld d) { return (d * PI / 180.0); }
+    void rad_normalize(ld &ang) { // use division if ang is arbitrally big or small
         while (ang < 0) ang += PI * 2;
         while (ang > 2 * PI) ang -= PI * 2;
     }
-    double get_angle(PT a, PT b) {
-        double costheta = dot(a, b) / a.norm() / b.norm();
-        return acos(max((double) -1.0, min((double) 1.0, costheta)));
+    ld get_angle(PT a, PT b) {
+        ld costheta = dot(a, b) / a.norm() / b.norm();
+        return acos(max((ld) -1.0, min((ld) 1.0, costheta)));
     }
     bool is_point_in_angle(PT b, PT a, PT c, PT p) { // does point p lie in angle <bac
         assert(orientation(a, b, c) != 0);
@@ -79,18 +79,18 @@ namespace geometry {
     struct line {
         PT a, b; // goes through points a and b
         PT v;
-        double c;  //line form: direction vec [cross] (x, y) = c
+        ld c;  //line form: direction vec [cross] (x, y) = c
         line() {}
  
         //direction vector v and offset c
-        line(PT v, double c) : v(v), c(c) {
+        line(PT v, ld c) : v(v), c(c) {
             auto p = get_points();
             a = p.first;
             b = p.second;
         }
  
         // equation ax + by + c = 0
-        line(double _a, double _b, double _c) : v({_b, -_a}), c(-_c) {
+        line(ld _a, ld _b, ld _c) : v({_b, -_a}), c(-_c) {
             auto p = get_points();
             a = p.first;
             b = p.second;
@@ -100,7 +100,7 @@ namespace geometry {
         line(PT p, PT q) : v(q - p), c(cross(v, p)), a(p), b(q) {}
         pair<PT, PT> get_points() { //extract any two points from this line
             PT p, q;
-            double a = -v.y, b = v.x; // ax + by = c
+            ld a = -v.y, b = v.x; // ax + by = c
             if (sign(a) == 0) {
                 p = PT(0, c / b);
                 q = PT(1, c / b);
@@ -115,8 +115,8 @@ namespace geometry {
         }
  
         // ax + by + c = 0
-        array<double, 3> get_abc() {
-            double a = -v.y, b = v.x;
+        array<ld, 3> get_abc() {
+            ld a = -v.y, b = v.x;
             return {a, b, -c};
         }
  
@@ -133,14 +133,14 @@ namespace geometry {
         // a projection point comes before another if it comes first according to vector v
         bool cmp_by_projection(PT p, PT q) { return dot(v, p) < dot(v, q); }
  
-        line shift_left(double d) {
+        line shift_left(ld d) {
             PT z = v.perp().truncate(d);
             return line(a + z, b + z);
         }
     };
  
     // find a point from a through b with distance d
-    PT point_along_line(PT a, PT b, double d) {
+    PT point_along_line(PT a, PT b, ld d) {
         assert(a != b);
         return a + (((b - a) / (b - a).norm()) * d);
     }
@@ -157,7 +157,7 @@ namespace geometry {
     }
  
     // minimum distance from point c to line through a and b
-    double dist_from_point_to_line(PT a, PT b, PT c) {
+    ld dist_from_point_to_line(PT a, PT b, PT c) {
         return fabs(cross(b - a, c - a) / (b - a).norm());
     }
  
@@ -173,7 +173,7 @@ namespace geometry {
  
     // minimum distance point from point c to segment ab that lies on segment ab
     PT project_from_point_to_seg(PT a, PT b, PT c) {
-        double r = dist2(a, b);
+        ld r = dist2(a, b);
         if (sign(r) == 0) return a;
         r = dot(c - a, b - a) / r;
         if (r < 0) return a;
@@ -182,13 +182,13 @@ namespace geometry {
     }
  
     // minimum distance from point c to segment ab
-    double dist_from_point_to_seg(PT a, PT b, PT c) {
+    ld dist_from_point_to_seg(PT a, PT b, PT c) {
         return dist(c, project_from_point_to_seg(a, b, c));
     }
  
     // 0 if not parallel, 1 if parallel, 2 if collinear
     int is_parallel(PT a, PT b, PT c, PT d) {
-        double k = fabs(cross(b - a, d - c));
+        ld k = fabs(cross(b - a, d - c));
         if (k < eps) {
             if (fabs(cross(a - b, a - c)) < eps && fabs(cross(c - d, c - a)) < eps) return 2;
             else return 1;
@@ -217,9 +217,9 @@ namespace geometry {
  
     // intersection point between ab and cd assuming unique intersection exists
     bool line_line_intersection(PT a, PT b, PT c, PT d, PT &ans) {
-        double a1 = a.y - b.y, b1 = b.x - a.x, c1 = cross(a, b);
-        double a2 = c.y - d.y, b2 = d.x - c.x, c2 = cross(c, d);
-        double det = a1 * b2 - a2 * b1;
+        ld a1 = a.y - b.y, b1 = b.x - a.x, c1 = cross(a, b);
+        ld a2 = c.y - d.y, b2 = d.x - c.x, c2 = cross(c, d);
+        ld det = a1 * b2 - a2 * b1;
         if (det == 0) return 0;
         ans = PT((b1 * c2 - b2 * c1) / det, (c1 * a2 - a1 * c2) / det);
         return 1;
@@ -227,8 +227,8 @@ namespace geometry {
  
     // intersection point between segment ab and segment cd assuming unique intersection exists
     bool seg_seg_intersection(PT a, PT b, PT c, PT d, PT &ans) {
-        double oa = cross2(c, d, a), ob = cross2(c, d, b);
-        double oc = cross2(a, b, c), od = cross2(a, b, d);
+        ld oa = cross2(c, d, a), ob = cross2(c, d, b);
+        ld oc = cross2(a, b, c), od = cross2(a, b, d);
         if (oa * ob < 0 && oc * od < 0) {
             ans = (a * ob - b * oa) / (ob - oa);
             return 1;
@@ -253,8 +253,8 @@ namespace geometry {
 // intersection  between segment ab and line cd
 // 0 if do not intersect, 1 if proper intersect, 2 if segment intersect
     int seg_line_relation(PT a, PT b, PT c, PT d) {
-        double p = cross2(c, d, a);
-        double q = cross2(c, d, b);
+        ld p = cross2(c, d, a);
+        ld q = cross2(c, d, b);
         if (sign(p) == 0 && sign(q) == 0) return 2;
         else if (p * q < 0) return 1;
         else return 0;
@@ -269,7 +269,7 @@ namespace geometry {
     }
  
 // minimum distance from segment ab to segment cd
-    double dist_from_seg_to_seg(PT a, PT b, PT c, PT d) {
+    ld dist_from_seg_to_seg(PT a, PT b, PT c, PT d) {
         PT dummy;
         if (seg_seg_intersection(a, b, c, d, dummy)) return 0.0;
         else
@@ -278,26 +278,26 @@ namespace geometry {
     }
  
 // minimum distance from point c to ray (starting point a and direction vector b)
-    double dist_from_point_to_ray(PT a, PT b, PT c) {
+    ld dist_from_point_to_ray(PT a, PT b, PT c) {
         b = a + b;
-        double r = dot(c - a, b - a);
+        ld r = dot(c - a, b - a);
         if (r < 0.0) return dist(c, a);
         return dist_from_point_to_line(a, b, c);
     }
  
 // starting point as and direction vector ad
     bool ray_ray_intersection(PT as, PT ad, PT bs, PT bd) {
-        double dx = bs.x - as.x, dy = bs.y - as.y;
-        double det = bd.x * ad.y - bd.y * ad.x;
+        ld dx = bs.x - as.x, dy = bs.y - as.y;
+        ld det = bd.x * ad.y - bd.y * ad.x;
         if (fabs(det) < eps) return 0;
-        double u = (dy * bd.x - dx * bd.y) / det;
-        double v = (dy * ad.x - dx * ad.y) / det;
+        ld u = (dy * bd.x - dx * bd.y) / det;
+        ld v = (dy * ad.x - dx * ad.y) / det;
         if (sign(u) >= 0 && sign(v) >= 0) return 1;
         else return 0;
     }
-    double ray_ray_distance(PT as, PT ad, PT bs, PT bd) {
+    ld ray_ray_distance(PT as, PT ad, PT bs, PT bd) {
         if (ray_ray_intersection(as, ad, bs, bd)) return 0.0;
-        double ans = dist_from_point_to_ray(as, ad, bs);
+        ld ans = dist_from_point_to_ray(as, ad, bs);
         ans = min(ans, dist_from_point_to_ray(bs, bd, as));
         return ans;
     }
@@ -305,14 +305,14 @@ namespace geometry {
     // # CIRCLE START
     struct circle {
         PT p;
-        double r;
+        ld r;
  
         circle() {}
  
-        circle(PT _p, double _r) : p(_p), r(_r) {};
+        circle(PT _p, ld _r) : p(_p), r(_r) {};
  
         // center (x, y) and radius r
-        circle(double x, double y, double _r) : p(PT(x, y)), r(_r) {};
+        circle(ld x, ld y, ld _r) : p(PT(x, y)), r(_r) {};
  
         // circumcircle of a triangle
         // the three points must be unique
@@ -327,7 +327,7 @@ namespace geometry {
         // pass a bool just to differentiate from circumcircle
         circle(PT a, PT b, PT c, bool t) {
             line u, v;
-            double m = atan2(b.y - a.y, b.x - a.x), n = atan2(c.y - a.y, c.x - a.x);
+            ld m = atan2(b.y - a.y, b.x - a.x), n = atan2(c.y - a.y, c.x - a.x);
             u.a = a;
             u.b = u.a + (PT(cos((n + m) / 2.0), sin((n + m) / 2.0)));
             v.a = b;
@@ -339,22 +339,22 @@ namespace geometry {
  
         bool operator==(circle v) { return p == v.p && sign(r - v.r) == 0; }
  
-        double area() { return PI * r * r; }
+        ld area() { return PI * r * r; }
  
-        double circumference() { return 2.0 * PI * r; }
+        ld circumference() { return 2.0 * PI * r; }
     };
  
     //0 if outside, 1 if on circumference, 2 if inside circle
-    int circle_point_relation(PT p, double r, PT b) {
-        double d = dist(p, b);
+    int circle_point_relation(PT p, ld r, PT b) {
+        ld d = dist(p, b);
         if (sign(d - r) < 0) return 2;
         if (sign(d - r) == 0) return 1;
         return 0;
     }
  
     // 0 if outside, 1 if on circumference, 2 if inside circle
-    int circle_line_relation(PT p, double r, PT a, PT b) {
-        double d = dist_from_point_to_line(a, b, p);
+    int circle_line_relation(PT p, ld r, PT a, PT b) {
+        ld d = dist_from_point_to_line(a, b, p);
         if (sign(d - r) < 0) return 2;
         if (sign(d - r) == 0) return 1;
         return 0;
@@ -362,12 +362,12 @@ namespace geometry {
  
     //compute intersection of line through points a and b with
     //circle centered at c with radius r > 0
-    vector<PT> circle_line_intersection(PT c, double r, PT a, PT b) {
+    vector<PT> circle_line_intersection(PT c, ld r, PT a, PT b) {
         vector<PT> ret;
         b = b - a;
         a = a - c;
-        double A = dot(b, b), B = dot(a, b);
-        double C = dot(a, a) - r * r, D = B * B - A * C;
+        ld A = dot(b, b), B = dot(a, b);
+        ld C = dot(a, a) - r * r, D = B * B - A * C;
         if (D < -eps) return ret;
         ret.push_back(c + a + b * (-B + sqrt(D + eps)) / A);
         if (D > eps) ret.push_back(c + a + b * (-B - sqrt(D)) / A);
@@ -379,11 +379,11 @@ namespace geometry {
     //3 - intersect in 2 points
     //2 - intersect inside in one point
     //1 - inside and do not intersect
-    int circle_circle_relation(PT a, double r, PT b, double R) {
-        double d = dist(a, b);
+    int circle_circle_relation(PT a, ld r, PT b, ld R) {
+        ld d = dist(a, b);
         if (sign(d - r - R) > 0) return 5;
         if (sign(d - r - R) == 0) return 4;
-        double l = fabs(r - R);
+        ld l = fabs(r - R);
         if (sign(d - r - R) < 0 && sign(d - l) > 0) return 3;
         if (sign(d - l) == 0) return 2;
         if (sign(d - l) < 0) return 1;
@@ -391,13 +391,13 @@ namespace geometry {
         return -1;
     }
  
-    vector<PT> circle_circle_intersection(PT a, double r, PT b, double R) {
+    vector<PT> circle_circle_intersection(PT a, ld r, PT b, ld R) {
         if (a == b && sign(r - R) == 0) return {PT(1e18, 1e18)};
         vector<PT> ret;
-        double d = sqrt(dist2(a, b));
+        ld d = sqrt(dist2(a, b));
         if (d > r + R || d + min(r, R) < max(r, R)) return ret;
-        double x = (d * d - R * R + r * r) / (2 * d);
-        double y = sqrt(r * r - x * x);
+        ld x = (d * d - R * R + r * r) / (2 * d);
+        ld y = sqrt(r * r - x * x);
         PT v = (b - a) / d;
         ret.push_back(a + v * x + rotateccw90(v) * y);
         if (y > 0) ret.push_back(a + v * x - rotateccw90(v) * y);
@@ -406,7 +406,7 @@ namespace geometry {
  
     // returns two circle c1, c2 through points a, b and of radius r
     // 0 if there is no such circle, 1 if one circle, 2 if two circle
-    int get_circle(PT a, PT b, double r, circle &c1, circle &c2) {
+    int get_circle(PT a, PT b, ld r, circle &c1, circle &c2) {
         vector<PT> v = circle_circle_intersection(a, r, b, r);
         int t = v.size();
         if (!t) return 0;
@@ -417,8 +417,8 @@ namespace geometry {
  
     // returns two circle c1, c2 which is tangent to line u,  goes through
     // point q and has radius r1; 0 for no circle, 1 if c1 = c2 , 2 if c1 != c2
-    int get_circle(line u, PT q, double r1, circle &c1, circle &c2) {
-        double d = dist_from_point_to_line(u.a, u.b, q);
+    int get_circle(line u, PT q, ld r1, circle &c1, circle &c2) {
+        ld d = dist_from_point_to_line(u.a, u.b, q);
         if (sign(d - r1 * 2.0) > 0) return 0;
         if (sign(d) == 0) {
             cout << u.v.x << ' ' << u.v.y << '\n';
@@ -449,36 +449,36 @@ namespace geometry {
     // dist(w, a) : dist(w, b) = rp : rq
     // rp != rq
     // https://en.wikipedia.org/wiki/Circles_of_Apollonius
-    circle get_apollonius_circle(PT p, PT q, double rp, double rq) {
+    circle get_apollonius_circle(PT p, PT q, ld rp, ld rq) {
         rq *= rq;
         rp *= rp;
-        double a = rq - rp;
+        ld a = rq - rp;
         assert(sign(a));
-        double g = rq * p.x - rp * q.x;
+        ld g = rq * p.x - rp * q.x;
         g /= a;
-        double h = rq * p.y - rp * q.y;
+        ld h = rq * p.y - rp * q.y;
         h /= a;
-        double c = rq * p.x * p.x - rp * q.x * q.x + rq * p.y * p.y - rp * q.y * q.y;
+        ld c = rq * p.x * p.x - rp * q.x * q.x + rq * p.y * p.y - rp * q.y * q.y;
         c /= a;
         PT o(g, h);
-        double r = g * g + h * h - c;
+        ld r = g * g + h * h - c;
         r = sqrt(r);
         return circle(o, r);
     }
  
     // returns area of intersection between two circles
-    double circle_circle_area(PT a, double r1, PT b, double r2) {
-        double d = (a - b).norm();
+    ld circle_circle_area(PT a, ld r1, PT b, ld r2) {
+        ld d = (a - b).norm();
         if (r1 + r2 < d + eps) return 0;
         if (r1 + d < r2 + eps) return PI * r1 * r1;
         if (r2 + d < r1 + eps) return PI * r2 * r2;
-        double theta_1 = acos((r1 * r1 + d * d - r2 * r2) / (2 * r1 * d)),
+        ld theta_1 = acos((r1 * r1 + d * d - r2 * r2) / (2 * r1 * d)),
                 theta_2 = acos((r2 * r2 + d * d - r1 * r1) / (2 * r2 * d));
         return r1 * r1 * (theta_1 - sin(2 * theta_1) / 2.) + r2 * r2 * (theta_2 - sin(2 * theta_2) / 2.);
     }
  
     // tangent lines from point q to the circle
-    int tangent_lines_from_point(PT p, double r, PT q, line &u, line &v) {
+    int tangent_lines_from_point(PT p, ld r, PT q, line &u, line &v) {
         int x = sign(dist2(p, q) - r * r);
         if (x < 0) return 0; // point in cricle
         if (x == 0) { // point on circle
@@ -486,9 +486,9 @@ namespace geometry {
             v = u;
             return 1;
         }
-        double d = dist(p, q);
-        double l = r * r / d;
-        double h = sqrt(r * r - l * l);
+        ld d = dist(p, q);
+        ld l = r * r / d;
+        ld h = sqrt(r * r - l * l);
         u = line(q, p + ((q - p).truncate(l) + (rotateccw90(q - p).truncate(h))));
         v = line(q, p + ((q - p).truncate(l) + (rotatecw90(q - p).truncate(h))));
         return 2;
@@ -496,10 +496,10 @@ namespace geometry {
  
     // returns outer tangents line of two circles
     // if inner == 1 it returns inner tangent lines
-    int tangents_lines_from_circle(PT c1, double r1, PT c2, double r2, bool inner, line &u, line &v) {
+    int tangents_lines_from_circle(PT c1, ld r1, PT c2, ld r2, bool inner, line &u, line &v) {
         if (inner) r2 = -r2;
         PT d = c2 - c1;
-        double dr = r1 - r2, d2 = d.norm2(), h2 = d2 - dr * dr;
+        ld dr = r1 - r2, d2 = d.norm2(), h2 = d2 - dr * dr;
         if (d2 == 0 || h2 < 0) {
             assert(h2 != 0);
             return 0;
@@ -519,16 +519,16 @@ namespace geometry {
     constexpr int MX_UNION = 2020;
     struct CircleUnion {
         int n;
-        double x[MX_UNION], y[MX_UNION], r[MX_UNION];
+        ld x[MX_UNION], y[MX_UNION], r[MX_UNION];
         int covered[MX_UNION];
-        vector<pair<double, double> > seg, cover;
-        double arc, pol;
-        inline int sign(double x) { return x < -eps ? -1 : x > eps; }
-        inline int sign(double x, double y) { return sign(x - y); }
-        inline double SQ(const double x) { return x * x; }
-        inline double dist(double x1, double y1, double x2, double y2) { return sqrt(SQ(x1 - x2) + SQ(y1 - y2)); }
-        inline double angle(double A, double B, double C) {
-            double val = (SQ(A) + SQ(B) - SQ(C)) / (2 * A * B);
+        vector<pair<ld, ld> > seg, cover;
+        ld arc, pol;
+        inline int sign(ld x) { return x < -eps ? -1 : x > eps; }
+        inline int sign(ld x, ld y) { return sign(x - y); }
+        inline ld SQ(const ld x) { return x * x; }
+        inline ld dist(ld x1, ld y1, ld x2, ld y2) { return sqrt(SQ(x1 - x2) + SQ(y1 - y2)); }
+        inline ld angle(ld A, ld B, ld C) {
+            ld val = (SQ(A) + SQ(B) - SQ(C)) / (2 * A * B);
             if (val < -1) val = -1;
             if (val > +1) val = +1;
             return acos(val);
@@ -543,16 +543,16 @@ namespace geometry {
             seg.clear(), cover.clear();
             arc = pol = 0;
         }
-        void add(double xx, double yy, double rr) {
+        void add(ld xx, ld yy, ld rr) {
             x[n] = xx, y[n] = yy, r[n] = rr, covered[n] = 0, n++;
         }
-        void getarea(int i, double lef, double rig) {
+        void getarea(int i, ld lef, ld rig) {
             arc += 0.5 * r[i] * r[i] * (rig - lef - sin(rig - lef));
-            double x1 = x[i] + r[i] * cos(lef), y1 = y[i] + r[i] * sin(lef);
-            double x2 = x[i] + r[i] * cos(rig), y2 = y[i] + r[i] * sin(rig);
+            ld x1 = x[i] + r[i] * cos(lef), y1 = y[i] + r[i] * sin(lef);
+            ld x2 = x[i] + r[i] * cos(rig), y2 = y[i] + r[i] * sin(rig);
             pol += x1 * y2 - x2 * y1;
         }
-        double solve() {
+        ld solve() {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < i; j++) {
                     if (!sign(x[i] - x[j]) && !sign(y[i] - y[j]) && !sign(r[i] - r[j])) {
@@ -574,26 +574,26 @@ namespace geometry {
                     seg.clear();
                     for (int j = 0; j < n; j++) {
                         if (i != j) {
-                            double d = dist(x[i], y[i], x[j], y[j]);
+                            ld d = dist(x[i], y[i], x[j], y[j]);
                             if (sign(d - (r[j] + r[i])) >= 0 || sign(d - abs(r[j] - r[i])) <= 0) {
                                 continue;
                             }
-                            double alpha = atan2(y[j] - y[i], x[j] - x[i]);
-                            double beta = angle(r[i], d, r[j]);
-                            pair<double, double> tmp(alpha - beta, alpha + beta);
+                            ld alpha = atan2(y[j] - y[i], x[j] - x[i]);
+                            ld beta = angle(r[i], d, r[j]);
+                            pair<ld, ld> tmp(alpha - beta, alpha + beta);
                             if (sign(tmp.first) <= 0 && sign(tmp.second) <= 0) {
-                                seg.push_back(pair<double, double>(2 * PI + tmp.first, 2 * PI + tmp.second));
+                                seg.push_back(pair<ld, ld>(2 * PI + tmp.first, 2 * PI + tmp.second));
                             } else if (sign(tmp.first) < 0) {
-                                seg.push_back(pair<double, double>(2 * PI + tmp.first, 2 * PI));
-                                seg.push_back(pair<double, double>(0, tmp.second));
+                                seg.push_back(pair<ld, ld>(2 * PI + tmp.first, 2 * PI));
+                                seg.push_back(pair<ld, ld>(0, tmp.second));
                             } else {
                                 seg.push_back(tmp);
                             }
                         }
                     }
                     sort(seg.begin(), seg.end());
-                    double rig = 0;
-                    for (vector<pair<double, double> >::iterator iter = seg.begin(); iter != seg.end(); iter++) {
+                    ld rig = 0;
+                    for (vector<pair<ld, ld> >::iterator iter = seg.begin(); iter != seg.end(); iter++) {
                         if (sign(rig - iter->first) >= 0) {
                             rig = max(rig, iter->second);
                         } else {
@@ -614,7 +614,7 @@ namespace geometry {
  
     // # POLYGON START
  
-    double area_of_triangle(PT a, PT b, PT c) {
+    ld area_of_triangle(PT a, PT b, PT c) {
         return fabs(cross(b - a, c - a) * 0.5);
     }
  
@@ -629,15 +629,15 @@ namespace geometry {
         return -1;
     }
  
-    double perimeter(vector<PT> &p) {
-        double ans = 0;
+    ld perimeter(vector<PT> &p) {
+        ld ans = 0;
         int n = p.size();
         for (int i = 0; i < n; i++) ans += dist(p[i], p[(i + 1) % n]);
         return ans;
     }
  
-    double area(vector<PT> &p) {
-        double ans = 0;
+    ld area(vector<PT> &p) {
+        ld ans = 0;
         int n = p.size();
         for (int i = 0; i < n; i++) ans += cross(p[i], p[(i + 1) % n]);
         return fabs(ans) * 0.5;
@@ -650,9 +650,9 @@ namespace geometry {
     PT centroid(vector<PT> &p) {
         int n = p.size();
         PT c(0, 0);
-        double sum = 0;
+        ld sum = 0;
         for (int i = 0; i < n; i++) sum += cross(p[i], p[(i + 1) % n]);
-        double scale = 3.0 * sum;
+        ld scale = 3.0 * sum;
         for (int i = 0; i < n; i++) {
             int j = (i + 1) % n;
             c = c + (p[i] + p[j]) * cross(p[i], p[j]);
@@ -662,7 +662,7 @@ namespace geometry {
  
     // 0 if cw, 1 if ccw
     bool get_direction(vector<PT> &p) {
-        double ans = 0;
+        ld ans = 0;
         int n = p.size();
         for (int i = 0; i < n; i++) ans += cross(p[i], p[(i + 1) % n]);
         if (sign(ans) > 0) return 1;
@@ -674,27 +674,27 @@ namespace geometry {
     // O(n log^2 MX)
     PT geometric_median(vector<PT> p) {
         auto tot_dist = [&](PT z) {
-            double res = 0;
+            ld res = 0;
             for (int i = 0; i < p.size(); i++) res += dist(p[i], z);
             return res;
         };
-        auto findY = [&](double x) {
-            double yl = -1e5, yr = 1e5;
+        auto findY = [&](ld x) {
+            ld yl = -1e5, yr = 1e5;
             for (int i = 0; i < 60; i++) {
-                double ym1 = yl + (yr - yl) / 3;
-                double ym2 = yr - (yr - yl) / 3;
-                double d1 = tot_dist(PT(x, ym1));
-                double d2 = tot_dist(PT(x, ym2));
+                ld ym1 = yl + (yr - yl) / 3;
+                ld ym2 = yr - (yr - yl) / 3;
+                ld d1 = tot_dist(PT(x, ym1));
+                ld d2 = tot_dist(PT(x, ym2));
                 if (d1 < d2) yr = ym2;
                 else yl = ym1;
             }
-            return pair<double, double>(yl, tot_dist(PT(x, yl)));
+            return pair<ld, ld>(yl, tot_dist(PT(x, yl)));
         };
-        double xl = -1e5, xr = 1e5;
+        ld xl = -1e5, xr = 1e5;
         for (int i = 0; i < 60; i++) {
-            double xm1 = xl + (xr - xl) / 3;
-            double xm2 = xr - (xr - xl) / 3;
-            double y1, d1, y2, d2;
+            ld xm1 = xl + (xr - xl) / 3;
+            ld xm2 = xr - (xr - xl) / 3;
+            ld y1, d1, y2, d2;
             auto z = findY(xm1);
             y1 = z.first;
             d1 = z.second;
@@ -804,7 +804,7 @@ namespace geometry {
     int extreme_vertex(vector<PT> &p, const PT &z, const int top) { // O(log n)
         int n = p.size();
         if (n == 1) return 0;
-        double ans = dot(p[0], z);
+        ld ans = dot(p[0], z);
         int id = 0;
         if (dot(p[top], z) > ans) ans = dot(p[top], z), id = top;
         int l = 1, r = top - 1;
@@ -826,11 +826,11 @@ namespace geometry {
     }
  
     // maximum distance from any point on the perimeter to another point on the perimeter
-    double diameter(vector<PT> &p) {
+    ld diameter(vector<PT> &p) {
         int n = (int) p.size();
         if (n == 1) return 0;
         if (n == 2) return dist(p[0], p[1]);
-        double ans = 0;
+        ld ans = 0;
         int i = 0, j = 1;
         while (i < n) {
             while (cross(p[(i + 1) % n] - p[i], p[(j + 1) % n] - p[j]) >= 0) {
@@ -845,10 +845,10 @@ namespace geometry {
  
     // minimum distance between two parallel lines (non necessarily axis parallel)
     // such that the polygon can be put between the lines
-    double width(vector<PT> &p) {
+    ld width(vector<PT> &p) {
         int n = (int) p.size();
         if (n <= 2) return 0;
-        double ans = inf;
+        ld ans = inf;
         int i = 0, j = 1;
         while (i < n) {
             while (cross(p[(i + 1) % n] - p[i], p[(j + 1) % n] - p[j]) >= 0) j = (j + 1) % n;
@@ -859,18 +859,18 @@ namespace geometry {
     }
  
     // minimum perimeter
-    double minimum_enclosing_rectangle(vector<PT> &p) {
+    ld minimum_enclosing_rectangle(vector<PT> &p) {
         int n = p.size();
         if (n <= 2) return perimeter(p);
         int mndot = 0;
-        double tmp = dot(p[1] - p[0], p[0]);
+        ld tmp = dot(p[1] - p[0], p[0]);
         for (int i = 1; i < n; i++) {
             if (dot(p[1] - p[0], p[i]) <= tmp) {
                 tmp = dot(p[1] - p[0], p[i]);
                 mndot = i;
             }
         }
-        double ans = inf;
+        ld ans = inf;
         int i = 0, j = 1, mxdot = 1;
         while (i < n) {
             PT cur = p[(i + 1) % n] - p[i];
@@ -915,8 +915,8 @@ namespace geometry {
         vector<PT> ans;
         int n = (int) p.size();
         for (int i = 0; i < n; i++) {
-            double c1 = cross(b - a, p[i] - a);
-            double c2 = cross(b - a, p[(i + 1) % n] - a);
+            ld c1 = cross(b - a, p[i] - a);
+            ld c2 = cross(b - a, p[(i + 1) % n] - a);
             if (sign(c1) >= 0) ans.push_back(p[i]);
             if (sign(c1 * c2) < 0) {
                 if (!is_parallel(p[i], p[(i + 1) % n], a, b)) {
@@ -932,19 +932,19 @@ namespace geometry {
     // not necessarily convex, boundary is included in the intersection
     // returns total intersected length
     // it returns the sum of the lengths of the portions of the line that are inside the polygon
-    double polygon_line_intersection(vector<PT> p, PT a, PT b) {
+    ld polygon_line_intersection(vector<PT> p, PT a, PT b) {
         int n = p.size();
         p.push_back(p[0]);
         line l = line(a, b);
-        double ans = 0.0;
-        vector<pair<double, int> > vec;
+        ld ans = 0.0;
+        vector<pair<ld, int> > vec;
         for (int i = 0; i < n; i++) {
             int s1 = orientation(a, b, p[i]);
             int s2 = orientation(a, b, p[i + 1]);
             if (s1 == s2) continue;
             line t = line(p[i], p[i + 1]);
             PT inter = (t.v * l.c - l.v * t.c) / cross(l.v, t.v);
-            double tmp = dot(inter, l.v);
+            ld tmp = dot(inter, l.v);
             int f;
             if (s1 > s2) f = s1 && s2 ? 2 : 1;
             else f = s1 && s2 ? -2 : -1;
@@ -1030,8 +1030,8 @@ namespace geometry {
  
     // minimum distance from a point to a convex polygon
     // it assumes point lie strictly outside the polygon
-    double dist_from_point_to_polygon(vector<PT> &p, PT z) {
-        double ans = inf;
+    ld dist_from_point_to_polygon(vector<PT> &p, PT z) {
+        ld ans = inf;
         int n = p.size();
         if (n <= 3) {
             for (int i = 0; i < n; i++) ans = min(ans, dist_from_point_to_seg(p[i], p[(i + 1) % n], z));
@@ -1041,7 +1041,7 @@ namespace geometry {
         if (l > r) r += n;
         while (l < r) {
             int mid = (l + r) >> 1;
-            double left = dist2(p[mid % n], z), right = dist2(p[(mid + 1) % n], z);
+            ld left = dist2(p[mid % n], z), right = dist2(p[(mid + 1) % n], z);
             ans = min({ans, left, right});
             if (left < right) r = mid;
             else l = mid + 1;
@@ -1055,7 +1055,7 @@ namespace geometry {
     // minimum distance from convex polygon p to line ab
     // returns 0 is it intersects with the polygon
     // top - upper right vertex
-    double dist_from_polygon_to_line(vector<PT> &p, PT a, PT b, int top) { //O(log n)
+    ld dist_from_polygon_to_line(vector<PT> &p, PT a, PT b, int top) { //O(log n)
         PT orth = (b - a).perp();
         if (orientation(a, b, p[0]) > 0) orth = (a - b).perp();
         int id = extreme_vertex(p, orth, top);
@@ -1067,8 +1067,8 @@ namespace geometry {
     // minimum distance from a convex polygon to another convex polygon
     // the polygon doesnot overlap or touch
     // tested in https://toph.co/p/the-wall
-    double dist_from_polygon_to_polygon(vector<PT> &p1, vector<PT> &p2) { // O(n log n)
-        double ans = inf;
+    ld dist_from_polygon_to_polygon(vector<PT> &p1, vector<PT> &p2) { // O(n log n)
+        ld ans = inf;
         for (int i = 0; i < p1.size(); i++) {
             ans = min(ans, dist_from_point_to_polygon(p2, p1[i]));
         }
@@ -1079,9 +1079,9 @@ namespace geometry {
     }
  
     // maximum distance from a convex polygon to another convex polygon
-    double maximum_dist_from_polygon_to_polygon(vector<PT> &u, vector<PT> &v) { //O(n)
+    ld maximum_dist_from_polygon_to_polygon(vector<PT> &u, vector<PT> &v) { //O(n)
         int n = (int) u.size(), m = (int) v.size();
-        double ans = 0;
+        ld ans = 0;
         if (n < 3 || m < 3) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) ans = max(ans, dist2(u[i], v[j]));
@@ -1102,17 +1102,17 @@ namespace geometry {
     // calculates the area of the union of n polygons (not necessarily convex).
     // the points within each polygon must be given in CCW order.
     // complexity: O(N^2), where N is the total number of points
-    double rat(PT a, PT b, PT p) {
+    ld rat(PT a, PT b, PT p) {
         return !sign(a.x - b.x) ? (p.y - a.y) / (b.y - a.y) : (p.x - a.x) / (b.x - a.x);
     };
  
-    double polygon_union(vector<vector<PT>> &p) {
+    ld polygon_union(vector<vector<PT>> &p) {
         int n = p.size();
-        double ans = 0;
+        ld ans = 0;
         for (int i = 0; i < n; ++i) {
             for (int v = 0; v < (int) p[i].size(); ++v) {
                 PT a = p[i][v], b = p[i][(v + 1) % p[i].size()];
-                vector<pair<double, int>> segs;
+                vector<pair<ld, int>> segs;
                 segs.emplace_back(0, 0), segs.emplace_back(1, 0);
                 for (int j = 0; j < n; ++j) {
                     if (i != j) {
@@ -1124,7 +1124,7 @@ namespace geometry {
                                     segs.emplace_back(rat(a, b, c), 1), segs.emplace_back(rat(a, b, d), -1);
                                 }
                             } else {
-                                double sa = cross(d - c, a - c), sb = cross(d - c, b - c);
+                                ld sa = cross(d - c, a - c), sb = cross(d - c, b - c);
                                 if (sc >= 0 && sd < 0) segs.emplace_back(sa / (sa - sb), 1);
                                 else if (sc < 0 && sd >= 0) segs.emplace_back(sa / (sa - sb), -1);
                             }
@@ -1132,10 +1132,10 @@ namespace geometry {
                     }
                 }
                 sort(segs.begin(), segs.end());
-                double pre = min(max(segs[0].first, 0.0), 1.0), now, sum = 0;
+                ld pre = min(max(segs[0].first, (ld)0.0), (ld)1.0), now, sum = 0;
                 int cnt = segs[0].second;
                 for (int j = 1; j < segs.size(); ++j) {
-                    now = min(max(segs[j].first, 0.0), 1.0);
+                    now = min(max(segs[j].first, (ld)0.0), (ld)1.0);
                     if (!cnt) sum += now - pre;
                     cnt += segs[j].second;
                     pre = now;
@@ -1242,7 +1242,7 @@ namespace geometry {
         vector<PT> c;
         while (i < n || j < m) {
             c.push_back(a[i] + b[j]);
-            double p = cross(a[i + 1] - a[i], b[j + 1] - b[j]);
+            ld p = cross(a[i + 1] - a[i], b[j + 1] - b[j]);
             if (sign(p) >= 0) ++i;
             if (sign(p) <= 0) ++j;
         }
@@ -1251,27 +1251,27 @@ namespace geometry {
  
     // returns the area of the intersection of the circle with center c and radius r
     // and the triangle formed by the points c, a, b
-    double _triangle_circle_intersection(PT c, double r, PT a, PT b) {
-        double sd1 = dist2(c, a), sd2 = dist2(c, b);
+    ld _triangle_circle_intersection(PT c, ld r, PT a, PT b) {
+        ld sd1 = dist2(c, a), sd2 = dist2(c, b);
         if (sd1 > sd2) swap(a, b), swap(sd1, sd2);
-        double sd = dist2(a, b);
-        double d1 = sqrtl(sd1), d2 = sqrtl(sd2), d = sqrt(sd);
-        double x = abs(sd2 - sd - sd1) / (2 * d);
-        double h = sqrtl(sd1 - x * x);
+        ld sd = dist2(a, b);
+        ld d1 = sqrtl(sd1), d2 = sqrtl(sd2), d = sqrt(sd);
+        ld x = abs(sd2 - sd - sd1) / (2 * d);
+        ld h = sqrtl(sd1 - x * x);
         if (r >= d2) return h * d / 2;
-        double area = 0;
+        ld area = 0;
         if (sd + sd1 < sd2) {
             if (r < d1) area = r * r * (acos(h / d2) - acos(h / d1)) / 2;
             else {
                 area = r * r * (acos(h / d2) - acos(h / r)) / 2;
-                double y = sqrtl(r * r - h * h);
+                ld y = sqrtl(r * r - h * h);
                 area += h * (y - x) / 2;
             }
         } else {
             if (r < h) area = r * r * (acos(h / d2) + acos(h / d1)) / 2;
             else {
                 area += r * r * (acos(h / d2) - acos(h / r)) / 2;
-                double y = sqrtl(r * r - h * h);
+                ld y = sqrtl(r * r - h * h);
                 area += h * y / 2;
                 if (r < d1) {
                     area += r * r * (acos(h / d1) - acos(h / r)) / 2;
@@ -1283,14 +1283,14 @@ namespace geometry {
     }
  
     // intersection between a simple polygon and a circle
-    double polygon_circle_intersection(vector<PT> &v, PT p, double r) {
+    ld polygon_circle_intersection(vector<PT> &v, PT p, ld r) {
         int n = v.size();
-        double ans = 0.00;
+        ld ans = 0.00;
         PT org = {0, 0};
         for (int i = 0; i < n; i++) {
             int x = orientation(p, v[i], v[(i + 1) % n]);
             if (x == 0) continue;
-            double area = _triangle_circle_intersection(org, r, v[i] - p, v[(i + 1) % n] - p);
+            ld area = _triangle_circle_intersection(org, r, v[i] - p, v[(i + 1) % n] - p);
             if (x < 0) ans -= area;
             else ans += area;
         }
@@ -1299,22 +1299,22 @@ namespace geometry {
  
     // find a circle of radius r that contains as many points as possible
     // O(n^2 log n);
-    double maximum_circle_cover(vector<PT> p, double r, circle &c) {
+    ld maximum_circle_cover(vector<PT> p, ld r, circle &c) {
         int n = p.size();
         int ans = 0;
         int id = 0;
-        double th = 0;
+        ld th = 0;
         for (int i = 0; i < n; ++i) {
             // maximum circle cover when the circle goes through this point
-            vector<pair<double, int>> events = {{-PI, +1},
+            vector<pair<ld, int>> events = {{-PI, +1},
                                                 {PI,  -1}};
             for (int j = 0; j < n; ++j) {
                 if (j == i) continue;
-                double d = dist(p[i], p[j]);
+                ld d = dist(p[i], p[j]);
                 if (d > r * 2) continue;
-                double dir = (p[j] - p[i]).arg();
-                double ang = acos(d / 2 / r);
-                double st = dir - ang, ed = dir + ang;
+                ld dir = (p[j] - p[i]).arg();
+                ld ang = acos(d / 2 / r);
+                ld st = dir - ang, ed = dir + ang;
                 if (st > PI) st -= PI * 2;
                 if (st <= -PI) st += PI * 2;
                 if (ed > PI) ed -= PI * 2;
@@ -1343,12 +1343,12 @@ namespace geometry {
     }
  
     // radius of the maximum inscribed circle in a convex polygon
-    double maximum_inscribed_circle(vector<PT> p) {
+    ld maximum_inscribed_circle(vector<PT> p) {
         int n = p.size();
         if (n <= 2) return 0;
-        double l = 0, r = 20000;
+        ld l = 0, r = 20000;
         while (r - l > eps) {
-            double mid = (l + r) * 0.5;
+            ld mid = (l + r) * 0.5;
             vector<HP> h;
             const int L = 1e9;
             h.push_back(HP(PT(-L, -L), PT(L, -L)));
@@ -1399,30 +1399,30 @@ namespace geometry {
     // # STAR START
     struct star {
         int n;    // number of sides of the star
-        double r; // radius of the circumcircle
-        star(int _n, double _r) {
+        ld r; // radius of the circumcircle
+        star(int _n, ld _r) {
             n = _n;
             r = _r;
         }
  
-        double area() {
-            double theta = PI / n;
-            double s = 2 * r * sin(theta);
-            double R = 0.5 * s / tan(theta);
-            double a = 0.5 * n * s * R;
-            double a2 = 0.25 * s * s / tan(1.5 * theta);
+        ld area() {
+            ld theta = PI / n;
+            ld s = 2 * r * sin(theta);
+            ld R = 0.5 * s / tan(theta);
+            ld a = 0.5 * n * s * R;
+            ld a2 = 0.25 * s * s / tan(1.5 * theta);
             return a - n * a2;
         }
     };
  
     // given a list of lengths of the sides of a polygon in counterclockwise order
     // returns the maximum area of a non-degenerate polygon that can be formed using those lengths
-    double get_maximum_polygon_area_for_given_lengths(vector<double> v) {
+    ld get_maximum_polygon_area_for_given_lengths(vector<ld> v) {
         if (v.size() < 3) {
             return 0;
         }
         int m = 0;
-        double sum = 0;
+        ld sum = 0;
         for (int i = 0; i < v.size(); i++) {
             if (v[i] > v[m]) {
                 m = i;
@@ -1434,13 +1434,13 @@ namespace geometry {
         }
         // the polygon should be a circular polygon
         // that is all points are on the circumference of a circle
-        double l = v[m] / 2, r = 1e6; // fix it correctly
+        ld l = v[m] / 2, r = 1e6; // fix it correctly
         int it = 60;
-        auto ang = [](double x, double r) { // x = length of the chord, r = radius of the circle
+        auto ang = [](ld x, ld r) { // x = length of the chord, r = radius of the circle
             return 2 * asin((x / 2) / r);
         };
-        auto calc = [=](double r) {
-            double sum = 0;
+        auto calc = [=](ld r) {
+            ld sum = 0;
             for (auto x: v) {
                 sum += ang(x, r);
             }
@@ -1448,7 +1448,7 @@ namespace geometry {
         };
         // compute the radius of the circle
         while (it--) {
-            double mid = (l + r) / 2;
+            ld mid = (l + r) / 2;
             if (calc(mid) <= 2 * PI) {
                 r = mid;
             } else {
@@ -1457,11 +1457,11 @@ namespace geometry {
         }
  
         if (calc(r) <= 2 * PI - eps) { // the center of the circle is outside the polygon
-            auto calc2 = [&](double r) {
-                double sum = 0;
+            auto calc2 = [&](ld r) {
+                ld sum = 0;
                 for (int i = 0; i < v.size(); i++) {
-                    double x = v[i];
-                    double th = ang(x, r);
+                    ld x = v[i];
+                    ld th = ang(x, r);
                     if (i != m) {
                         sum += th;
                     } else {
@@ -1474,18 +1474,18 @@ namespace geometry {
             r = 1e6;
             it = 60;
             while (it--) {
-                double mid = (l + r) / 2;
+                ld mid = (l + r) / 2;
                 if (calc2(mid) > 2 * PI) {
                     r = mid;
                 } else {
                     l = mid;
                 }
             }
-            auto get_area = [=](double r) {
-                double ans = 0;
+            auto get_area = [=](ld r) {
+                ld ans = 0;
                 for (int i = 0; i < v.size(); i++) {
-                    double x = v[i];
-                    double area = r * r * sin(ang(x, r)) / 2;
+                    ld x = v[i];
+                    ld area = r * r * sin(ang(x, r)) / 2;
                     if (i != m) {
                         ans += area;
                     } else {
@@ -1496,8 +1496,8 @@ namespace geometry {
             };
             return get_area(r);
         } else { // the center of the circle is inside the polygon
-            auto get_area = [=](double r) {
-                double ans = 0;
+            auto get_area = [=](ld r) {
+                ld ans = 0;
                 for (auto x: v) {
                     ans += r * r * sin(ang(x, r)) / 2;
                 }
@@ -1509,3 +1509,4 @@ namespace geometry {
 }
  
 using geometry::PT;
+using geometry::ld;
