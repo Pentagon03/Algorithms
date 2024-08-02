@@ -1,5 +1,5 @@
 /*
-Edge Disjoint BCC
+Vertex Disjoint BCC
 We are dividing BCC into set of vertices.
 Each BCC doesn't have any articulation edge(bridge).
 Use init(n) at the very first, if needed
