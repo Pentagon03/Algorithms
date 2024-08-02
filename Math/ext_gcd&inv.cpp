@@ -19,6 +19,7 @@ ll inv(ll a, ll m){
     if(g != 1) return -1;
     return (x%m + m) % m;
 }
+// inv(i) = inv(p % i) * (-p / i)
 
 // do_smth for x,y that ax + by = s, x >= 0 && y >= 0
 bool do_smth(ll a, ll b, ll s){
