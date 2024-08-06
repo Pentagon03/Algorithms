@@ -1,4 +1,7 @@
 // Test: https://judge.yosupo.jp/submission/225582
+// Reference: https://judge.yosupo.jp/submission/87297
+// MAX_DISTANCE: Infinity for path length
+
 // Min Heap
 template <typename Key, typename Value>
 struct LeftistHeap {
