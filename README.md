@@ -1,4 +1,3 @@
-[![Actions Status](https://github.com/Pentagon03/Algorithms/workflows/verify/badge.svg)](https://github.com/Pentagon03/Algorithms/actions)
 # Algorithms
 Warning: There are ideas and implementations that I don't own. Some are almost exactly same. Go to the reference links for the original creator.
 
