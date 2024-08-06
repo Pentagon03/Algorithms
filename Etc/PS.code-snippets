@@ -22,7 +22,7 @@
 		"#define nl '\\n'",
 		"#define sp ' '",
 		"#define int int64_t",
-		"using ll = int64_t; using ld = long double; using pii = pair<int,int>; int cur_tc;",
+		"using ll = int64_t; using pii = pair<int,int>; int cur_tc;",
 		"",
 		"",
 		"int32_t main(){",
@@ -87,6 +87,23 @@
 			"$0",
 		],
 		"description": "custom vector"
+	},
+	"binary search": {
+	"prefix": "bisect",
+	"scope": "cpp",
+	"body": [
+		"auto chk = [&](auto x)->bool{",
+		"",
+		"};",
+		"int lo = $0; // False",
+		"int hi = ; // True",
+		"while(lo + 1 < hi){",
+		"    auto mid = (lo + hi) / 2;",
+		"    if(chk(mid)) hi = mid;",
+		"    else lo = mid;",
+		"}"
+	],
+	"description": "binary search"
 	},
 	"solve": {
 		"prefix": "solve_old",
