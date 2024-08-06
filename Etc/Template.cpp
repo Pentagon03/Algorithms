@@ -18,7 +18,7 @@ template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::ste
 #define nl '\n'
 #define sp ' '
 #define int int64_t
-using ll = int64_t; using ld = long double; using pii = pair<int,int>; int cur_tc;
+using ll = int64_t; using pii = pair<int,int>; int cur_tc;
 
 
 int32_t main(){
