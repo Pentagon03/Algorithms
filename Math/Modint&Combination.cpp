@@ -31,9 +31,12 @@ struct modint {
         res.x = norm(P - x);
         return res;
     }
+    constexpr modint pow(ll b){
+        return power(*this, b);
+    }
     constexpr modint inv() const {
         assert(x != 0);
-        return power(*this, P - 2);
+        return power(*this, P-2);
     }
     constexpr modint &operator*=(modint rhs) {
         x = 1LL * x * rhs.x % P;
@@ -145,6 +148,5 @@ struct comb {
         return bm[m][k];
     }
 };
-
-constexpr MOD = ;
+constexpr int MOD = $0;
 using Z = modint<MOD>;
