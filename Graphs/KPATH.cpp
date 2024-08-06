@@ -219,3 +219,5 @@ public:
 		return path;
 	}
 };
+
+using Graph = std::vector<std::basic_string<array<int, 2>>>;
