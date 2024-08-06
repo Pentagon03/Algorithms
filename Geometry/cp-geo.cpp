@@ -1,6 +1,6 @@
 // from: https://codeforces.com/contest/1936/submission/249350779
 namespace geometry { // https://victorlecomte.com/cp-geo.pdf
-    using ld = double;
+    using ld = long double;
     const ld inf = 1e100;
     const ld eps = 1e-9;
     const ld PI = acos((ld) -1.0);
@@ -71,31 +71,31 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
     void polar_sort(vector<PT> &v, PT o) { // sort points in counterclockwise with respect to point o
         sort(v.begin(), v.end(), [&](PT a, PT b) {
             return make_tuple(half(a - o), 0.0, (a - o).norm2()) <
-                   make_tuple(half(b - o), cross(a - o, b - o), (b - o).norm2());
+                make_tuple(half(b - o), cross(a - o, b - o), (b - o).norm2());
         });
     }
- 
+
     // # LINE START
     struct line {
         PT a, b; // goes through points a and b
         PT v;
         ld c;  //line form: direction vec [cross] (x, y) = c
         line() {}
- 
+
         //direction vector v and offset c
         line(PT v, ld c) : v(v), c(c) {
             auto p = get_points();
             a = p.first;
             b = p.second;
         }
- 
+
         // equation ax + by + c = 0
         line(ld _a, ld _b, ld _c) : v({_b, -_a}), c(-_c) {
             auto p = get_points();
             a = p.first;
             b = p.second;
         }
- 
+
         // goes through points p and q
         line(PT p, PT q) : v(q - p), c(cross(v, p)), a(p), b(q) {}
         pair<PT, PT> get_points() { //extract any two points from this line
@@ -113,54 +113,54 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             }
             return {p, q};
         }
- 
+
         // ax + by + c = 0
         array<ld, 3> get_abc() {
             ld a = -v.y, b = v.x;
             return {a, b, -c};
         }
- 
+
         // 1 if on the left, -1 if on the right, 0 if on the line
         int side(PT p) { return sign(cross(v, p) - c); }
- 
+
         // line that is perpendicular to this and goes through point p
         line perpendicular_through(PT p) { return {p, p + perp(v)}; }
- 
+
         // translate the line by vector t i.e. shifting it by vector t
         line translate(PT t) { return {v, c + cross(v, t)}; }
- 
+
         // compare two points by their orthogonal projection on this line
         // a projection point comes before another if it comes first according to vector v
         bool cmp_by_projection(PT p, PT q) { return dot(v, p) < dot(v, q); }
- 
+
         line shift_left(ld d) {
             PT z = v.perp().truncate(d);
             return line(a + z, b + z);
         }
     };
- 
+
     // find a point from a through b with distance d
     PT point_along_line(PT a, PT b, ld d) {
         assert(a != b);
         return a + (((b - a) / (b - a).norm()) * d);
     }
- 
+
     // projection point c onto line through a and b  assuming a != b
     PT project_from_point_to_line(PT a, PT b, PT c) {
         return a + (b - a) * dot(c - a, b - a) / (b - a).norm2();
     }
- 
+
     // reflection point c onto line through a and b  assuming a != b
     PT reflection_from_point_to_line(PT a, PT b, PT c) {
         PT p = project_from_point_to_line(a, b, c);
         return p + p - c;
     }
- 
+
     // minimum distance from point c to line through a and b
     ld dist_from_point_to_line(PT a, PT b, PT c) {
         return fabs(cross(b - a, c - a) / (b - a).norm());
     }
- 
+
     // returns true if  point p is on line segment ab
     bool is_point_on_seg(PT a, PT b, PT p) {
         if (fabs(cross(p - b, a - b)) < eps) {
@@ -170,7 +170,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return false;
     }
- 
+
     // minimum distance point from point c to segment ab that lies on segment ab
     PT project_from_point_to_seg(PT a, PT b, PT c) {
         ld r = dist2(a, b);
@@ -180,12 +180,12 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (r > 1) return b;
         return a + (b - a) * r;
     }
- 
+
     // minimum distance from point c to segment ab
     ld dist_from_point_to_seg(PT a, PT b, PT c) {
         return dist(c, project_from_point_to_seg(a, b, c));
     }
- 
+
     // 0 if not parallel, 1 if parallel, 2 if collinear
     int is_parallel(PT a, PT b, PT c, PT d) {
         ld k = fabs(cross(b - a, d - c));
@@ -194,19 +194,19 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             else return 1;
         } else return 0;
     }
- 
+
     // check if two lines are same
     bool are_lines_same(PT a, PT b, PT c, PT d) {
         if (fabs(cross(a - c, c - d)) < eps && fabs(cross(b - c, c - d)) < eps) return true;
         return false;
     }
- 
+
     // bisector vector of <abc
     PT angle_bisector(PT &a, PT &b, PT &c) {
         PT p = a - b, q = c - b;
         return p + q * sqrt(dot(p, p) / dot(q, q));
     }
- 
+
     // 1 if point is ccw to the line, 2 if point is cw to the line, 3 if point is on the line
     int point_line_relation(PT a, PT b, PT p) {
         int c = sign(cross(p - a, b - a));
@@ -214,7 +214,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (c > 0) return 2;
         return 3;
     }
- 
+
     // intersection point between ab and cd assuming unique intersection exists
     bool line_line_intersection(PT a, PT b, PT c, PT d, PT &ans) {
         ld a1 = a.y - b.y, b1 = b.x - a.x, c1 = cross(a, b);
@@ -224,7 +224,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         ans = PT((b1 * c2 - b2 * c1) / det, (c1 * a2 - a1 * c2) / det);
         return 1;
     }
- 
+
     // intersection point between segment ab and segment cd assuming unique intersection exists
     bool seg_seg_intersection(PT a, PT b, PT c, PT d, PT &ans) {
         ld oa = cross2(c, d, a), ob = cross2(c, d, b);
@@ -234,7 +234,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             return 1;
         } else return 0;
     }
- 
+
 // intersection point between segment ab and segment cd assuming unique intersection may not exists
 // se.size()==0 means no intersection
 // se.size()==1 means one intersection
@@ -249,7 +249,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (is_point_on_seg(a, b, d)) se.insert(d);
         return se;
     }
- 
+
 // intersection  between segment ab and line cd
 // 0 if do not intersect, 1 if proper intersect, 2 if segment intersect
     int seg_line_relation(PT a, PT b, PT c, PT d) {
@@ -259,7 +259,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         else if (p * q < 0) return 1;
         else return 0;
     }
- 
+
 // intersection between segament ab and line cd assuming unique intersection exists
     bool seg_line_intersection(PT a, PT b, PT c, PT d, PT &ans) {
         bool k = seg_line_relation(a, b, c, d);
@@ -267,7 +267,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (k) line_line_intersection(a, b, c, d, ans);
         return k;
     }
- 
+
 // minimum distance from segment ab to segment cd
     ld dist_from_seg_to_seg(PT a, PT b, PT c, PT d) {
         PT dummy;
@@ -276,7 +276,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             return min({dist_from_point_to_seg(a, b, c), dist_from_point_to_seg(a, b, d),
                         dist_from_point_to_seg(c, d, a), dist_from_point_to_seg(c, d, b)});
     }
- 
+
 // minimum distance from point c to ray (starting point a and direction vector b)
     ld dist_from_point_to_ray(PT a, PT b, PT c) {
         b = a + b;
@@ -284,7 +284,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (r < 0.0) return dist(c, a);
         return dist_from_point_to_line(a, b, c);
     }
- 
+
 // starting point as and direction vector ad
     bool ray_ray_intersection(PT as, PT ad, PT bs, PT bd) {
         ld dx = bs.x - as.x, dy = bs.y - as.y;
@@ -301,19 +301,19 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         ans = min(ans, dist_from_point_to_ray(bs, bd, as));
         return ans;
     }
- 
+
     // # CIRCLE START
     struct circle {
         PT p;
         ld r;
- 
+
         circle() {}
- 
+
         circle(PT _p, ld _r) : p(_p), r(_r) {};
- 
+
         // center (x, y) and radius r
         circle(ld x, ld y, ld _r) : p(PT(x, y)), r(_r) {};
- 
+
         // circumcircle of a triangle
         // the three points must be unique
         circle(PT a, PT b, PT c) {
@@ -322,7 +322,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             line_line_intersection(b, b + rotatecw90(a - b), c, c + rotatecw90(a - c), p);
             r = dist(a, p);
         }
- 
+
         // inscribed circle of a triangle
         // pass a bool just to differentiate from circumcircle
         circle(PT a, PT b, PT c, bool t) {
@@ -336,14 +336,14 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             line_line_intersection(u.a, u.b, v.a, v.b, p);
             r = dist_from_point_to_seg(a, b, p);
         }
- 
+
         bool operator==(circle v) { return p == v.p && sign(r - v.r) == 0; }
- 
+
         ld area() { return PI * r * r; }
- 
+
         ld circumference() { return 2.0 * PI * r; }
     };
- 
+
     //0 if outside, 1 if on circumference, 2 if inside circle
     int circle_point_relation(PT p, ld r, PT b) {
         ld d = dist(p, b);
@@ -351,7 +351,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (sign(d - r) == 0) return 1;
         return 0;
     }
- 
+
     // 0 if outside, 1 if on circumference, 2 if inside circle
     int circle_line_relation(PT p, ld r, PT a, PT b) {
         ld d = dist_from_point_to_line(a, b, p);
@@ -359,7 +359,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (sign(d - r) == 0) return 1;
         return 0;
     }
- 
+
     //compute intersection of line through points a and b with
     //circle centered at c with radius r > 0
     vector<PT> circle_line_intersection(PT c, ld r, PT a, PT b) {
@@ -373,7 +373,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (D > eps) ret.push_back(c + a + b * (-B - sqrt(D)) / A);
         return ret;
     }
- 
+
     //5 - outside and do not intersect
     //4 - intersect outside in one point
     //3 - intersect in 2 points
@@ -390,7 +390,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         assert(0);
         return -1;
     }
- 
+
     vector<PT> circle_circle_intersection(PT a, ld r, PT b, ld R) {
         if (a == b && sign(r - R) == 0) return {PT(1e18, 1e18)};
         vector<PT> ret;
@@ -403,7 +403,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (y > 0) ret.push_back(a + v * x - rotateccw90(v) * y);
         return ret;
     }
- 
+
     // returns two circle c1, c2 through points a, b and of radius r
     // 0 if there is no such circle, 1 if one circle, 2 if two circle
     int get_circle(PT a, PT b, ld r, circle &c1, circle &c2) {
@@ -414,7 +414,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (t == 2) c2.p = v[1], c2.r = r;
         return t;
     }
- 
+
     // returns two circle c1, c2 which is tangent to line u,  goes through
     // point q and has radius r1; 0 for no circle, 1 if c1 = c2 , 2 if c1 != c2
     int get_circle(line u, PT q, ld r1, circle &c1, circle &c2) {
@@ -444,7 +444,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         c2 = circle(p2, r1);
         return 2;
     }
- 
+
     // returns the circle such that for all points w on the circumference of the circle
     // dist(w, a) : dist(w, b) = rp : rq
     // rp != rq
@@ -465,7 +465,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         r = sqrt(r);
         return circle(o, r);
     }
- 
+
     // returns area of intersection between two circles
     ld circle_circle_area(PT a, ld r1, PT b, ld r2) {
         ld d = (a - b).norm();
@@ -476,7 +476,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
                 theta_2 = acos((r2 * r2 + d * d - r1 * r1) / (2 * r2 * d));
         return r1 * r1 * (theta_1 - sin(2 * theta_1) / 2.) + r2 * r2 * (theta_2 - sin(2 * theta_2) / 2.);
     }
- 
+
     // tangent lines from point q to the circle
     int tangent_lines_from_point(PT p, ld r, PT q, line &u, line &v) {
         int x = sign(dist2(p, q) - r * r);
@@ -493,7 +493,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         v = line(q, p + ((q - p).truncate(l) + (rotatecw90(q - p).truncate(h))));
         return 2;
     }
- 
+
     // returns outer tangents line of two circles
     // if inner == 1 it returns inner tangent lines
     int tangents_lines_from_circle(PT c1, ld r1, PT c2, ld r2, bool inner, line &u, line &v) {
@@ -513,7 +513,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (out.size() == 2) v = line(out[1].first, out[1].second);
         return 1 + (h2 > 0);
     }
- 
+
     // O(n^2 log n)
     // https://vjudge.net/problem/UVA-12056
     constexpr int MX_UNION = 2020;
@@ -611,13 +611,13 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             return pol / 2.0 + arc;
         }
     } CU;
- 
+
     // # POLYGON START
- 
+
     ld area_of_triangle(PT a, PT b, PT c) {
         return fabs(cross(b - a, c - a) * 0.5);
     }
- 
+
     // -1 if strictly inside, 0 if on the polygon, 1 if strictly outside
     int is_point_in_triangle(PT a, PT b, PT c, PT p) {
         if (sign(cross(b - a, c - a)) < 0) swap(b, c);
@@ -628,21 +628,21 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (c1 + c2 + c3 != 3) return 0;
         return -1;
     }
- 
+
     ld perimeter(vector<PT> &p) {
         ld ans = 0;
         int n = p.size();
         for (int i = 0; i < n; i++) ans += dist(p[i], p[(i + 1) % n]);
         return ans;
     }
- 
+
     ld area(vector<PT> &p) {
         ld ans = 0;
         int n = p.size();
         for (int i = 0; i < n; i++) ans += cross(p[i], p[(i + 1) % n]);
         return fabs(ans) * 0.5;
     }
- 
+
     // centroid of a (possibly non-convex) polygon,
     // assuming that the coordinates are listed in a clockwise or
     // counterclockwise fashion.  Note that the centroid is often known as
@@ -659,7 +659,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return c / scale;
     }
- 
+
     // 0 if cw, 1 if ccw
     bool get_direction(vector<PT> &p) {
         ld ans = 0;
@@ -668,7 +668,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (sign(ans) > 0) return 1;
         return 0;
     }
- 
+
     // it returns a point such that the sum of distances
     // from that point to all points in p  is minimum
     // O(n log^2 MX)
@@ -706,7 +706,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return {xl, findY(xl).first};
     }
- 
+
     vector<PT> convex_hull(vector<PT> &p) {
         if (p.size() <= 1) return p;
         vector<PT> v = p;
@@ -732,7 +732,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (v.size() == 2 && v[0] == v[1]) v.pop_back();
         return v;
     }
- 
+
     //checks if convex or not
     bool is_convex(vector<PT> &p) {
         bool s[3];
@@ -746,7 +746,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return 1;
     }
- 
+
     // -1 if strictly inside, 0 if on the polygon, 1 if strictly outside
     // it must be strictly convex, otherwise make it strictly convex first
     int is_point_in_convex(vector<PT> &p, const PT &x) { // O(log n)
@@ -766,7 +766,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (r == n - 1 && b == 0) return 0;
         return -1;
     }
- 
+
     bool is_point_on_polygon(vector<PT> &p, const PT &z) {
         int n = p.size();
         for (int i = 0; i < n; i++) {
@@ -774,7 +774,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return 0;
     }
- 
+
     // returns 1e9 if the point is on the polygon
     int winding_number(vector<PT> &p, const PT &z) { // O(n)
         if (is_point_on_polygon(p, z)) return 1e9;
@@ -790,13 +790,13 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return ans;
     }
- 
+
     // -1 if strictly inside, 0 if on the polygon, 1 if strictly outside
     int is_point_in_polygon(vector<PT> &p, const PT &z) { // O(n)
         int k = winding_number(p, z);
         return k == 1e9 ? 0 : k == 0 ? 1 : -1;
     }
- 
+
     // id of the vertex having maximum dot product with z
     // polygon must need to be convex
     // top - upper right vertex
@@ -824,7 +824,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         if (dot(p[l], z) > ans) ans = dot(p[l], z), id = l;
         return id;
     }
- 
+
     // maximum distance from any point on the perimeter to another point on the perimeter
     ld diameter(vector<PT> &p) {
         int n = (int) p.size();
@@ -842,7 +842,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return sqrt(ans);
     }
- 
+
     // minimum distance between two parallel lines (non necessarily axis parallel)
     // such that the polygon can be put between the lines
     ld width(vector<PT> &p) {
@@ -857,7 +857,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return ans;
     }
- 
+
     // minimum perimeter
     ld minimum_enclosing_rectangle(vector<PT> &p) {
         int n = p.size();
@@ -877,13 +877,13 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             while (cross(cur, p[(j + 1) % n] - p[j]) >= 0) j = (j + 1) % n;
             while (dot(p[(mxdot + 1) % n], cur) >= dot(p[mxdot], cur)) mxdot = (mxdot + 1) % n;
             while (dot(p[(mndot + 1) % n], cur) <= dot(p[mndot], cur)) mndot = (mndot + 1) % n;
-            ans = min(ans, 2.0 * ((dot(p[mxdot], cur) / cur.norm() - dot(p[mndot], cur) / cur.norm()) +
-                                  dist_from_point_to_line(p[i], p[(i + 1) % n], p[j])));
+            ans = min(ans,(ld) (2.0 * ((dot(p[mxdot], cur) / cur.norm() - dot(p[mndot], cur) / cur.norm()) +
+                                dist_from_point_to_line(p[i], p[(i + 1) % n], p[j])) ));
             i++;
         }
         return ans;
     }
- 
+
     // given n points, find the minimum enclosing circle of the points
     // call convex_hull() before this for faster solution
     // expected O(n)
@@ -908,7 +908,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return c;
     }
- 
+
     // returns a vector with the vertices of a polygon with everything
     // to the left of the line going from a to b cut away.
     vector<PT> cut(vector<PT> &p, PT a, PT b) {
@@ -928,7 +928,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return ans;
     }
- 
+
     // not necessarily convex, boundary is included in the intersection
     // returns total intersected length
     // it returns the sum of the lengths of the portions of the line that are inside the polygon
@@ -960,7 +960,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         p.pop_back();
         return ans;
     }
- 
+
     // given a convex polygon p, and a line ab and the top vertex of the polygon
     // returns the intersection of the line with the polygon
     // it returns the indices of the edges of the polygon that are intersected by the line
@@ -991,7 +991,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             }
         return res; // intersects the edges (res[0], res[0] + 1) and (res[1], res[1] + 1)
     }
- 
+
     pair<PT, int> point_poly_tangent(vector<PT> &p, PT Q, int dir, int l, int r) {
         while (r - l > 1) {
             int mid = (l + r) >> 1;
@@ -1018,7 +1018,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         for (int i = l + 1; i <= r; i++) ret = orientation(Q, ret.first, p[i]) != dir ? make_pair(p[i], i) : ret;
         return ret;
     }
- 
+
     // (ccw, cw) tangents from a point that is outside this convex polygon
     // returns indexes of the points
     // ccw means the tangent from Q to that point is in the same direction as the polygon ccw direction
@@ -1027,7 +1027,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         int cw = point_poly_tangent(p, Q, -1, 0, (int) p.size() - 1).second;
         return make_pair(ccw, cw);
     }
- 
+
     // minimum distance from a point to a convex polygon
     // it assumes point lie strictly outside the polygon
     ld dist_from_point_to_polygon(vector<PT> &p, PT z) {
@@ -1051,7 +1051,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         ans = min(ans, dist_from_point_to_seg(p[l % n], p[(l - 1 + n) % n], z));
         return ans;
     }
- 
+
     // minimum distance from convex polygon p to line ab
     // returns 0 is it intersects with the polygon
     // top - upper right vertex
@@ -1063,7 +1063,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             return 0.0; //if orth and a are in the same half of the line, then poly and line intersects
         return dist_from_point_to_line(a, b, p[id]); //does not intersect
     }
- 
+
     // minimum distance from a convex polygon to another convex polygon
     // the polygon doesnot overlap or touch
     // tested in https://toph.co/p/the-wall
@@ -1077,7 +1077,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return ans;
     }
- 
+
     // maximum distance from a convex polygon to another convex polygon
     ld maximum_dist_from_polygon_to_polygon(vector<PT> &u, vector<PT> &v) { //O(n)
         int n = (int) u.size(), m = (int) v.size();
@@ -1098,14 +1098,14 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return sqrt(ans);
     }
- 
+
     // calculates the area of the union of n polygons (not necessarily convex).
     // the points within each polygon must be given in CCW order.
     // complexity: O(N^2), where N is the total number of points
     ld rat(PT a, PT b, PT p) {
         return !sign(a.x - b.x) ? (p.y - a.y) / (b.y - a.y) : (p.x - a.x) / (b.x - a.x);
     };
- 
+
     ld polygon_union(vector<vector<PT>> &p) {
         int n = p.size();
         ld ans = 0;
@@ -1145,18 +1145,18 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return ans * 0.5;
     }
- 
+
     // # HALF PLANE START
     // contains all points p such that: cross(b - a, p - a) >= 0
     struct HP {
         PT a, b;
- 
+
         HP() {}
- 
+
         HP(PT a, PT b) : a(a), b(b) {}
- 
+
         HP(const HP &rhs) : a(rhs.a), b(rhs.b) {}
- 
+
         int operator<(const HP &rhs) const {
             PT p = b - a;
             PT q = rhs.b - rhs.a;
@@ -1166,24 +1166,24 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             if (cross(p, q)) return cross(p, q) > 0;
             return cross(p, rhs.b - a) < 0;
         }
- 
+
         PT line_line_intersection(PT a, PT b, PT c, PT d) {
             b = b - a;
             d = c - d;
             c = c - a;
             return a + b * cross(c, d) / cross(b, d);
         }
- 
+
         PT intersection(const HP &v) {
             return line_line_intersection(a, b, v.a, v.b);
         }
     };
- 
+
     int check(HP a, HP b, HP c) {
         return cross(a.b - a.a, b.intersection(c) - a.a) >
-               -eps; //-eps to include polygons of zero area (straight lines, points)
+            -eps; //-eps to include polygons of zero area (straight lines, points)
     }
- 
+
     // consider half-plane of counter-clockwise side of each line
     // if lines are not bounded add infinity rectangle
     // returns a convex polygon, a point can occur multiple times though
@@ -1216,7 +1216,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return hull;
     }
- 
+
     // rotate the polygon such that the (bottom, left)-most point is at the first position
     void reorder_polygon(vector<PT> &p) {
         int pos = 0;
@@ -1225,7 +1225,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         rotate(p.begin(), p.begin() + pos, p.end());
     }
- 
+
     // a and b are convex polygons
     // returns a convex hull of their minkowski sum
     // min(a.size(), b.size()) >= 2
@@ -1248,7 +1248,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return c;
     }
- 
+
     // returns the area of the intersection of the circle with center c and radius r
     // and the triangle formed by the points c, a, b
     ld _triangle_circle_intersection(PT c, ld r, PT a, PT b) {
@@ -1281,7 +1281,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return area;
     }
- 
+
     // intersection between a simple polygon and a circle
     ld polygon_circle_intersection(vector<PT> &v, PT p, ld r) {
         int n = v.size();
@@ -1296,7 +1296,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return abs(ans);
     }
- 
+
     // find a circle of radius r that contains as many points as possible
     // O(n^2 log n);
     ld maximum_circle_cover(vector<PT> p, ld r, circle &c) {
@@ -1341,7 +1341,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         c = circle(w, r); //best_circle
         return ans;
     }
- 
+
     // radius of the maximum inscribed circle in a convex polygon
     ld maximum_inscribed_circle(vector<PT> p) {
         int n = p.size();
@@ -1367,7 +1367,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return l;
     }
- 
+
     // ear decomposition, O(n^3) but faster
     vector<vector<PT>> triangulate(vector<PT> p) {
         vector<vector<PT>> v;
@@ -1395,7 +1395,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
         return v;
     }
- 
+
     // # STAR START
     struct star {
         int n;    // number of sides of the star
@@ -1404,7 +1404,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             n = _n;
             r = _r;
         }
- 
+
         ld area() {
             ld theta = PI / n;
             ld s = 2 * r * sin(theta);
@@ -1414,7 +1414,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
             return a - n * a2;
         }
     };
- 
+
     // given a list of lengths of the sides of a polygon in counterclockwise order
     // returns the maximum area of a non-degenerate polygon that can be formed using those lengths
     ld get_maximum_polygon_area_for_given_lengths(vector<ld> v) {
@@ -1455,7 +1455,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
                 l = mid;
             }
         }
- 
+
         if (calc(r) <= 2 * PI - eps) { // the center of the circle is outside the polygon
             auto calc2 = [&](ld r) {
                 ld sum = 0;
@@ -1507,6 +1507,6 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
         }
     }
 }
- 
+
 using geometry::PT;
 using geometry::ld;
