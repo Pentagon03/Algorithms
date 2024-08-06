@@ -1,3 +1,4 @@
+// Link: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/KPATH.cpp
 // Test: https://judge.yosupo.jp/submission/225582
 // Reference: https://judge.yosupo.jp/submission/87297
 // MAX_DISTANCE: Infinity for path length
