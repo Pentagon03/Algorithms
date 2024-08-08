@@ -53,7 +53,7 @@ private:
 	std::vector<int> prev_node;
 public:
 	explicit K_Shortest_Paths_Solver(const Graph& g_, bool is_dag_, Distance MAX_DISTANCE_)
-			: MAX_DISTANCE(MAX_DISTANCE_), g(g_), n(g_.size()), is_dag(is_dag_){}
+			: g(g_), n(g_.size()), is_dag(is_dag_), MAX_DISTANCE(MAX_DISTANCE_) {}
 	// O(m log n)
 	auto dijkstra(const Graph& g_, int s) {
 		std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
@@ -83,7 +83,7 @@ public:
 		std::vector<int> order(n_);
 		std::queue<int> q;
 		for(int u = 0; u < n_; u++)
-			if(!in_deg[u])
+			if(not in_deg[u])
 				q.push(u);
 		for(auto &u : order){
 			if(q.empty()) {
@@ -173,7 +173,7 @@ public:
 				prev_node.push_back(pre);
 			};
 			emplace(d[source] + h[source]->key, h[source]);
-			while (!q.empty() && (int) distances.size() < k) {
+			while (!q.empty() and (int) distances.size() < k) {
 				auto [cd, ch, cur] = q.top();
 				q.pop();
 				distances.push_back(cd);
@@ -209,7 +209,7 @@ public:
 			int cur = source;
 			using std::get;
 			while (cur != sink or idx < (int) sidetracks.size()){
-				if(idx < (int) sidetracks.size() && cur == get<0>(sidetracks[idx])){
+				if(idx < (int) sidetracks.size() and cur == get<0>(sidetracks[idx])){
 					path.push_back(sidetracks[idx]);
 					cur = get<1>(sidetracks[idx]);
 					idx++;
