@@ -31,7 +31,7 @@ template <typename Distance, typename Graph>
 struct K_Shortest_Paths_Solver{
 private:
 	const Distance MAX_DISTANCE;
-	Graph g;
+	const Graph& g;
 	int n;
 	bool is_dag;
 	/*
