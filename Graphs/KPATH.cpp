@@ -52,7 +52,7 @@ private:
 	std::vector<std::pair<Distance, heap_t*>> nodes;
 	std::vector<int> prev_node;
 public:
-	explicit K_Shortest_Paths_Solver(Graph g_, bool is_dag_, Distance MAX_DISTANCE_)
+	explicit K_Shortest_Paths_Solver(const Graph& g_, bool is_dag_, Distance MAX_DISTANCE_)
 			: MAX_DISTANCE(MAX_DISTANCE_), g(g_), n(g_.size()), is_dag(is_dag_){}
 	// O(m log n)
 	auto dijkstra(const Graph& g_, int s) {
