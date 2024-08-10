@@ -11,10 +11,22 @@ struct BIT{
         assert(1 <= p+2 && p+2 <= n);
         for(p+=2;p<=n;p+=p&-p) op(t[p],v);
     }
-    inline T qry(int p){
+    inline T qry(int p) const{
         assert(1 <= p+2 && p+2 <= n);
         T res=0;
         for(p+=2;p>0;p-=p&-p) op(res,t[p]);
         return res;
+    }
+    // min lb>=1 s.t. sum[lb] >= x
+    inline int lower_bound(T x){
+        int p = 0; T sum = 0;
+        for(int i = __lg(n); i >= 0; i--){
+            if((p|1<<i) <= n and sum + t[p | (1<<i)] < x){
+                p |= (1<<i);
+                op(sum, t[p]);
+            }
+        }
+        ++p; //  p=1 -> -1
+        return p-2;
     }
 };
