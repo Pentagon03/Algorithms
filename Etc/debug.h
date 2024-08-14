@@ -24,12 +24,12 @@ namespace __DEBUG_UTIL__
     using namespace std;
     template <typename T>
     concept is_iterable = requires(T &&x) { begin(x); } &&
-                        !is_same_v<remove_cvref_t<T>, string>;
-    void print(const char *x) { cerr << x; }
-    void print(char x) { cerr << "\'" << x << "\'"; }
-    void print(bool x) { cerr << (x ? "T" : "F"); }
-    void print(string x) { cerr << "\"" << x << "\""; }
-    void print(vector<bool> &v)
+                          !is_same_v<remove_cvref_t<T>, string>;
+    inline void print(const char *x) { cerr << x; }
+    inline void print(char x) { cerr << "\'" << x << "\'"; }
+    inline void print(bool x) { cerr << (x ? "T" : "F"); }
+    inline void print(string x) { cerr << "\"" << x << "\""; }
+    inline void print(vector<bool> &v)
     { /* Overloaded this because stl optimizes vector<bool> by using
          _Bit_reference instead of bool to conserve space. */
         int f = 0;
@@ -39,7 +39,7 @@ namespace __DEBUG_UTIL__
         cerr << "}";
     }
     template <typename T>
-    void print(T &&x)
+    inline void print(T &&x)
     {
         if constexpr (is_iterable<T>)
             if (size(x) && is_iterable<decltype(*(begin(x)))>)
@@ -81,15 +81,15 @@ namespace __DEBUG_UTIL__
         {
             int f = 0;
             cerr << '(', apply([&f](auto... args)
-                            { ((cerr << (f++ ? "," : ""), print(args)), ...); },
-                            x);
+                               { ((cerr << (f++ ? "," : ""), print(args)), ...); },
+                               x);
             cerr << ')';
         }
         else
             cerr << x;
     }
     template <typename T, typename... V>
-    void printer(const char *names, T &&head, V &&...tail)
+    inline void printer(const char *names, T &&head, V &&...tail)
     {
         int i = 0;
         for (size_t bracket = 0; names[i] != '\0' and (names[i] != ',' or bracket != 0); i++)
@@ -105,7 +105,7 @@ namespace __DEBUG_UTIL__
             cerr << "]\n";
     }
     template <typename T, typename... V>
-    void printerArr(const char *names, T arr[], size_t N, V... tail)
+    inline void printerArr(const char *names, T arr[], size_t N, V... tail)
     {
         size_t i = 0;
         for (; names[i] and names[i] != ','; i++)
@@ -123,6 +123,7 @@ namespace __DEBUG_UTIL__
     }
 
 }
+
 
 #ifdef LOCAL
 #define debug(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printer(#__VA_ARGS__, __VA_ARGS__)
