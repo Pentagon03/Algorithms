@@ -5,8 +5,8 @@
 		"body": [
 		"#include\"bits/stdc++.h\"",
 		"// put headers before define",
-		"// g++ -std=c++20 -D LOCAL",
-		"#ifdef LOCAL",
+		"// g++ -std=c++20 -D _DEBUG",
+		"#ifdef _DEBUG",
 		"#define Pentagon03",
 		"#include<Pentagon03/debug.h>",
 		"#else",
@@ -38,6 +38,21 @@
 		"}"
 		],
 		"description": "c++ solve"
+	},
+	"c++ debug": {
+		"prefix": "debug",
+		"scope": "cpp",
+		"body": [
+		"// g++ -std=c++20 -D _DEBUG",
+		"#ifdef _DEBUG",
+		"#define Pentagon03",
+		"#include<Pentagon03/debug.h>",
+		"#else",
+		"#define dbg(...) ",
+		"#define dbgArr(...)",
+		"#endif",
+		],
+		"description": "c++ debug"
 	},
 	"simple c++ template": {
 		"prefix": "simple",
@@ -220,9 +235,9 @@
 		"body": [
 			"from sys import stdin, stdout, exit",
 			"rs = lambda:stdin.readline().rstrip()",
-			"ri = lambda:int(RS())",
-			"rl = lambda:list(map(int,RS().split()))",
-			"rll = lambda n: [RI() for _ in range(n)]",
+			"ri = lambda:int(rs())",
+			"rl = lambda:list(map(int,rs().split()))",
+			"rll = lambda n: [ri() for _ in range(n)]",
 			"pr = lambda x:stdout.write(str(x)+'\\n')",
 			"inf = 10**9",
 			"mod = 10**9 + 7",
@@ -237,7 +252,7 @@
 			"",
 			"def main():",
 			"    TC = 1 ",
-			"    TC = RI()",
+			"    TC = ri()",
 			"    for _ in range(TC):",
 			"        solve()",
 			"",

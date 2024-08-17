@@ -1,7 +1,7 @@
 #include"bits/stdc++.h"
 // put headers before define
-// g++ -std=c++20 -D LOCAL
-#ifdef LOCAL
+// g++ -std=c++20 -D _DEBUG
+#ifdef _DEBUG
 #define Pentagon03
 #include<Pentagon03/debug.h>
 #else
