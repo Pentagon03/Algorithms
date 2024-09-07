@@ -19,8 +19,9 @@ public:
 		E.push_back({u, 0, 0, -cost});
 		if (!d) add_edge(v, u, cap, cost);
 	}
+	// put inf for no constrains for _mxcost
 	pair<int, Cost> flow(int s, int t, Cost _mxcost) {
-        mxcost = _mxcost;
+		mxcost = _mxcost;
 		int mf{};
 		while (spfa(s, t)) {
 			fill(last.begin(), last.end(), 0);
