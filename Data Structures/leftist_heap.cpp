@@ -3,7 +3,7 @@
 #include<algorithm>
 
 /**
- * Title: "Min" Leftist Heap
+ * Title: "Min" Leftist Heap which is Persistent.
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
