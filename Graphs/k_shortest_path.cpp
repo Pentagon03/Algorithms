@@ -31,7 +31,7 @@ struct LeftistHeap {
  * Title: K_Shortest_Paths using Eppstein98(https://ics.uci.edu/~eppstein/pubs/Epp-SJC-98.pdf)
  * Prerequisite: Leftist Heap(https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp)
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/k_shortest_path.cpp
- * Test: https://judge.yosupo.jp/submission/237239
+ * Test: https://judge.yosupo.jp/submission/237244
  * Test: https://www.acmicpc.net/source/share/8d790f8092d44b98a679654b9a9ee4ec
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
