@@ -18,7 +18,7 @@ struct LeftistHeap {
                 self_t* right_)
             : node_rank{rank_}, key{key_}, value{value_}, left{left_}, right{right_} {}
     friend self_t* heap_insert(LeftistHeap* a, const Key k, const Value v, std::deque<LeftistHeap>& alloc) {
-        if (not a or not (a->key < k)) { // Important: just checking a->key > k will lead to Low Efficiency of Leftist Heap
+        if (not a or not (a->key < k)) { // Important: k == a.key case should be considerd. if not, k will be repeatively inserted through the whole heap.
             alloc.emplace_back(1, k, v, a, nullptr);
             return &alloc.back();
         }
