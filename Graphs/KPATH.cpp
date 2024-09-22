@@ -1,14 +1,4 @@
 /**
- * Title: K_Shortest_Paths using Eppstein98(https://ics.uci.edu/~eppstein/pubs/Epp-SJC-98.pdf)
- * Prerequisite: Leftist Heap(https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp)
- * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/KPATH.cpp
- * Test: https://judge.yosupo.jp/submission/237239
- * Test: https://www.acmicpc.net/source/share/0c6c77eedc054734a7bf88aed4964d86
- * Reference: nor( https://judge.yosupo.jp/submission/87297 )
- */
-
-
-/**
  * Title: "Min" Leftist Heap 
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
@@ -35,6 +25,15 @@ struct LeftistHeap {
         return &alloc.back();
     }
 };
+
+/**
+ * Title: K_Shortest_Paths using Eppstein98(https://ics.uci.edu/~eppstein/pubs/Epp-SJC-98.pdf)
+ * Prerequisite: Leftist Heap(https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp)
+ * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/KPATH.cpp
+ * Test: https://judge.yosupo.jp/submission/237239
+ * Test: https://www.acmicpc.net/source/share/0c6c77eedc054734a7bf88aed4964d86
+ * Reference: nor( https://judge.yosupo.jp/submission/87297 )
+ */
 
 template <typename Distance, typename Graph>
 struct K_Shortest_Paths_Solver{
