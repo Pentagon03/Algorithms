@@ -32,7 +32,7 @@ struct LeftistHeap {
  * Prerequisite: Leftist Heap(https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp)
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/k_shortest_path.cpp
  * Test: https://judge.yosupo.jp/submission/237239
- * Test: https://www.acmicpc.net/source/share/0c6c77eedc054734a7bf88aed4964d86
+ * Test: https://www.acmicpc.net/source/share/8d790f8092d44b98a679654b9a9ee4ec
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 
