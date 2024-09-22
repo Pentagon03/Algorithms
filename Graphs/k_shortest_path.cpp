@@ -1,5 +1,5 @@
 /**
- * Title: "Min" Leftist Heap which is Persistent.
+ * Title: "Min" Persistent Leftist Heap
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
