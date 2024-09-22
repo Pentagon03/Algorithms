@@ -3,7 +3,7 @@
  * Prerequisite: Leftist Heap
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/KPATH.cpp
  * Test: https://judge.yosupo.jp/submission/237239
- * Test: http://boj.kr/ce82639281744036b3ed06257c5b1d5a
+ * Test: https://www.acmicpc.net/source/share/0c6c77eedc054734a7bf88aed4964d86
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 
