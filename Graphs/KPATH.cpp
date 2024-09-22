@@ -48,7 +48,7 @@ private:
 
     
     std::vector<Distance> d; // d(x): shortest path from x to sink
-    std::vector<int> best; // best(x): next node in the shortest path from from x to sink 
+    std::vector<int> best; // best(x): next node in the shortest path from x to sink 
 
 
     // for edge (u, v, w),  sidetrack(u,v,w) weight will be key, edge (u, v) will be value
