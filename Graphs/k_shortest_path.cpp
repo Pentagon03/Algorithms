@@ -65,7 +65,8 @@ private:
     std::vector<int> path_last_node; // last sidetrack index of "nodes" in K-shortest path
 public:
     /**
-     * g: Given as Reference. g should be valid until we use K_Shortest_Paths_Solver
+     * Graph g: vector<vector<pair<int,Distance>> or other similar structure.
+     * g shoule be given as Reference, should be valid until we use K_Shortest_Paths_Solver.
      * is_dag: whether g is DAG or not.
      * MAX_DISTANCE: maximum value of Distance
      * IDENTITY_DISTANCE: Identity value of Distance
