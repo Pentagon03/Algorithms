@@ -11,7 +11,7 @@ public:
 	vector<bool> vst;
 	vector<Cost> d;
 	Cost tcost{}, mxcost{}, inf{};
-	mcf_graph(int V) : G(V), d(V), last(V), vst(V), inf(numeric_limits<Cost>::max()/4){ }
+	mcf_graph(int V) : G(V), d(V), last(V), vst(V), inf(numeric_limits<Cost>::max()){ }
 	void add_edge(int u, int v, int cap, Cost cost, bool d = true) {
 		G[u].push_back(E.size());
 		E.push_back({v, cap, 0, cost});
