@@ -1,7 +1,7 @@
 /*
 Segment Tree Generalized
 Usage: 
-SegTree st(int, [&](const int &l, const int &r){
+SegTree<int> st(n, [&](const int &l, const int &r){
     return min(l,r);
 });
 Reference: https://codeforces.com/contest/1936/submission/249337780
