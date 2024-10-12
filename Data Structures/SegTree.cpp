@@ -20,6 +20,7 @@ struct SegTree{
         for(int i=0;i<size(v);i++) t[n+i]=v[i];
         for(int i=n-1;i>=1;i--) t[i]=f(t[i<<1],t[i<<1|1]);
     }
+    int get(int i){return t[i+n];}
     void upd(int i,T v){
         t[i+=n]=v;
         for(i>>=1;i>=1;i>>=1) t[i]=f(t[i<<1],t[i<<1|1]);
