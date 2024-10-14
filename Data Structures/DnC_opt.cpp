@@ -13,7 +13,7 @@ void dnc(){
         int il = optl, ir = min(m-1, optr);
         for(int i=il;i<=ir;i++){
             if(pre[i] == -1) continue;
-            int v = pre[i] + C(i+1, m);
+            int v = pre[i] + C(i, m);
             if(cur[m] < v){
                 cur[m] = v;
                 opt = i;
