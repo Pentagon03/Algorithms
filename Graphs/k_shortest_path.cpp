@@ -36,14 +36,14 @@ struct LeftistHeap {
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 
-template <typename Distance, typename Graph>
+template <typename Distance, typename WeightedGraph>
 struct K_Shortest_Paths_Solver{
 private:
     template <typename T> using min_heap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
     using heap_t = LeftistHeap<Distance, std::pair<int, int>>;
 
     const Distance MAX_DISTANCE, IDENTITY_DISTANCE;
-    const Graph& g;
+    const WeightedGraph& g;
     int n;
     bool is_dag; // contains whether this graph is DAG or not.
 
@@ -71,11 +71,11 @@ public:
      * MAX_DISTANCE: maximum value of Distance
      * IDENTITY_DISTANCE: Identity value of Distance
      */
-    explicit K_Shortest_Paths_Solver(const Graph& g_, bool is_dag_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_)
+    explicit K_Shortest_Paths_Solver(const WeightedGraph& g_, bool is_dag_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_)
             : g(g_), n(g_.size()), is_dag(is_dag_), MAX_DISTANCE(MAX_DISTANCE_), IDENTITY_DISTANCE(IDENTITY_DISTANCE_){}
     
     // O(|E| log |V|)
-    auto dijkstra(const Graph& g_, int s) {
+    auto dijkstra(const WeightedGraph& g_, int s) {
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         min_heap<std::pair<Distance, int>> heap;
@@ -96,7 +96,7 @@ public:
     }
 
     // O(|E| + |V|)
-    auto topology_sort(const Graph& g_){
+    auto topology_sort(const WeightedGraph& g_){
         const int n_ = g_.size();
         std::vector<int> in_deg(n_, 0);
         for(int u = 0; u < n_; u++)
@@ -122,7 +122,7 @@ public:
     }
 
     // O(|E| + |V|)
-    auto shortest_path_dag(const Graph& g_, int s){
+    auto shortest_path_dag(const WeightedGraph& g_, int s){
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         d_[s] = IDENTITY_DISTANCE;
@@ -141,7 +141,7 @@ public:
 
     // O(|E| log |V| + |K|)
     auto k_shortest_paths(int source, int sink, int k) {
-        Graph g_rev(n);
+        WeightedGraph g_rev(n);
         for (int u = 0; u < n; ++u)
             for (auto &[v, w] : g[u])
                 g_rev[v].push_back({u, w});

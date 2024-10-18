@@ -4,11 +4,11 @@
  */
 using W = int;
 constexpr W INF_ = numeric_limits<W>::max() / 2; // INF + INF doesn't overflow
-struct Graph{
+struct WeightedGraph{
     using Edge = tuple<int, int, W>;
     int n; // vertex from 0 to n-1
     vector<vector<pair<int, W>>> g;
-    Graph(int n_):n(n_), g(n){}
+    WeightedGraph(int n_):n(n_), g(n){}
     void add_edge(int a, int b, W w = 1, bool directed = true){
         assert(a < n and b < n);
         g[a].emplace_back(b, w);

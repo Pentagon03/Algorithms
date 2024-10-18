@@ -41,11 +41,11 @@ struct LeftistHeap {
 // Reference: https://judge.yosupo.jp/submission/87297
 // MAX_DISTANCE: Infinity for path length
 
-template <typename Distance, typename Graph>
+template <typename Distance, typename WeightedGraph>
 struct K_Shortest_Paths_Solver{
 private:
     const Distance MAX_DISTANCE, BASE_DISTANCE;
-    const Graph& g;
+    const WeightedGraph& g;
     int n;
     bool is_dag;
     /*
@@ -67,10 +67,10 @@ private:
     std::vector<std::pair<Distance, int>> nodes;
     std::vector<int> prev_node;
 public:
-    explicit K_Shortest_Paths_Solver(const Graph& g_, bool is_dag_, Distance MAX_DISTANCE_, Distance BASE_DISTANCE_)
+    explicit K_Shortest_Paths_Solver(const WeightedGraph& g_, bool is_dag_, Distance MAX_DISTANCE_, Distance BASE_DISTANCE_)
             : g(g_), n(g_.size()), is_dag(is_dag_), MAX_DISTANCE(MAX_DISTANCE_), BASE_DISTANCE(BASE_DISTANCE_), pivot(0){}
     // O(m log n)
-    auto dijkstra(const Graph& g_, int s) {
+    auto dijkstra(const WeightedGraph& g_, int s) {
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         min_heap<std::pair<Distance, int>> heap;
@@ -89,7 +89,7 @@ public:
         }
         return std::make_pair(d_, prv);
     }
-    auto topology_sort(const Graph& g_){
+    auto topology_sort(const WeightedGraph& g_){
         const int n_ = g_.size();
         std::vector<int> in_deg(n_, 0);
         for(int u = 0; u < n_; u++)
@@ -114,7 +114,7 @@ public:
         return order;
     }
     // O(n + m)
-    auto shortest_path_dag(const Graph& g_, int s){
+    auto shortest_path_dag(const WeightedGraph& g_, int s){
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         d_[s] = BASE_DISTANCE;
@@ -131,7 +131,7 @@ public:
         return std::make_pair(d_, prv);
     }
     auto k_shortest_paths(int source, int sink, int k) {
-        Graph g_rev(n);
+        WeightedGraph g_rev(n);
         for (int u = 0; u < n; ++u)
             for (auto &[v, w] : g[u])
                 g_rev[v].push_back({u, w});
