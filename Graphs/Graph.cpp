@@ -20,7 +20,7 @@ struct WeightedGraph{
     }
     void add_edges(const vector<pair<int,int>>&edge_list, bool directed = true){
         for(auto&[a, b]: edge_list)
-            add_edge(a, b, 1, directed);
+            add_edge(a, b);
     }
     void shuffle(){
         static mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
