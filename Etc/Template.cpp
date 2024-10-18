@@ -1,4 +1,7 @@
+//https://github.com/Pentagon03/Algorithms
+#pragma GCC optimize("Ofast")
 #include"bits/stdc++.h"
+using namespace std;
 // put headers before define
 // g++ -std=c++20 -D _DEBUG
 #ifdef _DEBUG
@@ -8,17 +11,14 @@
 #define dbg(...) 
 #define dbgArr(...)
 #endif
-
-#pragma GCC optimize("Ofast,unroll-loops")
-using namespace std;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
-template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); std::uniform_int_distribution<T> dist(l, r); return dist(gen);}
+template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}
 #define all(v) (v).begin(),(v).end()
-#define setarr(A, x) memset(A, x, sizeof A)
 #define nl '\n'
 #define sp ' '
 #define int int64_t
 using ll = int64_t; using pii = pair<int,int>; int cur_tc;
+constexpr int inf = (int) 1e9 + 3; constexpr ll infl = (ll) 1e18 + 3;
 
 
 int32_t main(){
