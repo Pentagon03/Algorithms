@@ -21,11 +21,12 @@ struct two_sat{
         auto[x,y] = stk.back(); stk.pop_back();
         scc.g[x^1].pop_back(); scc.g[y^1].pop_back();
     }
-    // (i = a OR j = b)
+    // (x OR y) <=> (~x -> y AND ~y -> x)
     void add_clause(int x,int y){
         // stk.emplace_back(x, y); // optional
         scc.add_edge(x^1, y); scc.add_edge(y^1, x);
     }
+    // (i = a OR j = b)
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
         assert(0 <= j && j < n && "j in range");
@@ -33,8 +34,8 @@ struct two_sat{
     }
     // ((i == a) == (j == b))
     void is_equal(int i, bool a, int j, bool b){
-        add_clause(i, a, j, !b);
-        add_clause(i, !a, j, b);
+        add_clause(i, a, j, b);
+        add_clause(i, !a, j, !b);
     }
     void atMostOneNaive(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
@@ -69,7 +70,7 @@ struct two_sat{
         auto&&id = scc.scc_id();
         ans = vector<bool>(n);
         for(int i = 0; i < n; i++){
-            if(id[2*i] == id[2*i+1]) return false;
+            if(id[2*i] == id[2*i+1]) return false; // (i, false) and (i, true) in same SCC
             ans[i] = id[2*i+1] > id[2*i];
         }
         return true;
