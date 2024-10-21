@@ -10,12 +10,19 @@ def stress_test(file="sol", start=1, file_sol = "", file_gen = ""):
     i = start
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Directory Path
     
-    if not file_gen:
-        file_gen = f"{file}_gen"
-    file_gen = os.path.join(script_dir, file_gen) # Generator
+    
     if not file_sol:
         file_sol = f"{file}_sol"
     file_sol = os.path.join(script_dir, file_sol) # Solution or Brute Force
+
+    if not file_gen:
+        file_gen = f"{file}_gen"
+    file_gen = os.path.join(script_dir, file_gen) # Generator
+
+    if not os.path.exists(file_sol):
+        print("No Solution File")
+    if not os.path.exists(file_gen):
+        print("No Generator File")
 
     while True:
         input_file = os.path.join(script_dir, f"{i}.in") # Input File
@@ -23,25 +30,24 @@ def stress_test(file="sol", start=1, file_sol = "", file_gen = ""):
         my_out = os.path.join(script_dir, f"{i}.my") # My Output File
             
         if not os.path.exists(input_file):
-            if os.system(f"{file_gen} {i} > {input_file}"):  # {i} is Seed (Use args)
-                print(f"No {file_gen} Generator or Error Occurred")
+            if not os.path.exists(file_gen):
+                print("Every Test Passed!")
+                break
+            elif os.system(f"{file_gen} {i} > {input_file}"):  # {i} is Seed (Use args)
+                print(f"Generator Error Occurred")
                 break
         if os.path.exists(file_sol):
             if os.system(f"{file_sol} < {input_file} > {ans_out}"):
-                print(f"{file_sol} Error Occurred")
+                print(f"Solution Error Occurred")
                 break
         if not os.path.exists(ans_out):
-            print(f"No {ans_out}")
-            break
-        if os.system(f"{file_sol} < {input_file} > {ans_out}"):
-            print(f"No {file_sol} Solution or Error Occurred")
+            print(f"No Output File")
             break
         
-        print(f"Testcase No.{i}")
+        print(f"Testcase {i}")
         if os.system(f"{os.path.join(script_dir, file)} < {input_file} > {my_out}"): 
             print(f"No {file} or Error Occurred")
             break
-        
         if open(my_out).read().rstrip() != open(ans_out).read().rstrip(): # eliminate rstrip if needed
             print("Output is Different")
             break
