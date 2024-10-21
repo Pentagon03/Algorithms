@@ -35,7 +35,7 @@ python stress.py <file_name> <start_index> <solution_file> <generator_file>
 python stress.py
 ```
 - `sol` 프로그램을 사용하여 1번 테스트 케이스부터 스트레스 테스트를 수행합니다.
-- 폴더 안에 `{번호}.in` 파일이 존재하지 않으면 프로그램이 중지됩니다.
+- 폴더 안에 `{번호}.in` 파일 또는 `{file_name}_gen`이 존재하지 않으면 프로그램이 중지됩니다.
 - 폴더 안에 `{번호}.ans` 파일 또는 `{file_name}_sol`이 존재해야 합니다.
 - 테스트 케이스 출력과 정답 파일의 출력이 다를 경우 중지됩니다.
 
