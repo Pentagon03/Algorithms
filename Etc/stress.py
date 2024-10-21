@@ -10,7 +10,6 @@ def stress_test(file="sol", start=1, file_sol = "", file_gen = ""):
     i = start
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Directory Path
     
-    
     if not file_sol:
         file_sol = f"{file}_sol"
     file_sol = os.path.join(script_dir, file_sol) # Solution or Brute Force
