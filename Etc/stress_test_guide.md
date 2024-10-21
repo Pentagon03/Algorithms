@@ -1,6 +1,7 @@
 # 스트레스 테스트 스크립트
 - [코드 링크](https://github.com/Pentagon03/Algorithms/blob/master/Etc/stress.py)
 - 원하는 코드를 올바른 출력과 자동으로 비교하는 스트레스 테스터입니다.
+- 이 코드는 Windows11 플랫폼에서 테스트 되었습니다.
 - 자유롭게 파일을 수정해도 됩니다. 배포 시 이 파일을 출처로 남겨 주세요.
 
 ## 사용법
@@ -35,6 +36,8 @@ python stress.py <file_name> <start_index> <solution_file> <generator_file>
 ```bash
 python stress.py
 ```
+- 폴더에 `sol.cpp, 1.in, 1.ans ~ 3.in, 3.ans`이 있는 상황입니다.
+- `sol.cpp`를 컴파일하여 `sol.exe` 또는 `sol`을 만듭니다.
 - `sol` 프로그램을 사용하여 1번 테스트 케이스부터 스트레스 테스트를 수행합니다.
 - 폴더 안에 `{번호}.in` 파일과 `{file_name}_gen`이 모두 존재하지 않으면 프로그램이 중지됩니다.
 - 폴더 안에 `{번호}.ans` 파일과 `{file_name}_sol`이 모두 존재하지 않으면 프로그램이 중지됩니다.
