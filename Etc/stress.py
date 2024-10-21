@@ -1,3 +1,15 @@
+'''
+3줄 요약:
+1. 스트레스테스터, 내 코드,  모든 테스트케이스 파일, (필요시 제너레이터, 브루트포스 코드) 한 곳에 몰아넣고 컴파일 해놓기.
+2. in / out 파일 이름은 {번호}.in, {번호}.ans 여야 하며, 필요시 변경할 것
+3. python stress.py [내 코드 이름], [앞글자 t면 제너레이터 사용], [테케시작번호] -> 이렇게 실행시 스트레스 테스트 해줌
+
+python stress.py <file_name> <generator_flag> [start_index]
+- stress.py and every input / output file, script should be in the same file
+- compile your latest script and make a executable file.
+- generator = True -> make a {file}_gen executable test case generator (stdout)
+- no {i}.ans file? -> make a {file}_ok executable bruteforce solution
+'''
 import os
 import sys
 
