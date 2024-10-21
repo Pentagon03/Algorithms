@@ -26,7 +26,7 @@ struct two_sat{
         // stk.emplace_back(x, y); // optional
         scc.add_edge(x^1, y); scc.add_edge(y^1, x);
     }
-    // (i = a OR j = b)
+    // (i = a OR j = b) <=> if one is false, the other is true
     void add_clause(int i, bool a, int j, bool b){
         assert(0 <= i && i < n && "i in range");
         assert(0 <= j && j < n && "j in range");
@@ -34,8 +34,8 @@ struct two_sat{
     }
     // ((i == a) == (j == b))
     void is_equal(int i, bool a, int j, bool b){
-        add_clause(i, a, j, !b);
-        add_clause(i, !a, j, b);
+        add_clause(i, a, j, !b); // if i == !a, then j == !b
+        add_clause(i, !a, j, b); // if i == a, then j == b
     }
     void atMostOneNaive(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
