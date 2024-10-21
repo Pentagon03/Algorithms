@@ -34,8 +34,8 @@ struct two_sat{
     }
     // ((i == a) == (j == b))
     void is_equal(int i, bool a, int j, bool b){
-        add_clause(i, a, j, b);
-        add_clause(i, !a, j, !b);
+        add_clause(i, a, j, !b);
+        add_clause(i, !a, j, b);
     }
     void atMostOneNaive(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
