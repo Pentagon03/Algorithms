@@ -888,6 +888,7 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
     // call convex_hull() before this for faster solution
     // expected O(n)
     circle minimum_enclosing_circle(vector<PT> &p) {
+        srand(time(NULL));
         random_shuffle(p.begin(), p.end());
         int n = p.size();
         circle c(p[0], 0);
