@@ -1,5 +1,5 @@
 // from: https://codeforces.com/contest/1936/submission/249350779
-namespace geometry { // https://victorlecomte.com/cp-geo.pdf
+namespace geo { // https://victorlecomte.com/cp-geo.pdf
     using ld = long double;
     const ld inf = 1e100;
     const ld eps = 1e-9;
@@ -1509,5 +1509,5 @@ namespace geometry { // https://victorlecomte.com/cp-geo.pdf
     }
 }
 
-using geometry::PT;
-using geometry::ld;
+using geo::PT;
+using geo::ld;
