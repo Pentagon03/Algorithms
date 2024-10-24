@@ -3,9 +3,9 @@
  * cmp 상으로 가장 큰 것이 반환됨
  * T에는 == operator가 있어야 함.
  */
-template<class T, class container = vector<T>, class cmp = less<T>>
+template<class T, class cmp = less<T>>
 struct heap{
-    priority_queue<T, container, cmp> iq, dq;
+    priority_queue<T, vector<T>, cmp> iq, dq;
     cmp f;
     bool eq(const T&l, const T&r){return not f(l, r) and not f(r, l);}
     void push(T x){iq.push(x);}
