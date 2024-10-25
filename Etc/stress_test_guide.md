@@ -1,7 +1,7 @@
 # 스트레스 테스트 스크립트
 - [코드 링크](https://github.com/Pentagon03/Algorithms/blob/master/Etc/stress.py)
 - 원하는 코드를 올바른 출력과 자동으로 비교하는 스트레스 테스터입니다.
-- 이 코드는 Windows11 플랫폼에서 테스트 되었습니다.
+- 이 코드는 Windows11에서 테스트 되었습니다.
 - 자유롭게 파일을 수정해도 됩니다. 배포 시 이 파일을 출처로 남겨 주세요.
 
 ## 사용법
@@ -9,7 +9,9 @@
 - 출력파일 또는 (브루트포스) 솔루션 코드가 준비되어 있어야 합니다.
 - 이제 준비한 모든 파일을 한 폴더에 넣습니다.
 - "파일 규칙"을 참고해주세요.
+- 자동으로 모든 .cpp 파일을 컴파일하므로, 수정이 필요할 경우 stress.py를 수정합니다.
 - 파이썬 파일 내부에서 stress_test 함수를 원하는 인자에 따라 호출하거나, 아래 커맨드를 사용합니다.
+- StressTestExample 폴더를 참고하셔도 좋습니다.
 ```bash
 python stress.py <file_name> <start_index> <solution_file> <generator_file> 
 ```
@@ -17,8 +19,9 @@ python stress.py <file_name> <start_index> <solution_file> <generator_file>
 ### 파일 규칙
 - 입력 파일: `{번호}.in`
 - 정답 파일: `{번호}.ans`
+- 확장자가 다를 경우 본 파일의 rename_files 함수를 사용해주세요.
 - 실행파일, 제너레이터, 솔루션은 모두 컴파일되어 있어야 합니다.
-- 실행파일의 기본값은 `sol`입니다.
+- 실행파일의 기본값은 `a`입니다.
 - 솔루션과 제너레이터의 기본값은 `{실행파일이름}_sol`와 `{실행파일이름}_gen`. 입니다.
 - 사용자 출력 파일 `{번호}.my`가 자동으로 생성됩니다.
 - 제너레이터 파일보다 기존 .in 파일이 우선순위가 높습니다.
@@ -36,9 +39,9 @@ python stress.py <file_name> <start_index> <solution_file> <generator_file>
 ```bash
 python stress.py
 ```
-- 폴더에 `sol.cpp, 1.in, 1.ans ~ 3.in, 3.ans`이 있는 상황입니다.
-- `sol.cpp`를 컴파일하여 `sol.exe` 또는 `sol`을 만듭니다.
-- `sol` 프로그램을 사용하여 1번 테스트 케이스부터 스트레스 테스트를 수행합니다.
+- 폴더에 `a.cpp, 1.in, 1.ans ~ 3.in, 3.ans`이 있는 상황입니다.
+- `a.cpp`를 컴파일하여 `a.exe` 또는 `a`을 만듭니다.
+- `a` 프로그램을 사용하여 1번 테스트 케이스부터 스트레스 테스트를 수행합니다.
 - 폴더 안에 `{번호}.in` 파일과 `{file_name}_gen`이 모두 존재하지 않으면 프로그램이 중지됩니다.
 - 폴더 안에 `{번호}.ans` 파일과 `{file_name}_sol`이 모두 존재하지 않으면 프로그램이 중지됩니다.
 - 테스트 케이스 출력과 정답 파일의 출력이 다를 경우 중지됩니다.
