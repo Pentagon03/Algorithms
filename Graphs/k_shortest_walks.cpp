@@ -13,12 +13,14 @@ struct LeftistHeap {
     LeftistHeap(int rank_, Key key_, Value value_, self_t* left_,
                 self_t* right_)
             : node_rank{rank_}, key{key_}, value{value_}, left{left_}, right{right_} {}
-    friend self_t* heap_insert(LeftistHeap* a, const Key k, const Value v, std::deque<LeftistHeap>& alloc) {
+    // contains Leftistheap itself for each node. We use deque for non-reallocation such as vector. pointers don't get invalidated.
+    inline static thread_local std::deque<LeftistHeap> alloc;
+    friend self_t* heap_insert(LeftistHeap* a, const Key &k, const Value &v) {
         if (not a or not (a->key < k)) { // Important: k == a.key case should be considerd. if not, k will be repeatively inserted through the whole heap.
             alloc.emplace_back(1, k, v, a, nullptr);
             return &alloc.back();
         }
-        auto l = a->left, r = heap_insert(a->right, k, v, alloc);
+        auto l = a->left, r = heap_insert(a->right, k, v);
         // Gurantee => l valid and l->rank >= r->rank
         if (not l or l->node_rank < r->node_rank)
             std::swap(l, r);
@@ -28,32 +30,30 @@ struct LeftistHeap {
 };
 
 /**
- * Title: K_Shortest_Paths using Eppstein98(https://ics.uci.edu/~eppstein/pubs/Epp-SJC-98.pdf)
+ * Title: K Shortest Walks using Eppstein98(https://ics.uci.edu/~eppstein/pubs/Epp-SJC-98.pdf)
+ * You can get distances, and recover full path.
  * Prerequisite: Leftist Heap(https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp)
- * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/k_shortest_path.cpp
- * Test: https://judge.yosupo.jp/submission/237244
- * Test: https://www.acmicpc.net/source/share/8d790f8092d44b98a679654b9a9ee4ec
+ * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Graphs/k_shortest_walks.cpp
+ * Test: https://judge.yosupo.jp/submission/244972
+ * Test: https://www.acmicpc.net/source/share/ff1b64260b894885b6ed1503fc11c8a7
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 
-template <typename Distance, typename WeightedGraph>
-struct K_Shortest_Paths_Solver{
+template <class Distance, class WeightedGraph>
+struct kShortestWalksSolver{
 private:
-    template <typename T> using min_heap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
-    using heap_t = LeftistHeap<Distance, std::pair<int, int>>;
-
     const Distance MAX_DISTANCE, IDENTITY_DISTANCE;
     const WeightedGraph& g;
     int n;
     bool is_dag; // contains whether this graph is DAG or not.
+    bool negative_edge; // contains whether this graph contains neagative edge weight
 
-    
+    template <typename T> using min_heap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
     std::vector<Distance> d; // d(x): shortest path from x to sink
     std::vector<int> best; // best(x): next node in the shortest path from x to sink 
 
-
-    // for edge (u, v, w),  sidetrack(u,v,w) weight will be key, edge (u, v) will be value
-    std::deque<heap_t> alloc; // contains heap itself for each node. We use deque for non-reallocation such as vector. pointers doesn't get invalidated.
+    // LeftistHeap: for edge (u, v, w),  sidetrack(u,v,w) weight will be key, edge (u, v) will be value
+    using heap_t = LeftistHeap<Distance, std::pair<int, int>>;
     std::vector<heap_t*> h; // contains heap pointer for each node
 
     std::vector<Distance> distances; // distance of K-shortest path
@@ -71,15 +71,15 @@ public:
      * MAX_DISTANCE: maximum value of Distance
      * IDENTITY_DISTANCE: Identity value of Distance
      */
-    explicit K_Shortest_Paths_Solver(const WeightedGraph& g_, bool is_dag_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_)
-            : g(g_), n(g_.size()), is_dag(is_dag_), MAX_DISTANCE(MAX_DISTANCE_), IDENTITY_DISTANCE(IDENTITY_DISTANCE_){}
+    explicit kShortestWalksSolver(const WeightedGraph& g_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_, bool is_dag_ = false, bool negative_edge_ = false)
+            : g(g_), n(g_.size()), MAX_DISTANCE(MAX_DISTANCE_), IDENTITY_DISTANCE(IDENTITY_DISTANCE_), is_dag(is_dag_), negative_edge(negative_edge_) {}
     
-    // O(|E| log |V|)
-    auto dijkstra(const WeightedGraph& g_, int s) {
+    // returns {distance vector, prev vertex vector}
+    std::pair<std::vector<Distance>, std::vector<int>> dijkstra(const WeightedGraph& g_, int src) {
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         min_heap<std::pair<Distance, int>> heap;
-        heap.emplace(d_[s] = IDENTITY_DISTANCE, s);
+        heap.emplace(d_[src] = IDENTITY_DISTANCE, src);
         while (!heap.empty()) {
             auto [dv, v] = heap.top();
             heap.pop();
@@ -92,11 +92,53 @@ public:
                 }
             }
         }
-        return std::make_pair(d_, prv);
+        return std::make_pair(std::move(d_), std::move(prv));
+    }
+
+    // returns {empty vector, cycle} if there is a negative cycle
+    // returns {distance vector, prev vertex vector}
+    std::pair<std::vector<Distance>, std::vector<int>> bellman_ford(const WeightedGraph& g_, int src){
+        std::vector<Distance> dis(n, MAX_DISTANCE);
+        std::vector<int> prv(n, -1);
+        auto detect_cycle = [&](int x)->vector<int>{
+            vector<bool> vis(n);
+            vector<int> t;
+            while(true){
+                t.push_back(x);
+                if(vis[x]) break;
+                vis[x] = true;
+                x = prv[x];
+            }
+            int last = t.back();
+            reverse(t.begin(), t.end());
+            while(t.back() != last) t.pop_back();
+            return move(t);
+        };
+
+        std::queue<std::pair<Distance, int>> q({{dis[src] = IDENTITY_DISTANCE, src}}); // SPFA
+        for(int i = 1; i <= n and not q.empty(); i++){
+            int sz = q.size();
+            for(int j = 0; j < sz; j++){
+                auto [cur_dis, x] = q.front(); q.pop();
+                if(cur_dis > dis[x]) continue;
+                for(auto[nx, w]: g_[x]){
+                    if(dis[nx] > dis[x] + w){
+                        dis[nx] = dis[x] + w;
+                        prv[nx] = x;
+                        if(i == n){
+                            assert(0 and "Negative Cycle Occured");
+                            return std::make_pair(std::vector<Distance>(), detect_cycle(nx));
+                        }
+                        q.emplace(dis[nx], nx);
+                    }
+                }
+            }
+        }
+        return std::make_pair(std::move(dis), std::move(prv));
     }
 
     // O(|E| + |V|)
-    auto topology_sort(const WeightedGraph& g_){
+    std::vector<int> topology_sort(const WeightedGraph& g_){
         const int n_ = g_.size();
         std::vector<int> in_deg(n_, 0);
         for(int u = 0; u < n_; u++)
@@ -118,15 +160,16 @@ public:
                 if(--in_deg[v] == 0)
                     q.push(v);
         }
-        return order;
+        return move(order);
     }
 
     // O(|E| + |V|)
-    auto shortest_path_dag(const WeightedGraph& g_, int s){
+    // returns 
+    std::pair<vector<Distance>, vector<int>> shortest_path_dag(const WeightedGraph& g_, int s){
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         d_[s] = IDENTITY_DISTANCE;
-        auto &&order = topology_sort(g_);
+        auto order = topology_sort(g_);
         for(auto v: order){
             if(d_[v] == MAX_DISTANCE) continue;
             for(auto &[to, w] : g_[v]){
@@ -136,27 +179,28 @@ public:
                 }
             }
         }
-        return std::make_pair(d_, prv);
+        return std::make_pair(move(d_), move(prv));
     }
 
     // O(|E| log |V| + |K|)
-    auto k_shortest_paths(int source, int sink, int k) {
+    // returns vector of distances
+    std::vector<Distance> k_shortest_paths(int source, int sink, int k) {
         WeightedGraph g_rev(n);
         for (int u = 0; u < n; ++u)
             for (auto &[v, w] : g[u])
                 g_rev[v].push_back({u, w});
         if(is_dag) std::tie(d, best) = shortest_path_dag(g_rev, sink);
-        else std::tie(d, best) = dijkstra(g_rev, sink);
+        else if(not negative_edge) std::tie(d, best) = dijkstra(g_rev, sink);
+        else std::tie(d, best) = bellman_ford(g_rev, sink);
         
         if (d[source] == MAX_DISTANCE)
-            return std::vector<Distance>{};
+            return move(std::vector<Distance>{});
 
         std::vector<std::basic_string<int>> tree(n);
         for (int u = 0; u < n; ++u)
             if (best[u] != -1)
                 tree[best[u]].push_back(u); // u will adopt best[u]'s heap
         
-        alloc.clear();
         h = std::vector<heap_t*>(n, nullptr);
         {
             std::queue<int> q({sink});
@@ -172,7 +216,7 @@ public:
                         seen_p = true; // we can only skip once.
                         continue;
                     }
-                    h[u] = heap_insert(h[u], c, {u, v}, alloc);
+                    h[u] = heap_insert(h[u], c, {u, v});
                 }
                 for (auto p : tree[u]) h[p] = h[u], q.push(p); // This works fast since this is basically a pointer
             }
@@ -189,7 +233,7 @@ public:
         prev_node.reserve(3 * k);
 
         if (not h[source])
-            return distances;
+            return move(distances);
 
         {
             min_heap<std::tuple<Distance, heap_t*, int>> q;
@@ -211,9 +255,11 @@ public:
                 if (ch->right) emplace(cd + ch->right->key - ch->key, ch->right, prev_node[cur]); // same heap, add difference
             }
         }
-        return distances;
+        return move(distances);
     }
-    auto kth_shortest_full_path(int source, int sink, int k, bool call_k_paths = false) {
+
+    // returns list of edges
+    std::vector<std::tuple<int, int, Distance>> kth_shortest_full_path(int source, int sink, int k, bool call_k_paths = false) {
         if (call_k_paths)
             k_shortest_paths(source, sink, k + 1);
         std::vector<std::tuple<int, int, Distance>> path{};
@@ -248,6 +294,6 @@ public:
                 }
             }
         }
-        return path;
+        return move(path);
     }
 };
