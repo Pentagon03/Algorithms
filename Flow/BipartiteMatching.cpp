@@ -10,6 +10,7 @@ get_min_vertex_cover: [groupA/B, vertex]
 get_max_independent_set: [groupA/B, vertex], complement of min_vertex_cover.
 */
 struct BipartiteMatching{
+    using pii = pair<int,int>;
     vector<int> vis, A, B;
     vector<vector<int>> g;
     int pv;
