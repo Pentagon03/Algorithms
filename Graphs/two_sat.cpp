@@ -32,10 +32,10 @@ struct two_sat{
         assert(0 <= j && j < n && "j in range");
         add_clause(idx(i, a), idx(j, b));
     }
-    // ((i == a) == (j == b))
+    // ((i == a) == (j == b))   <-> not ( (i == a and j == !b) or (i==!a and j==b) ) <=> (i==!a or j ==b) and (i==a or j==!b)
     void is_equal(int i, bool a, int j, bool b){
-        add_clause(i, a, j, !b); // if i == !a, then j == !b
-        add_clause(i, !a, j, b); // if i == a, then j == b
+        add_clause(i, a, j, !b);
+        add_clause(i, !a, j, b);
     }
     void atMostOneNaive(const vector<pair<int,bool>>& v){
         if(v.size() <= 1) return;
