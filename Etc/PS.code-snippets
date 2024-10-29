@@ -65,7 +65,6 @@
 			"#define sp ' '",
 			"#define nl '\\n'",
 			"#define all(v) (v).begin(), (v).end()",
-			"#define dbg(x) cerr<<#x<<\": \"<<x<<endl",
 			"#define int long long",
 			"using ll = long long;",
 			"",

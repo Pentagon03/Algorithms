@@ -1,9 +1,12 @@
 /*
 Bipartite matching
+이분매칭 - 이분 그래프에서 간선을 선택할건데, 각 정점은 최대 한번만 선택 가능. 선택 가능한 최대 간선 수.
+최소버텍스커버 - 모든 간선의 최소 한 끝점이 선택되기 위한 최소 정점 집합
+최대독립집합 - 어떤 정점도 인접하지 않은 최대 정점 집합
 max_matching for matching value
 get_max_matching for actual matchings (vector<pii>)
-get_min_vertex_cover: [group, vertex]
-get_max_independent_set: [group, vertex], complement of min_vertex_cover.
+get_min_vertex_cover: [groupA/B, vertex]
+get_max_independent_set: [groupA/B, vertex], complement of min_vertex_cover.
 */
 struct BipartiteMatching{
     vector<int> vis, A, B;
@@ -53,7 +56,6 @@ struct BipartiteMatching{
         }
         return ans;
     }
-    //증명: https://m.blog.naver.com/kks227/220967185015
     vector<pii> get_min_vertex_cover(){
         if(pv == 0) max_matching();
         vector<vector<int>> g2(size(B));
