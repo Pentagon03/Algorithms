@@ -6,7 +6,7 @@ for(int i = mask; i > 0; i = i-1 & mask)
 	F[mask] += A[i];
 
 // 2. SOS DP, O(N 2^N).  S(i, mask) as set of subsets such that it differ for the first $i$ bits. (0-based)
-for(int i=0;<(1<<N);i++) F[i] = A[i];
+for(int i=0;i<(1<<N);i++) F[i] = A[i];
 for(int i=0;i<N;i++) for(int mask=0;mask<(1<<N);mask++)
 	if(mask & (1<<i))
 		F[mask] += F[mask ^ (1<<i)]  
