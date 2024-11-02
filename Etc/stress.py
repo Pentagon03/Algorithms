@@ -18,6 +18,7 @@ def rename_files(ext_a, ext_b):
         os.rename(filename, new_name)
         print(f"{filename} -> {new_name}")
 
+# import compile_cpp_files
 # cpp 파일 일괄 컴파일
 def compile_cpp_files():
     # 현재 디렉터리에서 모든 .cpp 파일 검색
