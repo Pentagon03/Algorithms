@@ -1,4 +1,4 @@
-// [Option 1]
+// [Option 1] (Faster)
 // test: http://boj.kr/12401ac7a9414dc8b96b8c2ebbf6eb49
 // watch here: https://github.com/ngthanhtrung23/ACM_Notebook_new/blob/master/Math/bigint.h
 
