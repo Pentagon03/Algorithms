@@ -1,4 +1,5 @@
-#Usage: python _atcoder_expander.py [Source].cpp
+# Atcoder Expander: https://atcoder.github.io/ac-library/production/document_en/appendix.html
+# Usage: python _atcoder_expander.py [Source].cpp
 
 #!/usr/bin/env python3
 
