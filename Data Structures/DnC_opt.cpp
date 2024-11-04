@@ -1,31 +1,32 @@
-void dnc(){
-    auto C = [&](int i, int j){
-        // some monge array.
+/**
+ * cur[i] = min(pre[j] + C(j,i)) 
+ * if Opt(i) is monotone, we can apply Dnc opt.
+ * Usually C(j, i) is a monge array
+*/
+auto dnc = [&](int steps, int n){
+    const ll infl = numeric_limits<ll>::max()/2; 
+    auto C = [&](int j, int i){
+        // You should carefully handle j > i case
+        if(j > i) return infl;
+        return ;
     };
-    vector<int> pre(n+1, -1), cur(n+1);
-    pre[0] = 0;
-    // we get dp(k, l ~ r), we see dp(k-1, optl ~ optr).
+    vector<ll> pre(n+1), cur(n+1);
+    for(int i=0;i<=n;i++) pre[i] = C(i, 0);
     auto dnc = [&](auto&self, int l, int r, int optl, int optr){
         if(l > r) return;
         int m = l + r >> 1;
-        cur[m] = -1;
-        int opt = 0;
-        int il = optl, ir = min(m-1, optr);
-        for(int i=il;i<=ir;i++){
-            if(pre[i] == -1) continue;
-            int v = pre[i] + C(i, m);
-            if(cur[m] < v){
-                cur[m] = v;
-                opt = i;
-            }
+        pair<ll, int> best({infl, m});
+        for(int i=optl;i<=min(m, optr);i++){
+            if(pre[i] >= infl) continue;
+            best = min(best, {pre[i] + C(i, m), i});
         }
+        int opt; tie(cur[m], opt) = best;
         self(self, l, m-1, optl, opt);
         self(self, m+1, r, opt, optr);
     };
-    for(int i=1;i<=n;i++){
-        dnc(dnc, 1, n, 0, n);
-        cur[0] = -1;
-        cout << cur[n] << '\n';
+    for(int i=1;i<=steps;i++){
+        dnc(dnc, 0, n, 0, n);
         pre.swap(cur);
     }
-}
+    return pre;
+};

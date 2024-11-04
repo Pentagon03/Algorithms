@@ -18,6 +18,7 @@
 		"// put ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset",
 		"using namespace std;",
 		"template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}",
+		"template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}",
 		"template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}",
 		"#define all(v) (v).begin(),(v).end()",
 		"#define nl '\\n'",

@@ -15,3 +15,5 @@ void prt(T &&v, Args &&...args) {
     cout << forward<T>(v) << ' ';
     prt(forward<Args>(args)...);
 };
+
+#include<Pentagon03/debug.h>
