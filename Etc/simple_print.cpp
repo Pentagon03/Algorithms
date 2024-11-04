@@ -1,23 +1,31 @@
-// source: swoon, pentagon03
+/** print function that can print any element or iterable
+ * source: swoon. edited by pentagon03
+ * set 'debug_ = 1' to change from cout to cerr
+ * ex)
+ * vector<vector<int>> v = {{1,2,3}, {3,4,5}, {5,6,7}};
+ * int a = 3; double b = 3.14; string c = "asdf";
+ * print(v, a, b, c);
+ */
+constexpr bool debug_ = 0;
 template<class T>
-void prt(T &&v) { cout << forward<T>(v); }
+void print(T &&v) { (debug_?cerr:cout) << forward<T>(v); }
 
 template <class T>
 concept is_iterable = requires(T &&x) { begin(x); end(x); } &&
                       !is_same_v<remove_cvref_t<T>, string>;
 
 template<is_iterable T>
-void prt(T &&container) {
+void print(T &&container) {
     for (auto &&element : container) {
         using E = decltype(element);
-        prt(forward<E>(element));  // 각 원소를 prt에 넘김
-        cout << (is_iterable<E> ? '\n': ' ');
+        print(forward<E>(element));  // 각 원소를 prt에 넘김
+        print(is_iterable<E> ? '\n': ' ');
     }
 }
 
 template<class T, class... Args>
-void prt(T &&v, Args &&...args) {
-    prt(forward<T>(v)); 
-    if(not is_iterable<T>) prt(' ');
-    prt(forward<Args>(args)...);
+void print(T &&v, Args &&...args) {
+    print(forward<T>(v)); 
+    if(not is_iterable<T>) print(' ');
+    print(forward<Args>(args)...);
 }
