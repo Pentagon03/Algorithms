@@ -19,7 +19,9 @@ namespace geo { // https://victorlecomte.com/cp-geo.pdf
         bool operator==(PT a) const { return sign(a.x - x) == 0 && sign(a.y - y) == 0; }
         bool operator!=(PT a) const { return !(*this == a); }
         bool operator<(PT a) const { return sign(a.x - x) == 0 ? y < a.y : x < a.x; }
+        bool operator<=(PT a) const { return *this < a or *this == a;}
         bool operator>(PT a) const { return sign(a.x - x) == 0 ? y > a.y : x > a.x; }
+        bool operator>=(PT a) const{ return *this > a or *this == a;}
         ld norm() { return sqrt(x * x + y * y); }
         ld norm2() { return x * x + y * y; }
         PT perp() { return PT(-y, x); }
