@@ -2,7 +2,7 @@
 namespace geo { // https://victorlecomte.com/cp-geo.pdf
     using ld = long double;
     const ld inf = 1e100;
-    const ld eps = 1e-9;
+    const ld eps = 1e-12;
     const ld PI = acos((ld) -1.0);
     int sign(ld x) { return (x > eps) - (x < -eps); }
     // # POINT START
