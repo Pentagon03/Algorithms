@@ -46,6 +46,7 @@
     "prefix": "print",
 		"body": [
 			"/** print function that can print any element or iterable",
+			" * https://github.com/Pentagon03/Algorithms/blob/master/Etc/simple_print.cpp",
 			" * source: pentagon03, idea: swoon",
 			" * set 'debug_ = 1' to change from cout to cerr",
 			" * Note: ONLY printing (iterables of iterables) will print '\\n' at the end",
@@ -179,7 +180,7 @@
 	],
 	"description": "binary search"
 	},
-	"solve": {
+	"solve old": {
 		"prefix": "solve_old",
 		"scope": "cpp",
 		"body": [
