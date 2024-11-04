@@ -217,6 +217,16 @@ namespace geo { // https://victorlecomte.com/cp-geo.pdf
         return 3;
     }
 
+    // -1 if outside to point a, 0 if between a and b (inclusive), 1 if outside to point b
+    int point_seg_relation(PT a, PT b, PT p){
+        assert(point_line_relation(a, b, p) == 3 && "point should be on line");
+        int flag = 1;
+        if(a > b) swap(a, b), flag = -1;
+        if(a <= p and p <= b) return 0;
+        if(p < a) return flag * -1;
+        else return flag;
+    }
+
     // intersection point between ab and cd assuming unique intersection exists
     bool line_line_intersection(PT a, PT b, PT c, PT d, PT &ans) {
         ld a1 = a.y - b.y, b1 = b.x - a.x, c1 = cross(a, b);
