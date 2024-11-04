@@ -6,14 +6,3 @@ char c='='; cerr<<#__VA_ARGS__<<" "; ((cerr<<exchange(c,',')<<" "<<x),...); cerr
 #else
 #define gg(...)
 #endif
-
-// source: swoon
-template<class T>
-void prt(T &&v) { cout << forward<T>(v) << '\n'; }
-template<class T, class... Args>
-void prt(T &&v, Args &&...args) {
-    cout << forward<T>(v) << ' ';
-    prt(forward<Args>(args)...);
-};
-
-#include<Pentagon03/debug.h>
