@@ -16,6 +16,10 @@ namespace geo { // https://victorlecomte.com/cp-geo.pdf
         PT operator*(const ld a) const { return PT(x * a, y * a); }
         friend PT operator*(const ld &a, const PT &b) { return PT(a * b.x, a * b.y); }
         PT operator/(const ld a) const { return PT(x / a, y / a); }
+        PT& operator+=(const PT &a) { x += a.x; y += a.y; return *this; } 
+        PT& operator-=(const PT &a) { x -= a.x; y -= a.y; return *this; } 
+        PT& operator*=(const ld a) { x *= a; y *= a; return *this; } 
+        PT& operator/=(const ld a) { x /= a; y /= a; return *this; }
         bool operator==(PT a) const { return sign(a.x - x) == 0 && sign(a.y - y) == 0; }
         bool operator!=(PT a) const { return !(*this == a); }
         bool operator<(PT a) const { return sign(a.x - x) == 0 ? y < a.y : x < a.x; }
