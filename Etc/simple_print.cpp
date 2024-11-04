@@ -18,7 +18,7 @@ template<is_iterable T>
 void print(T &&container) {
     for (auto &&element : container) {
         using E = decltype(element);
-        print(forward<E>(element));  // 각 원소를 prt에 넘김
+        print(forward<E>(element));
         print(is_iterable<E> ? '\n': ' ');
     }
 }
