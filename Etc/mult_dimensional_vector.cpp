@@ -15,3 +15,12 @@ struct Vec<1, T> : public vector<T> {
     Vec<4, int64_t> f(n, k, 2, 2); // = f[n][k][2][2];
     Vec<2, int> adj(n); // graph
 */
+
+
+// modified, source: https://judge.yosupo.jp/submission/172003
+// last value should be initial value
+auto vec(int n, auto&&... s) {
+    static_assert(sizeof...(s) >= 1);
+    if constexpr (sizeof...(s) == 1) return vector (n, s...);
+    else return vector (n, vec(s...));
+}
