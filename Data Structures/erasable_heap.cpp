@@ -1,7 +1,6 @@
 /** Eraseable heap
  * cmp는 bool operator()이 정의된 struct 또는 class
  * cmp 상으로 가장 큰 것이 반환됨
- * T에는 == operator가 있어야 함.
  */
 template<class T, class cmp = less<T>>
 struct heap{
