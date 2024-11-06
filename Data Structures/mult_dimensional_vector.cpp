@@ -16,11 +16,13 @@ struct Vec<1, T> : public vector<T> {
     Vec<2, int> adj(n); // graph
 */
 
-
-// modified, source: https://judge.yosupo.jp/submission/172003
-// last value should be initial value
+/** Multidimensional Vector
+ * modified, source: https://judge.yosupo.jp/submission/172003
+ * usage: vector(D1, D2, ... , Initial Value)
+ */
 auto vec(int n, auto&&... s) {
-    static_assert(sizeof...(s) >= 1);
+    static_assert(sizeof...(s) >= 1 and "last parameter should be initial value");
     if constexpr (sizeof...(s) == 1) return vector (n, s...);
     else return vector (n, vec(s...));
 }
+
