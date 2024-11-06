@@ -1,5 +1,5 @@
 // source: https://judge.yosupo.jp/submission/172003
-// IS = Insert Order, LG heavily depends on situation
+// 1<<LG is bucket size, IS = Insert Order, LG heavily depends on situation
 using u64 = uint64_t;
 template <typename T, int LG = 22, bool KEEP_IS = false>
 struct HashMap {
@@ -33,7 +33,7 @@ struct HashMap {
     }
     bool contains(u64 k) const {
         int i = index(k);
-        return vis[i] && key[i] == k;
+        return vis[i] and key[i] == k;
     }
     void clear() {
         vis.reset();
