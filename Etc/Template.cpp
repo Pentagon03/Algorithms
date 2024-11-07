@@ -38,12 +38,9 @@ int32_t main(){
     cin.tie(0)->sync_with_stdio(0); cin.exceptions(ios::badbit | ios::failbit);
     // cout<<fixed<<setprecision(15);
     int tc = 1;
-    // cin >> tc;
+    cin >> tc;
     auto solve_tc = [&](){
-        vector<int> v = {1, 2, 3};
-        append(v, v);
-        dbg(v);
-        rep1(i, 3) dbg(i);
+        
     };
     for(cur_tc=1;cur_tc<=tc;cur_tc++) solve_tc();
     return 0;
