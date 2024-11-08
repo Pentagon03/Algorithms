@@ -7,6 +7,7 @@ prt = lambda *x:stdout.write(' '.join(map(str, x))+'\n')
 inf = 10**9; mod = 10**9 + 7
 
 def solve():
+    ${0}
     return
 
 def main():
