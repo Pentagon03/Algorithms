@@ -15,14 +15,3 @@ struct Vec<1, T> : public vector<T> {
     Vec<4, int64_t> f(n, k, 2, 2); // = f[n][k][2][2];
     Vec<2, int> adj(n); // graph
 */
-
-/** Multidimensional Vector
- * modified, source: https://judge.yosupo.jp/submission/172003
- * usage: vector(D1, D2, ... , Initial Value)
- */
-auto vec(int n, auto&&... s) {
-    static_assert(sizeof...(s) >= 1 and "last parameter should be initial value");
-    if constexpr (sizeof...(s) == 1) return vector (n, s...);
-    else return vector (n, vec(s...));
-}
-
