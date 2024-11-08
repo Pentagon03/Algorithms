@@ -16,7 +16,8 @@ for subdir in os.walk('.'):
     name, *extension = filename.split('.')
     if not name or name[0] == '_' or len(extension) != 1:
       continue
-    if extension[0] != 'cpp':
+    extension = extension[0]
+    if name[:8].lower() != 'template' and extension != 'cpp':
       continue
 
     if name in snippets:
@@ -27,7 +28,7 @@ for subdir in os.walk('.'):
     with open(path, 'r', encoding='UTF8') as f:
       snippet = {
         "prefix": name,
-        "scope": "cpp",
+        "scope": extension,
         "body": [line.rstrip() for line in f.readlines()],
         "description": name
       }
