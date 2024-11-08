@@ -10,17 +10,21 @@
 #pragma GCC optimize("Ofast", "unroll-loops")
 // #pragma GCC target("avx2", "popcnt")
 #include"bits/stdc++.h"
-// put ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
+// ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
 using namespace std;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
 template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}
-template <class T1, typename T2>
-void append(T1& x, const T2& y) {
-    if constexpr (std::is_convertible_v<T2, typename T1::value_type>) x.push_back(y);
-    else x.reserve(x.size() + y.size()), x.insert(x.end(), y.begin(), y.end());
+auto vec(int n, auto&&... s) {
+    static_assert(sizeof...(s) >= 1 and "last parameter should be initial value");
+    if constexpr (sizeof...(s) == 1) return vector (n, s...);
+    else return vector (n, vec(s...));
 }
-template <class T1, typename U>
-inline void append(T1& x, std::initializer_list<U> y) {x.insert(x.end(), y.begin(), y.end());}
+void assign(auto&A, auto&&n, auto&&...v){
+    if constexpr(sizeof...(v) == 0) A = n;
+    else for(int i=0;i<n;i++) assign(A[i], v...);
+}
+void append(auto&x, auto&&y){x.reserve(x.size()+y.size()), x.insert(x.end(), y.begin(), y.end());}
+void addv(auto&v, auto&&...x){(v.push_back(x),...);}
 template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}
 #define all(v) (v).begin(),(v).end()
 #define nl '\n'
@@ -38,9 +42,9 @@ int32_t main(){
     cin.tie(0)->sync_with_stdio(0); cin.exceptions(ios::badbit | ios::failbit);
     // cout<<fixed<<setprecision(15);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     auto solve_tc = [&](){
-        
+        ${0}
     };
     for(cur_tc=1;cur_tc<=tc;cur_tc++) solve_tc();
     return 0;

@@ -1,0 +1,1 @@
+python Etc/_vscode_snippet_generator.py
