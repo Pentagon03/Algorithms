@@ -148,5 +148,5 @@ struct comb {
         return bm[m][k];
     }
 };
-constexpr int MOD = $0;
+constexpr int MOD = ${0};
 using Z = modint<MOD>;
