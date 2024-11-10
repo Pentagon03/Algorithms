@@ -1,6 +1,6 @@
 # Source: https://github.com/the-tourist/algo/blob/master/generate_snippets.py
 
-# Generates cpp.json with snippets for VSCode
+# Generates algo.codesnippets with snippets for VSCode
 
 import os
 import json
