@@ -1,6 +1,6 @@
 /*
 Segment Tree Generalized
-Usage: SegTree<int> st(n, less<int>(), INT_MAX); or lambda
+Usage: SegTree<int> st(n, plus<int>(), 0); or lambda
 Reference: https://codeforces.com/contest/1936/submission/249337780
 */
 template<class T, class Func = function<T(const T &, const T &)>>
@@ -10,10 +10,9 @@ struct SegTree{
     Func f;
     SegTree(uint32_t _n, const Func &g = Func(), T dval = T()):f(g), identity(dval){
         assert(_n >= 1);
-        // n = 1;
-        // while(n < _n) n <<= 1;
-        n = bit_ceil(_n);
-        t.assign(n*2, identity);
+        // n = 1; while(n < _n) n <<= 1;
+        // n = bit_ceil(_n); // need this for non-trivial compositions
+        t.assign(n << 1, identity);
     }
     SegTree(const vector<T>&v, const Func &g = Func(), T dval = T()): SegTree(size(v), g, dval){
         for(int i=0;i<size(v);i++) t[i+n]=v[i];
