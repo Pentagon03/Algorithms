@@ -1,6 +1,7 @@
 /*
 Segment Tree Generalized
 Usage: SegTree<int> st(n, plus<int>(), 0); or lambda
+SegTree<int> seg(n, ranges::min, numeric_limits<int>::max());
 Reference: https://codeforces.com/contest/1936/submission/249337780
 */
 template<class T, class Func = function<T(const T &, const T &)>>

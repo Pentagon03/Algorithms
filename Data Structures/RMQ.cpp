@@ -2,9 +2,7 @@
 RMQ (range minimum query)
 usage: 
 vector<int> v;
-RMQ st(v, [&](int a,int b){
-	return max(a,b);
-});
+RMQ st(v, ranges::min);
 reference: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/RMQ.h
 */
 template<typename T, class Func = function<T(const T&, const T&)>>
