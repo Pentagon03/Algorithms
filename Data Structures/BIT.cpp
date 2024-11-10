@@ -1,6 +1,7 @@
 /*
-Binary indexed Tree
-set your operation function op
+- Binary indexed Tree
+- set your operation function op
+- You may make off-by-one error, so it prevents it
 */
 template<typename T = int>
 struct BIT{
@@ -26,7 +27,7 @@ struct BIT{
                 op(sum, t[p]);
             }
         }
-        ++p; //  p=1 -> -1
+        ++p; // so that sum >= x
         return p-2;
     }
 };
