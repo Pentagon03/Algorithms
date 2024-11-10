@@ -17,7 +17,7 @@ for subdir in os.walk('.'):
     if not name or name[0] == '_' or len(extension) != 1:
       continue
     extension = extension[0]
-    if name[:8].lower() != 'template' and extension != 'cpp':
+    if extension != 'cpp' and os.path.basename(subdir[0]).lower() != 'template':
       continue
 
     if name in snippets:

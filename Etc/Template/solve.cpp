@@ -14,6 +14,10 @@
 using namespace std;
 namespace R = std::ranges;
 namespace V = std::ranges::views;
+string input(char delim = '\n'){
+    string t; getline(cin, t, delim);
+    return move(t);
+}
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
 template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}
 auto vec(int n, auto&&... s) {
