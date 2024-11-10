@@ -20,7 +20,7 @@ for subdir in os.walk('.'):
     if extension != 'cpp' and os.path.basename(subdir[0]).lower() != 'template':
       continue
 
-    if name in snippets:
+    if name in snippets and extension != 'py':
       print(f'error: duplicate snippet {name}', file=sys.stderr)
       exit(0)
 
