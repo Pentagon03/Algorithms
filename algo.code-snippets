@@ -2018,6 +2018,7 @@
       "    print(forward<T>(x));",
       "    if constexpr(not is_iterable<T>) print(' ');",
       "    print(forward<Args>(args)...);",
+      "    if constexpr(sizeof...(args) == 1) print('\\n');",
       "}"
     ],
     "description": "myio"

@@ -14,9 +14,9 @@ void input(auto&...x){((cin>>x),...);}
 void print(auto &&x) { (debug_?cerr:cout)<<x; }
 
 template <class T>
-concept is_string = 
+concept is_string =
     is_same_v<remove_cvref_t<T>, string> ||
-    is_same_v<decay_t<T>, char*> || 
+    is_same_v<decay_t<T>, char*> ||
     is_same_v<decay_t<T>, const char*>;
 
 template <class T>
@@ -39,7 +39,8 @@ void print(T &&container) {
 
 template<class T, class... Args>
 void print(T &&x, Args &&...args) {
-    print(forward<T>(x)); 
+    print(forward<T>(x));
     if constexpr(not is_iterable<T>) print(' ');
     print(forward<Args>(args)...);
+    if constexpr(sizeof...(args) == 1) print('\n');
 }
