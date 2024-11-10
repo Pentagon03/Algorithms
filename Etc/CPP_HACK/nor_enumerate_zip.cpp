@@ -140,7 +140,7 @@ struct enumerate {
         bool operator==(const It& it) const { return iter_ == it.iter_; }
         bool operator!=(const It& it) const { return iter_ != it.iter_; }
         It& operator++() { return ++iter_, ++start_, *this; }
-        const It operator++(int) {
+        const It operator++(int32_t) {
             auto temp = *this;
             return operator++(), temp;
         }
