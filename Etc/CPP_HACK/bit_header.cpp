@@ -4,6 +4,16 @@ using ll = int64_t;
 // #define int ll
 using u32 = uint32_t;
 
+/*
+- uint32_t n에 대해 생각.
+- n 이상의 최소 2의 거듭제곱: bit_ceil(n)
+- n 이하의 최대 2의 거듭제곱: bit_floor(n)
+- log2(n)을 구하고 싶은 경우: bit_width(n) - 1 (n = 0의 경우 -1이 된다)  (or) __lg(n)
+- 2의 거듭제곱인지 확인하고 싶은 경우: has_single_bit(n)
+- 켜진 비트의 개수: popcount(n)
+- 가장 작은 켜진 비트 : countr_zero(n)
+- 가장 큰 켜진 비트 : bit_width(n) - 1 (or) countl_zero(0ULL) - countl_zero(n) - 1
+*/
 void solve(int cur_tc){
     using bset = bitset<5>;
     for(auto i{0};i<=0B1111;i++){
@@ -37,7 +47,6 @@ void solve(int cur_tc){
         cout << '\n';
     }
 }
-
 int32_t main(){
     cin.tie(0)->sync_with_stdio(0);
     int tc = 1;
