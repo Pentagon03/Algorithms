@@ -1,5 +1,5 @@
 {
-  "array_assign": {
+  "array_assign.cpp": {
     "prefix": "array_assign",
     "scope": "cpp",
     "body": [
@@ -11,7 +11,7 @@
     ],
     "description": "array_assign"
   },
-  "BigInt": {
+  "BigInt.cpp": {
     "prefix": "BigInt",
     "scope": "cpp",
     "body": [
@@ -623,7 +623,7 @@
     ],
     "description": "BigInt"
   },
-  "bisect": {
+  "bisect.cpp": {
     "prefix": "bisect",
     "scope": "cpp",
     "body": [
@@ -636,7 +636,7 @@
     ],
     "description": "bisect"
   },
-  "BIT": {
+  "BIT.cpp": {
     "prefix": "BIT",
     "scope": "cpp",
     "body": [
@@ -676,7 +676,7 @@
     ],
     "description": "BIT"
   },
-  "BIT_2D": {
+  "BIT_2D.cpp": {
     "prefix": "BIT_2D",
     "scope": "cpp",
     "body": [
@@ -705,7 +705,7 @@
     ],
     "description": "BIT_2D"
   },
-  "ConvexHullTrick": {
+  "ConvexHullTrick.cpp": {
     "prefix": "ConvexHullTrick",
     "scope": "cpp",
     "body": [
@@ -781,7 +781,7 @@
     ],
     "description": "ConvexHullTrick"
   },
-  "countInversion": {
+  "countInversion.cpp": {
     "prefix": "countInversion",
     "scope": "cpp",
     "body": [
@@ -813,7 +813,7 @@
     ],
     "description": "countInversion"
   },
-  "Date": {
+  "Date.cpp": {
     "prefix": "Date",
     "scope": "cpp",
     "body": [
@@ -879,7 +879,7 @@
     ],
     "description": "Date"
   },
-  "DnC_opt": {
+  "DnC_opt.cpp": {
     "prefix": "DnC_opt",
     "scope": "cpp",
     "body": [
@@ -918,7 +918,7 @@
     ],
     "description": "DnC_opt"
   },
-  "erasable_heap": {
+  "erasable_heap.cpp": {
     "prefix": "erasable_heap",
     "scope": "cpp",
     "body": [
@@ -949,7 +949,7 @@
     ],
     "description": "erasable_heap"
   },
-  "HashMap": {
+  "HashMap.cpp": {
     "prefix": "HashMap",
     "scope": "cpp",
     "body": [
@@ -1010,7 +1010,7 @@
     ],
     "description": "HashMap"
   },
-  "Lagrange_Relaxation": {
+  "Lagrange_Relaxation.cpp": {
     "prefix": "Lagrange_Relaxation",
     "scope": "cpp",
     "body": [
@@ -1037,7 +1037,7 @@
     ],
     "description": "Lagrange_Relaxation"
   },
-  "leftist_heap": {
+  "leftist_heap.cpp": {
     "prefix": "leftist_heap",
     "scope": "cpp",
     "body": [
@@ -1078,7 +1078,7 @@
     ],
     "description": "leftist_heap"
   },
-  "LiChaoTree": {
+  "LiChaoTree.cpp": {
     "prefix": "LiChaoTree",
     "scope": "cpp",
     "body": [
@@ -1116,7 +1116,7 @@
     ],
     "description": "LiChaoTree"
   },
-  "LiChaoTree_Rollback": {
+  "LiChaoTree_Rollback.cpp": {
     "prefix": "LiChaoTree_Rollback",
     "scope": "cpp",
     "body": [
@@ -1198,7 +1198,7 @@
     ],
     "description": "LiChaoTree_Rollback"
   },
-  "LineContainer": {
+  "LineContainer.cpp": {
     "prefix": "LineContainer",
     "scope": "cpp",
     "body": [
@@ -1259,7 +1259,7 @@
     ],
     "description": "LineContainer"
   },
-  "MergeSortTree": {
+  "MergeSortTree.cpp": {
     "prefix": "MergeSortTree",
     "scope": "cpp",
     "body": [
@@ -1333,7 +1333,7 @@
     ],
     "description": "MergeSortTree"
   },
-  "my_vec": {
+  "my_vec.cpp": {
     "prefix": "my_vec",
     "scope": "cpp",
     "body": [
@@ -1349,7 +1349,7 @@
     ],
     "description": "my_vec"
   },
-  "my_vec_class": {
+  "my_vec_class.cpp": {
     "prefix": "my_vec_class",
     "scope": "cpp",
     "body": [
@@ -1373,7 +1373,7 @@
     ],
     "description": "my_vec_class"
   },
-  "ordered_set,multiset": {
+  "ordered_set,multiset.cpp": {
     "prefix": "ordered_set,multiset",
     "scope": "cpp",
     "body": [
@@ -1442,7 +1442,7 @@
     ],
     "description": "ordered_set,multiset"
   },
-  "pbds_tourist": {
+  "pbds_tourist.cpp": {
     "prefix": "pbds_tourist",
     "scope": "cpp",
     "body": [
@@ -1464,7 +1464,7 @@
     ],
     "description": "pbds_tourist"
   },
-  "RMQ": {
+  "RMQ.cpp": {
     "prefix": "RMQ",
     "scope": "cpp",
     "body": [
@@ -1499,39 +1499,38 @@
     ],
     "description": "RMQ"
   },
-  "SegTree": {
+  "SegTree.cpp": {
     "prefix": "SegTree",
     "scope": "cpp",
     "body": [
       "/*",
       "Segment Tree Generalized",
-      "Usage:",
-      "SegTree<int> st(n, [&](const int &l, const int &r){",
-      "    return min(l,r);",
-      "});",
+      "Usage: SegTree<int> st(n, less<int>(), INT_MAX); or lambda",
       "Reference: https://codeforces.com/contest/1936/submission/249337780",
       "*/",
       "template<typename T, class Func = function<T(const T &, const T &)>>",
       "struct SegTree{",
-      "    int n; vector<T> t;",
+      "    uint32_t n; vector<T> t;",
       "    T identity;",
       "    Func f;",
-      "    SegTree(int _n, const Func &g, T dval = T()):f(g), identity(dval){",
-      "        n = 1;",
-      "        while(n < _n) n <<= 1;",
-      "        t.resize(n*2, identity);",
+      "    SegTree(uint32_t _n, const Func &g, T dval = T()):f(g), identity(dval){",
+      "        assert(_n >= 1);",
+      "        // n = 1;",
+      "        // while(n < _n) n <<= 1;",
+      "        n = bit_ceil(_n);",
+      "        t.assign(n*2, identity);",
       "    }",
       "    SegTree(const vector<T>&v, const Func &g, T dval = T()): SegTree(size(v), g, dval){",
-      "        for(int i=0;i<size(v);i++) t[n+i]=v[i];",
+      "        for(int i=0;i<size(v);i++) t[i+n]=v[i];",
       "        for(int i=n-1;i>=1;i--) t[i]=f(t[i<<1],t[i<<1|1]);",
       "    }",
-      "    int get(int i){return t[i+n];}",
+      "    const T& get(int i) const{return t[i+n];}",
       "    void upd(int i,T v){",
       "        t[i+=n]=v;",
       "        for(i>>=1;i>=1;i>>=1) t[i]=f(t[i<<1],t[i<<1|1]);",
       "    }",
       "    //[l, r]",
-      "    T qry(int l,int r){",
+      "    T qry(int l,int r) const{",
       "        T resL, resR;",
       "        resL = resR =  identity;",
       "        for(l+=n,r+=n;l<=r;l>>=1,r>>=1){",
@@ -1544,7 +1543,7 @@
     ],
     "description": "SegTree"
   },
-  "SOS_DP": {
+  "SOS_DP.cpp": {
     "prefix": "SOS_DP",
     "scope": "cpp",
     "body": [
@@ -1572,7 +1571,7 @@
     ],
     "description": "SOS_DP"
   },
-  "UnionFindwithRollback": {
+  "UnionFindwithRollback.cpp": {
     "prefix": "UnionFindwithRollback",
     "scope": "cpp",
     "body": [
@@ -1606,7 +1605,7 @@
     ],
     "description": "UnionFindwithRollback"
   },
-  "[NOT_TESTED] Roll-back-able Line Container": {
+  "[NOT_TESTED] Roll-back-able Line Container.cpp": {
     "prefix": "[NOT_TESTED] Roll-back-able Line Container",
     "scope": "cpp",
     "body": [
@@ -1695,7 +1694,7 @@
     ],
     "description": "[NOT_TESTED] Roll-back-able Line Container"
   },
-  "debug_my": {
+  "debug_my.cpp": {
     "prefix": "debug_my",
     "scope": "cpp",
     "body": [
@@ -1710,7 +1709,7 @@
     ],
     "description": "debug_my"
   },
-  "debug_simple": {
+  "debug_simple.cpp": {
     "prefix": "debug_simple",
     "scope": "cpp",
     "body": [
@@ -1725,7 +1724,7 @@
     ],
     "description": "debug_simple"
   },
-  "fastio": {
+  "fastio.cpp": {
     "prefix": "fastio",
     "scope": "cpp",
     "body": [
@@ -1860,7 +1859,7 @@
     ],
     "description": "fastio"
   },
-  "fastio_simple": {
+  "fastio_simple.cpp": {
     "prefix": "fastio_simple",
     "scope": "cpp",
     "body": [
@@ -1909,7 +1908,7 @@
     ],
     "description": "fastio_simple"
   },
-  "myio": {
+  "myio.cpp": {
     "prefix": "myio",
     "scope": "cpp",
     "body": [
@@ -1961,7 +1960,7 @@
     ],
     "description": "myio"
   },
-  "nor_enumerate_zip": {
+  "nor_enumerate_zip.cpp": {
     "prefix": "nor_enumerate_zip",
     "scope": "cpp",
     "body": [
@@ -2146,7 +2145,7 @@
     ],
     "description": "nor_enumerate_zip"
   },
-  "pragmas": {
+  "pragmas.cpp": {
     "prefix": "pragmas",
     "scope": "cpp",
     "body": [
@@ -2156,7 +2155,7 @@
     ],
     "description": "pragmas"
   },
-  "stackhack": {
+  "stackhack.cpp": {
     "prefix": "stackhack",
     "scope": "cpp",
     "body": [
@@ -2187,7 +2186,71 @@
     ],
     "description": "stackhack"
   },
-  "solve": {
+  "solve.cpp": {
+    "prefix": "solve",
+    "scope": "cpp",
+    "body": [
+      "// https://github.com/Pentagon03/Algorithms",
+      "// g++ -std=c++20 -D _DEBUG",
+      "#ifdef _DEBUG",
+      "#define Pentagon03",
+      "#include<Pentagon03/debug.h>",
+      "#else",
+      "#define dbg(...)",
+      "#define dbgArr(...)",
+      "#endif",
+      "#pragma GCC optimize(\"Ofast\", \"unroll-loops\")",
+      "// #pragma GCC target(\"avx2\", \"popcnt\")",
+      "#include\"bits/stdc++.h\"",
+      "// ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset",
+      "using namespace std;",
+      "namespace R = std::ranges;",
+      "namespace V = std::ranges::views;",
+      "string input(char delim = '\\n'){",
+      "    string t; getline(cin, t, delim);",
+      "    return move(t);",
+      "}",
+      "template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}",
+      "template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}",
+      "auto vec(int n, auto&&... s) {",
+      "    static_assert(sizeof...(s) >= 1 and \"last parameter should be initial value\");",
+      "    if constexpr (sizeof...(s) == 1) return vector (n, s...);",
+      "    else return vector (n, vec(s...));",
+      "}",
+      "void assign(auto&A, auto&&n, auto&&...v){",
+      "    if constexpr(sizeof...(v) == 0) A = n;",
+      "    else for(int i=0;i<n;i++) assign(A[i], v...);",
+      "}",
+      "void append(auto&x, auto&&y){x.reserve(x.size()+y.size()), x.insert(x.end(), y.begin(), y.end());}",
+      "void addv(auto&v, auto&&...x){(v.push_back(x),...);}",
+      "template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}",
+      "#define all(v) (v).begin(),(v).end()",
+      "#define nl '\\n'",
+      "#define sp ' '",
+      "#define rep(i, n) for(int i=0;i<(n);i++)",
+      "#define rep1(i, n) for(int i=1;i<=(n);i++)",
+      "#define repr(i, a, b) for(int i=(a);i<=(b);i++)",
+      "#define repd(i, b, a) for(int i=(b);i>=(a);i--)",
+      "#define int int64_t",
+      "using ll = int64_t; using pii = pair<int,int>; int cur_tc;",
+      "constexpr int inf = (int) 1e9 + 3; constexpr ll infl = (ll) 1e18 + 3;",
+      "",
+      "",
+      "int32_t main(){",
+      "    cin.tie(0)->sync_with_stdio(0); cin.exceptions(ios::badbit | ios::failbit);",
+      "    // cout<<fixed<<setprecision(15);",
+      "    int tc = 1;",
+      "    // cin >> tc;",
+      "    auto solve_tc = [&](){",
+      "        ${0}",
+      "    };",
+      "    for(cur_tc=1;cur_tc<=tc;cur_tc++) solve_tc();",
+      "    return 0;",
+      "}"
+    ],
+    "description": "solve"
+  },
+  "solve.py": {
     "prefix": "solve",
     "scope": "py",
     "body": [
@@ -2214,7 +2277,7 @@
     ],
     "description": "solve"
   },
-  "solve_simple": {
+  "solve_simple.cpp": {
     "prefix": "solve_simple",
     "scope": "cpp",
     "body": [
@@ -2236,7 +2299,7 @@
     ],
     "description": "solve_simple"
   },
-  "BipartiteMatching": {
+  "BipartiteMatching.cpp": {
     "prefix": "BipartiteMatching",
     "scope": "cpp",
     "body": [
@@ -2348,7 +2411,7 @@
     ],
     "description": "BipartiteMatching"
   },
-  "MaxCostFlow": {
+  "MaxCostFlow.cpp": {
     "prefix": "MaxCostFlow",
     "scope": "cpp",
     "body": [
@@ -2432,7 +2495,7 @@
     ],
     "description": "MaxCostFlow"
   },
-  "MaxFlow": {
+  "MaxFlow.cpp": {
     "prefix": "MaxFlow",
     "scope": "cpp",
     "body": [
@@ -2504,7 +2567,7 @@
     ],
     "description": "MaxFlow"
   },
-  "cp-geo": {
+  "cp-geo.cpp": {
     "prefix": "cp-geo",
     "scope": "cpp",
     "body": [
@@ -4040,7 +4103,7 @@
     ],
     "description": "cp-geo"
   },
-  "Geometry_All": {
+  "Geometry_All.cpp": {
     "prefix": "Geometry_All",
     "scope": "cpp",
     "body": [
@@ -4275,7 +4338,7 @@
     ],
     "description": "Geometry_All"
   },
-  "BCC_Edge_Disjoint": {
+  "BCC_Edge_Disjoint.cpp": {
     "prefix": "BCC_Edge_Disjoint",
     "scope": "cpp",
     "body": [
@@ -4336,7 +4399,7 @@
     ],
     "description": "BCC_Edge_Disjoint"
   },
-  "BCC_Vertex_Disjoint": {
+  "BCC_Vertex_Disjoint.cpp": {
     "prefix": "BCC_Vertex_Disjoint",
     "scope": "cpp",
     "body": [
@@ -4392,7 +4455,7 @@
     ],
     "description": "BCC_Vertex_Disjoint"
   },
-  "KPATH_INDEX_VERSION": {
+  "KPATH_INDEX_VERSION.cpp": {
     "prefix": "KPATH_INDEX_VERSION",
     "scope": "cpp",
     "body": [
@@ -4645,7 +4708,7 @@
     ],
     "description": "KPATH_INDEX_VERSION"
   },
-  "k_shortest_walks": {
+  "k_shortest_walks.cpp": {
     "prefix": "k_shortest_walks",
     "scope": "cpp",
     "body": [
@@ -4951,7 +5014,7 @@
     ],
     "description": "k_shortest_walks"
   },
-  "SCC_Kosaraju": {
+  "SCC_Kosaraju.cpp": {
     "prefix": "SCC_Kosaraju",
     "scope": "cpp",
     "body": [
@@ -5001,7 +5064,7 @@
     ],
     "description": "SCC_Kosaraju"
   },
-  "SCC_Tarjan": {
+  "SCC_Tarjan.cpp": {
     "prefix": "SCC_Tarjan",
     "scope": "cpp",
     "body": [
@@ -5068,7 +5131,7 @@
     ],
     "description": "SCC_Tarjan"
   },
-  "two_sat": {
+  "two_sat.cpp": {
     "prefix": "two_sat",
     "scope": "cpp",
     "body": [
@@ -5157,7 +5220,7 @@
     ],
     "description": "two_sat"
   },
-  "WeightedGraph": {
+  "WeightedGraph.cpp": {
     "prefix": "WeightedGraph",
     "scope": "cpp",
     "body": [
@@ -5378,7 +5441,7 @@
     ],
     "description": "WeightedGraph"
   },
-  "WeightedTree": {
+  "WeightedTree.cpp": {
     "prefix": "WeightedTree",
     "scope": "cpp",
     "body": [
@@ -5472,7 +5535,7 @@
     ],
     "description": "WeightedTree"
   },
-  "crt": {
+  "crt.cpp": {
     "prefix": "crt",
     "scope": "cpp",
     "body": [
@@ -5509,7 +5572,7 @@
     ],
     "description": "crt"
   },
-  "crt_coprime": {
+  "crt_coprime.cpp": {
     "prefix": "crt_coprime",
     "scope": "cpp",
     "body": [
@@ -5540,7 +5603,7 @@
     ],
     "description": "crt_coprime"
   },
-  "DiscreteLogarithm_Prime": {
+  "DiscreteLogarithm_Prime.cpp": {
     "prefix": "DiscreteLogarithm_Prime",
     "scope": "cpp",
     "body": [
@@ -5714,7 +5777,7 @@
     ],
     "description": "DiscreteLogarithm_Prime"
   },
-  "divmod": {
+  "divmod.cpp": {
     "prefix": "divmod",
     "scope": "cpp",
     "body": [
@@ -5728,7 +5791,7 @@
     ],
     "description": "divmod"
   },
-  "ext_gcd_inv": {
+  "ext_gcd_inv.cpp": {
     "prefix": "ext_gcd_inv",
     "scope": "cpp",
     "body": [
@@ -5773,7 +5836,7 @@
     ],
     "description": "ext_gcd_inv"
   },
-  "FFT": {
+  "FFT.cpp": {
     "prefix": "FFT",
     "scope": "cpp",
     "body": [
@@ -5854,7 +5917,7 @@
     ],
     "description": "FFT"
   },
-  "modint_combination": {
+  "modint_combination.cpp": {
     "prefix": "modint_combination",
     "scope": "cpp",
     "body": [
@@ -6016,7 +6079,7 @@
     ],
     "description": "modint_combination"
   },
-  "prime_factorization": {
+  "prime_factorization.cpp": {
     "prefix": "prime_factorization",
     "scope": "cpp",
     "body": [
@@ -6097,7 +6160,7 @@
     ],
     "description": "prime_factorization"
   },
-  "Simplex": {
+  "Simplex.cpp": {
     "prefix": "Simplex",
     "scope": "cpp",
     "body": [
@@ -6184,7 +6247,7 @@
     ],
     "description": "Simplex"
   },
-  "[WIP] Matrix": {
+  "[WIP] Matrix.cpp": {
     "prefix": "[WIP] Matrix",
     "scope": "cpp",
     "body": [
@@ -6221,7 +6284,7 @@
     ],
     "description": "[WIP] Matrix"
   },
-  "[WIP] Sieve": {
+  "[WIP] Sieve.cpp": {
     "prefix": "[WIP] Sieve",
     "scope": "cpp",
     "body": [
@@ -6328,7 +6391,7 @@
     ],
     "description": "[WIP] Sieve"
   },
-  "Aho-Corasick": {
+  "Aho-Corasick.cpp": {
     "prefix": "Aho-Corasick",
     "scope": "cpp",
     "body": [
@@ -6448,7 +6511,7 @@
     ],
     "description": "Aho-Corasick"
   },
-  "Fast_LCS": {
+  "Fast_LCS.cpp": {
     "prefix": "Fast_LCS",
     "scope": "cpp",
     "body": [
@@ -6539,7 +6602,7 @@
     ],
     "description": "Fast_LCS"
   },
-  "Hasher_Dot": {
+  "Hasher_Dot.cpp": {
     "prefix": "Hasher_Dot",
     "scope": "cpp",
     "body": [
@@ -6574,7 +6637,7 @@
     ],
     "description": "Hasher_Dot"
   },
-  "Kmp": {
+  "Kmp.cpp": {
     "prefix": "Kmp",
     "scope": "cpp",
     "body": [
@@ -6608,7 +6671,7 @@
     ],
     "description": "Kmp"
   },
-  "Manacher": {
+  "Manacher.cpp": {
     "prefix": "Manacher",
     "scope": "cpp",
     "body": [
@@ -6649,7 +6712,7 @@
     ],
     "description": "Manacher"
   },
-  "SuffixArray": {
+  "SuffixArray.cpp": {
     "prefix": "SuffixArray",
     "scope": "cpp",
     "body": [
@@ -6750,7 +6813,7 @@
     ],
     "description": "SuffixArray"
   },
-  "Suffix_Array_Benq": {
+  "Suffix_Array_Benq.cpp": {
     "prefix": "Suffix_Array_Benq",
     "scope": "cpp",
     "body": [

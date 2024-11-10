@@ -20,7 +20,7 @@ for subdir in os.walk('.'):
     if extension != 'cpp' and os.path.basename(subdir[0]).lower() != 'template':
       continue
 
-    if name in snippets and extension != 'py':
+    if filename in snippets:
       print(f'error: duplicate snippet {name}', file=sys.stderr)
       exit(0)
 
@@ -32,9 +32,9 @@ for subdir in os.walk('.'):
         "body": [line.rstrip() for line in f.readlines()],
         "description": name
       }
-      snippets[name] = snippet
+      snippets[filename] = snippet
 
-    print(f'generated snippet {name}', file=sys.stderr)
+    print(f'generated snippet {filename}', file=sys.stderr)
 
 with open('algo.code-snippets', 'w') as f:
   f.write(json.dumps(snippets, indent=2))
