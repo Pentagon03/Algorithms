@@ -1,3 +1,8 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll = int64_t;
+#define int ll
+
 /*
 Modint Implementation and Combination
 Reference: https://codeforces.com/blog/entry/127439 Problem E
@@ -151,5 +156,17 @@ struct comb {
         return bm[m][k];
     }
 };
-constexpr int MOD = ${0};
+constexpr int MOD = 1e9 + 7;
 using Z = modint<MOD>;
+
+void solve(int cur_tc){
+    comb<11> c11;
+    cout << c11.binom(10,1);
+}
+
+int32_t main(){
+    cin.tie(0)->sync_with_stdio(0);
+    int tc = 1;
+    // cin>>tc;
+    for(int i=1;i<=tc;i++) solve(i);
+}
