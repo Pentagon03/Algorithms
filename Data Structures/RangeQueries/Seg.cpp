@@ -6,10 +6,10 @@ S e() : identity of S
 
 // Example: S : Range add
 using S = int;
-S op(S a, S b){return a + b;}
 S e(){return 0;}
+S op(S a, S b){return a + b;}
 
-// template<class S, S (*op)(S, S), S (*e)()>
+// template<class S, S (*e)(), S (*op)(S, S)>
 struct Seg{
     public:
     Seg(int n = 0): Seg(vector (n, e())){}
