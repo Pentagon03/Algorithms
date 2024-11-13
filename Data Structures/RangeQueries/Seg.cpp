@@ -5,6 +5,7 @@ S op(S a, S b): monoid action
 Seg<S, e, op>
 */
 
+$0
 // Example:
 // S : Range add
 using S = int;

@@ -1733,6 +1733,7 @@
       "Seg<S, e, op>",
       "*/",
       "",
+      "$0",
       "// Example:",
       "// S : Range add",
       "using S = int;",
