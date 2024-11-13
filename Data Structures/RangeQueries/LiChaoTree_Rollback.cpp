@@ -1,4 +1,4 @@
-// source: benedit0724 https://www.acmicpc.net/source/65475052
+// source: benedict0724 https://www.acmicpc.net/source/65475052
 struct Line{
     ll m, y;
     Line() {}

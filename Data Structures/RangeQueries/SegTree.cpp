@@ -6,12 +6,11 @@ Reference: https://codeforces.com/contest/1936/submission/249337780
 */
 template<class T, class Func = function<T(const T &, const T &)>>
 struct SegTree{
-    uint32_t n; vector<T> t;
+    int n; vector<T> t;
     T identity;
     Func f;
     SegTree(uint32_t _n, const Func &g = Func(), T dval = T()):f(g), identity(dval){
         assert(_n >= 1);
-        // n = 1; while(n < _n) n <<= 1;
         // n = bit_ceil(_n); // need this for non-trivial compositions
         t.assign(n << 1, identity);
     }
