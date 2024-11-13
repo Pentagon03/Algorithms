@@ -6,34 +6,37 @@
 - F id(): identity of f
 - void mapping(F f, S&x) : x => f(x)
 - void composition(F f, F&g): g(x) => f(g(x))
-- `LazySeg<S, e, op, F, id, mapping, composition>`
-- Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
+- (optional) `LazySeg<S, e, op, F, id, mapping, composition>`
+- Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 
 # SegTree Beats Tutorial
 ## mapping to try_mapping
-- uncomment `if(tree[i].fail) push(i), pull(i);` in `apply` function.
+- 1. add `bool fail` variable into `S`.
+- 2. if mapping(F f, S x) can't be made, put `fail = true`, otherwise `fail = false`.
+- 3. uncomment `if(tree[i].fail) push(i), pull(i);` in `apply` function.
 ## (optional) strengthened break condition
 - put additional condition for returning `upd` function at the first.
 
 # Examples
 ## Example 1
 ```cpp
+// https://www.acmicpc.net/problem/10999
 // S: range sum, F: range add
 struct S{
     ll sum;
     int cnt;
 };
+constexpr S e(){return {0, 0};}
 S op(S a, S b){return {
     a.sum + b.sum,
     a.cnt + b.cnt
 };};
-S e(){return {0, 0};}
-using F = ll; // add f
+using F = ll; // add
+F id(){return 0;}
 // f(x)
-S mapping(F f, S x){return {x.sum + x.cnt * f, x.cnt};}
+constexpr S mapping(F f, S x){return {x.sum + x.cnt * f, x.cnt};}
 // f(g(x))
 F composition(F f, F g){return g + f;}
-F id(){return 0;}
 ```
 
 ## Example 2
