@@ -1,13 +1,21 @@
-# Lazy Segtree
-- put 'fail' information for Segment Tree Beats
+# Lazy Segtree Tutorial
 - S: monoid for tree
-- S op(S a, S b): monoid action
 - S e() : identity of S
+- S op(S a, S b): monoid action
 - F: mapping function
-- S mapping(F f, S x) : f(x)
-- F composition(F f, F g): f(g(x)) -> h(x)
 - F id(): identity of f
+- void mapping(F f, S&x) : x => f(x)
+- void composition(F f, F&g): g(x) => f(g(x))
+- `LazySeg<S, e, op, F, id, mapping, composition>`
+- Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 
+# SegTree Beats Tutorial
+## mapping to try_mapping
+- uncomment `if(tree[i].fail) push(i), pull(i);` in `apply` function.
+## (optional) strengthened break condition
+- put additional condition for returning `upd` function at the first.
+
+# Examples
 ## Example 1
 ```cpp
 // S: range sum, F: range add
@@ -85,4 +93,3 @@ F id(){
     };
 }
 ```
-

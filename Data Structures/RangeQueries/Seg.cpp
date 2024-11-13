@@ -1,10 +1,12 @@
 /* Segtree with point update
 S: monoid for tree
-S op(S a, S b): monoid action
 S e() : identity of S
+S op(S a, S b): monoid action
+Seg<S, e, op>
 */
 
-// Example: S : Range add
+// Example:
+// S : Range add
 using S = int;
 S e(){return 0;}
 S op(S a, S b){return a + b;}
