@@ -40,3 +40,46 @@ S mapping(F f, S x){return x + f;}
 F composition(F f, F g){return g + f;}
 F id(){return 0;}
 ```
+
+## Example 3: S : range add, F : range mul, add, set 
+// https://www.acmicpc.net/problem/13925
+```cpp
+constexpr int MOD = (int)1e9 + 7;
+struct S{
+    int sum;
+    int cnt;
+};
+int add(int a,int b){
+    a += b;
+    if(a >= MOD) a -= MOD;
+    return a;
+}
+int mul(int a,int b){
+    return 1LL * a * b % MOD;
+}
+S op(S a, S b){
+    return {add(a.sum, b.sum), a.cnt + b.cnt};
+}
+S e(){return {0, 0};}
+
+struct F{
+    int mul, add;
+};
+S mapping(F f, S x){
+    if(!x.cnt) return e();
+    return {add(mul(x.sum, f.mul), mul(x.cnt, f.add)), x.cnt};
+}
+F composition(F f, F g){
+    return F{
+        mul(g.mul, f.mul),
+        add(mul(g.add, f.mul), f.add)
+    };
+}
+F id(){
+    return F{
+        1,
+        0
+    };
+}
+```
+
