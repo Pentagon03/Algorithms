@@ -7,6 +7,8 @@
 - void mapping(F f, S&x) : x => f(x)
 - void composition(F f, F&g): g(x) => f(g(x))
 - (optional) `LazySeg<S, e, op, F, id, mapping, composition>`
+- `upd(l, r, f) : i \in [l, r], A[i] => f(A[i])`
+- `qry(l, r) : op(A[l], ... , A[r])`
 - Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 
 # SegTree Beats Tutorial
@@ -32,11 +34,11 @@ S op(S a, S b){return {
     a.cnt + b.cnt
 };};
 using F = ll; // add
-F id(){return 0;}
-// f(x)
-constexpr S mapping(F f, S x){return {x.sum + x.cnt * f, x.cnt};}
-// f(g(x))
-F composition(F f, F g){return g + f;}
+constexpr F id(){return 0;}
+// x = f(x)
+void mapping(F f, S&x){x.sum += x.cnt * f;}
+// g(x) = f(g(x))
+void composition(F f, F&g){g += f;}
 ```
 
 ## Example 2

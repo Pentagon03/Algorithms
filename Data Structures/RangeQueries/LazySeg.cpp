@@ -8,6 +8,8 @@
 - void mapping(F f, S&x) : x => f(x)
 - void composition(F f, F&g): g(x) => f(g(x))
 - (optional) `LazySeg<S, e, op, F, id, mapping, composition>`
+- `upd(l, r, f) : i \in [l, r], A[i] => f(A[i])`
+- `qry(l, r) : op(A[l], ... , A[r])`
 - Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 */
 
@@ -46,7 +48,7 @@ struct LazySeg{
         ranges::copy(v, begin(tree) + n);
         for(int i=n-1;i>=0;i--) pull(i);
     }
-    // i \in [l, r], A[i] => f(i)
+    // i \in [l, r], A[i] => f(A[i])
     void upd(int l, int r, F f, int nd = 1, int ns = 0, int ne = -1){
         // assert(0 <= l and l <= r and r <= n - 1);
         if(ne == -1) ne = n - 1;
