@@ -8,8 +8,9 @@
 - F composition(F f, F g): f(g(x)) -> h(x)
 - F id(): identity of f
 
-## Example 1: S: range sum, F: range add
+## Example 1
 ```cpp
+// S: range sum, F: range add
 struct S{
     ll sum;
     int cnt;
@@ -27,8 +28,9 @@ F composition(F f, F g){return g + f;}
 F id(){return 0;}
 ```
 
-## Example 2: S : range max, F : range add
+## Example 2
 ```cpp
+// S : range max, F : range add
 using S = int; // max
 constexpr S MIN = numeric_limits<S>::min() / 2; 
 S op(S a, S b){return max(a, b);}
@@ -41,9 +43,10 @@ F composition(F f, F g){return g + f;}
 F id(){return 0;}
 ```
 
-## Example 3: S : range add, F : range mul, add, set 
-// https://www.acmicpc.net/problem/13925
+## Example 3
 ```cpp
+// S : range add, F : range mul, add, set 
+// https://www.acmicpc.net/problem/13925
 constexpr int MOD = (int)1e9 + 7;
 struct S{
     int sum;
