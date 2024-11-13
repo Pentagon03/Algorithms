@@ -14,13 +14,13 @@ See examples: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Struct
 using S = int; // max
 constexpr S MIN = numeric_limits<S>::min() / 2; 
 S op(S a, S b){return max(a, b);}
-S e(){return MIN;}
+constexpr S e(){return MIN;}
 using F = int; // add
 // f(x)
 S mapping(F f, S x){return x + f;}
 // f(g(x))
 F composition(F f, F g){return g + f;}
-F id(){return 0;}
+constexpr F id(){return 0;}
 
 // template<   class S, S (*op)(S, S), S (*e)(),
 //             class F, S (*mapping)(F, S),
@@ -37,6 +37,7 @@ struct LazySeg{
     }
     // i \in [l, r] -> tree[i] = f(i)
     void upd(int l, int r, F f, int nd = 1, int ns = 0, int ne = -1){
+        assert(0 <= l and l <= r and r <= n - 1);
         if(ne == -1) ne = n - 1;
         if(r < ns or ne < l) return;
         if(l <= ns and ne <= r){
@@ -49,6 +50,7 @@ struct LazySeg{
         pull(nd);
     }
     S qry(int l, int r, int nd = 1, int ns = 0, int ne = -1){
+        assert(0 <= l and l <= r and r <= n - 1);
         if(ne == -1) ne = n - 1;
         if(r < ns or ne < l) return e();
         if(l <= ns and ne <= r) return tree[nd];
@@ -56,6 +58,7 @@ struct LazySeg{
         int nm = midpoint(ns, ne);
         return op(qry(l, r, nd << 1, ns, nm), qry(l, r, nd << 1 | 1, nm+1, ne));
     }
+    S qry_all(){ return tree[1]; }
     
     private:
     int n;
