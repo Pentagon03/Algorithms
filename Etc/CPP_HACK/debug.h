@@ -13,7 +13,7 @@ template<typename T> typename enable_if<is_iterable<T>::value&&!is_same<T, strin
     return cout << "]";
 }
 */
-// Source = https://codeforces.com/blog/entry/125435
+// Edited, Source = https://codeforces.com/blog/entry/125435
 #ifndef DEBUG_TEMPLATE_CPP
 
 #define DEBUG_TEMPLATE_CPP
@@ -22,9 +22,13 @@ template<typename T> typename enable_if<is_iterable<T>::value&&!is_same<T, strin
 namespace __DEBUG_UTIL__
 {
     using namespace std;
-    template <typename T>
-    concept is_iterable = requires(T &&x) { begin(x); } &&
-                          !is_same_v<remove_cvref_t<T>, string>;
+    template <class T>
+    concept is_string =
+        is_same_v<remove_cvref_t<T>, string> ||
+        is_same_v<decay_t<T>, char*> ||
+        is_same_v<decay_t<T>, const char*>;
+    template <class T>
+    concept is_iterable = requires(T &&x) { begin(x); end(x); } && !is_string<T>;
     inline void print(const char *x) { cerr << x; }
     inline void print(char x) { cerr << "\'" << x << "\'"; }
     inline void print(bool x) { cerr << (x ? "T" : "F"); }
@@ -39,7 +43,27 @@ namespace __DEBUG_UTIL__
         cerr << "}";
     }
     template <typename T>
-    inline void print(T &&x)
+    concept Integral128 = std::is_same_v<decay_t<T>, __int128_t> || std::is_same_v<decay_t<T>, __uint128_t>;
+
+    template <Integral128 T>
+    inline void print(T ans){
+        bool is_minimum = (ans<0) && ((ans<<1) == 0); // check whether this is the minimum of data type
+        string res;
+        bool neg_flag = false;
+        if(ans<0){
+            neg_flag = true;
+            if(is_minimum) ans = ~ans;
+            else ans *= -1;
+        }
+        do res.push_back(ans % 10 + '0'), ans/=10; while(ans>0);
+        if(is_minimum) ++res[0]; // we assume this is not 9, in-fact, c++ integer type {min}'s last digit is always '8'
+        if(neg_flag) res.push_back('-');
+        reverse(begin(res), end(res));
+        cerr << res;
+    }
+
+    template <typename T> requires (!Integral128<T>)
+    inline void print(T && x)
     {
         if constexpr (is_iterable<T>)
             if (size(x) && is_iterable<decltype(*(begin(x)))>)
@@ -98,7 +122,7 @@ namespace __DEBUG_UTIL__
             else if (names[i] == ')' or names[i] == '>' or names[i] == '}')
                 bracket--;
         cerr.write(names, i) << " = ";
-        print(head);
+        print(forward<T>(head));
         if constexpr (sizeof...(tail))
             cerr << " ||", printer(names + i + 1, tail...);
         else
