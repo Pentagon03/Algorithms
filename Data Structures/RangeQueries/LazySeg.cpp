@@ -13,6 +13,7 @@
 - Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 */
 
+$0
 // Example 1
 // https://www.acmicpc.net/problem/10999
 // S: range sum, F: range add

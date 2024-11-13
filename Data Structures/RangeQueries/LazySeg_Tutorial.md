@@ -44,16 +44,17 @@ void composition(F f, F&g){g += f;}
 ## Example 2
 ```cpp
 // S : range max, F : range add
+// https://www.acmicpc.net/problem/30857
 using S = int; // max
 constexpr S MIN = numeric_limits<S>::min() / 2; 
+constexpr S e(){return MIN;}
 S op(S a, S b){return max(a, b);}
-S e(){return MIN;}
 using F = int; // add
-// f(x)
-S mapping(F f, S x){return x + f;}
-// f(g(x))
-F composition(F f, F g){return g + f;}
-F id(){return 0;}
+// x => f(x)
+constexpr F id(){return 0;}
+void mapping(F f, S&x){x += f;}
+// g(x) => f(g(x))
+void composition(F f, F&g){g += f;}
 ```
 
 ## Example 3
