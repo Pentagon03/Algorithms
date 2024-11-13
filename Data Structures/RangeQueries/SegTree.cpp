@@ -1,36 +1,45 @@
-/*
-Segment Tree Generalized
-Usage: SegTree<int> st(n, plus<int>(), 0); or lambda
-SegTree<int> seg(n, ranges::min, numeric_limits<int>::max());
-Reference: https://codeforces.com/contest/1936/submission/249337780
+/* Segtree with point update
+S: monoid for tree
+S op(S a, S b): monoid action
+S e() : identity of S
 */
-template<class T, class Func = function<T(const T &, const T &)>>
-struct SegTree{
-    int n; vector<T> t;
-    T identity;
-    Func f;
-    SegTree(uint32_t _n, const Func &g = Func(), T dval = T()):f(g), identity(dval){
-        assert(_n >= 1);
-        // n = bit_ceil(_n); // need this for non-trivial compositions
-        t.assign(n << 1, identity);
+
+// Example: S : Range add
+using S = int;
+S op(S a, S b){return a + b;}
+S e(){return 0;}
+
+// template<class S, S (*op)(S, S), S (*e)()>
+struct Seg{
+    public:
+    Seg(int n = 0): Seg(vector (n, e())){}
+    Seg(const vector<S>&v){
+        // n = bit_ceil(size(v));
+        n = size(v);
+        tree = vector (n<<1, e());
+        ranges::copy(v, begin(tree)+n);
+        for(int i=n-1;i>=1;i--) pull(i);
     }
-    SegTree(const vector<T>&v, const Func &g = Func(), T dval = T()): SegTree(size(v), g, dval){
-        for(int i=0;i<size(v);i++) t[i+n]=v[i];
-        for(int i=n-1;i>=1;i--) t[i]=f(t[i<<1],t[i<<1|1]);
+    const S& get(int i) const{return tree[i+n];}
+    void set(int i, S val){
+        tree[i+=n] = val;
+        for(i>>=1;i>=1;i>>=1) pull(i);
     }
-    const T& get(int i) const{return t[i+n];}
-    void upd(int i,T v){
-        t[i+=n]=v;
-        for(i>>=1;i>=1;i>>=1) t[i]=f(t[i<<1],t[i<<1|1]);
-    }
+    S qry_all(){return tree[1];}
     //[l, r]
-    T qry(int l,int r) const{
-        T resL, resR;
-        resL = resR =  identity;
+    S qry(int l,int r) const{
+        S resL, resR;
+        resL = resR = e();
         for(l+=n,r+=n;l<=r;l>>=1,r>>=1){
-            if(l&1) resL = f(resL, t[l++]);
-            if(~r&1) resR = f(t[r--], resR); 
+            if(l&1) resL = op(resL, tree[l++]);
+            if(~r&1) resR = op(tree[r--], resR); 
         }
-        return f(resL, resR);
+        return op(resL, resR);
+    }
+    private:
+    int n;
+    vector<S> tree;
+    void pull(int i){
+        tree[i] = op(tree[i<<1], tree[i<<1|1]);
     }
 };
