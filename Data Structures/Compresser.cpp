@@ -1,9 +1,9 @@
 // reference: https://sotanishy.github.io/cp-library-cpp/misc/compress.hpp.html
 template<class T>
-struct Compress{
+struct Compresser{
     vector<T> t;
-    Compress() = default;
-    Compress(const vector<T> &v): t(v){}
+    Compresser() = default;
+    Compresser(const vector<T> &v): t(v){}
     void add(const auto&... x){ ((t.push_back(x)), ...); }
     void compress(){
         ranges::sort(t);
