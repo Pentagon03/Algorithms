@@ -1812,6 +1812,7 @@
       "        if(tree[nd].cover > 0) tree[nd].sum = c[e] - c[s];",
       "        else tree[nd].sum = e - s > 1 ? tree[nd<<1].sum + tree[nd<<1|1].sum : 0;",
       "    }",
+      "    int qry_all(){return tree[1].sum;}",
       "    // [l, r), [s, e)",
       "    int qry(int l, int r, int nd = 1, int s = 0, int e = -1){",
       "        if(e == -1) e = n;",
