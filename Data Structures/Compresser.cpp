@@ -9,6 +9,12 @@ struct Compresser{
         ranges::sort(t);
         t.erase(begin(ranges::unique(t)), end(t));
     }
+    int floor(const T& x) const{
+        return ranges::distance(begin(t), ranges::upper_bound(t, x)) - 1;
+    }
+    int ceil(const T& x) const{
+        return compress(x);
+    }
     int compress(const T& x) const {
         return ranges::distance(begin(t), ranges::lower_bound(t, x));
     }
