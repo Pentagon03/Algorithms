@@ -3,7 +3,7 @@
 - set your operation function op
 - You may make off-by-one error, so it prevents it
 */
-template<typename T = int>
+template<typename T>
 struct BIT{
     int n; vector<T> t;
     BIT(int _n=0):n(_n+4),t(n+1){}
