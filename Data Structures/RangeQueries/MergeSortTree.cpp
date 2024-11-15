@@ -17,25 +17,6 @@ struct MergeSortTree{
         assert(0 <= k and k < n);
         return tree[base+k][0];
     }
-    inline int greater(const Vec&v, int x){
-        return v.end() - upper_bound(all(v), x);
-    }
-    inline int less(const Vec&v, int x){
-        return lower_bound(all(v), x) - v.begin();
-    }
-    inline int greater_equal(const Vec&v, int x){
-        return v.size() - less(v, x); 
-    }
-    inline int less_equal(const Vec&v,  int x){
-        return v.size() - greater(v, x);
-    }
-    inline int in_range(const Vec&v,  int x, int y){
-        if(x > y) return 0;
-        return upper_bound(all(v), y) - lower_bound(all(v), x);
-    }
-    inline int equal(const Vec&v, int x){
-        return in_range(v, x, x);
-    }
     /* op is an operation to a vector
     ex) cnt_qry(0, n-1, [&](const vec& v){return f.less(v, x);})
     */
@@ -63,5 +44,24 @@ struct MergeSortTree{
         int lo = -1, hi = r, mid;
         while(lo+1<hi) cnt_qry(mid = lo + hi >> 1, r, op) <= k ? hi = mid : lo = mid;
         return hi;
+    }
+    static inline int greater(const Vec&v, int x){
+        return v.end() - upper_bound(all(v), x);
+    }
+    static inline int less(const Vec&v, int x){
+        return lower_bound(all(v), x) - v.begin();
+    }
+    static inline int greater_equal(const Vec&v, int x){
+        return v.size() - less(v, x); 
+    }
+    static inline int less_equal(const Vec&v,  int x){
+        return v.size() - greater(v, x);
+    }
+    static inline int in_range(const Vec&v,  int x, int y){
+        if(x > y) return 0;
+        return upper_bound(all(v), y) - lower_bound(all(v), x);
+    }
+    static inline int equal(const Vec&v, int x){
+        return in_range(v, x, x);
     }
 };
