@@ -5,17 +5,16 @@ struct MergeSortTree{
     vector<Vec> tree;
     MergeSortTree(){}
     MergeSortTree(const Vec& v){
-        n = v.size();
-        base = 1 << __lg(n-1) + 1;
+        int n = size(v);
+        base = bit_ceil((unsigned)n);
         tree.resize(base<<1);
-        for(int i=0;i<n;i++)
-            tree[base+i] = {v[i]};
+        ranges::copy(v, begin(tree)+base);
         for(int i=base-1;i>=1;i--)
             merge(all(tree[i<<1]),all(tree[i<<1|1]),back_inserter(tree[i]));
     }
     int elem(int k){
         assert(0 <= k and k < n);
-        return tree[base+k][0];
+        return tree[k+base][0];
     }
     /* op is an operation to a vector
     ex) cnt_qry(0, n-1, [&](const vec& v){return f.less(v, x);})
