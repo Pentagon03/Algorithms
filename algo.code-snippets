@@ -2506,6 +2506,17 @@
     ],
     "description": "pragmas"
   },
+  "readline.cpp": {
+    "prefix": "readline",
+    "scope": "cpp",
+    "body": [
+      "string readline(char delim = '\\n'){",
+      "    string t; getline(cin, t, delim);",
+      "    return move(t);",
+      "}"
+    ],
+    "description": "readline"
+  },
   "stackhack.cpp": {
     "prefix": "stackhack",
     "scope": "cpp",
