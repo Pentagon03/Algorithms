@@ -14,7 +14,7 @@
 using namespace std;
 namespace R = std::ranges;
 namespace V = std::ranges::views;
-string input(char delim = '\n'){
+string readline(char delim = '\n'){
     string t; getline(cin, t, delim);
     return move(t);
 }
