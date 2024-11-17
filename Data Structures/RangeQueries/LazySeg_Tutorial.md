@@ -19,6 +19,19 @@
 ## (optional) strengthened break condition
 - put additional condition for returning `upd` function at the first.
 
+# Dynamic Lazy Segtree
+- same convention with LazySeg
+- Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
+- Beats is possible as always
+- DynamicLazySeg seg(Range l, Range r);
+- if you need index information, modify 'make` function to put info.
+- Range=> index type, S=> node monoid, F=> update monoid
+- Given Example => Range: int, F: Range add, S: Range Sum.
+- If you need constant-optimization, consider following
+    - modify `push` function. so that no push occur when lazy == id()
+    - modify `pull`, `upd`, `qry` function. so that needless nd->l and nd->r will not be generated
+    - deque => array. and change Node *l, r => int l, r. we use index based approach. pre calculate needed array size
+
 # Examples
 ## Example 1
 ```cpp
