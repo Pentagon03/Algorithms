@@ -4,10 +4,12 @@
 - Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 - Beats is possible as always
 - if you need index information, modify 'make` function to put info.
-- Given Example is F: Range add, S: Range Sum.
+- Range=> index type, S=> node monoid, F=> update monoid
+- Given Example => Range: int, F: Range add, S: Range Sum.
 - Dynamic seg(0, 1e9) for example.
 */
 
+$0
 using Range = int;
 // Example
 // https://www.acmicpc.net/problem/20212
