@@ -6,9 +6,10 @@
 - F id(): identity of f
 - void mapping(F f, S&x) : x => f(x)
 - void composition(F f, F&g): g(x) => f(g(x))
-- (optional) `LazySeg<S, e, op, F, id, mapping, composition>`
+- If you need index information, modify `mapping` function to get additional parameter, and `apply` function
 - `upd(l, r, f) : i \in [l, r], A[i] => f(A[i])`
 - `qry(l, r) : op(A[l], ... , A[r])`
+- (optional) template: `LazySeg<S, e, op, F, id, mapping, composition>`
 - Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 
 # SegTree Beats Tutorial
@@ -22,15 +23,13 @@
 # Dynamic Lazy Segtree
 - same convention with LazySeg
 - Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
-- Beats is possible as always
-- DynamicLazySeg seg(Range l, Range r);
-- if you need index information, modify 'make` function to put info.
+- `DynamicLazySeg seg(Range l, Range r);`
+- If you need index information, consider one of following
+    - 1. modify `make` function to put info.
+    - 2. modify `mapping` function to get additional parameter (index), and modify `apply` function
 - Range=> index type, S=> node monoid, F=> update monoid
-- Given Example => Range: int, F: Range add, S: Range Sum.
-- If you need constant-optimization, consider following
-    - modify `push` function. so that no push occur when lazy == id()
-    - modify `pull`, `upd`, `qry` function. so that needless nd->l and nd->r will not be generated
-    - deque => array. and change Node *l, r => int l, r. we use index based approach. pre calculate needed array size
+- If you need constant-optimization, use Array version in github.
+    - adjust LG = Log Size of Array.
 
 # Examples
 ## Example 1

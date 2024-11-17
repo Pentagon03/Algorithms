@@ -1,16 +1,14 @@
 /*
-# # Dynamic Lazy Segtree
+# Dynamic Lazy Segtree
 - same convention with LazySeg
 - Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
-- Beats is possible as always
-- DynamicLazySeg seg(Range l, Range r);
-- if you need index information, modify 'make` function to put info.
+- `DynamicLazySeg seg(Range l, Range r);`
+- If you need index information, consider one of following
+    - 1. modify `make` function to put info.
+    - 2. modify `mapping` function to get additional parameter (index), and modify `apply` function
 - Range=> index type, S=> node monoid, F=> update monoid
-- Given Example => Range: int, F: Range add, S: Range Sum.
-- If you need constant-optimization, consider following
-    - modify `push` function. so that no push occur when lazy == id()
-    - modify `pull`, `upd`, `qry` function. so that needless nd->l and nd->r will not be generated
-    - deque => array. and change Node *l, r => int l, r. we use index based approach. pre calculate needed array size
+- If you need constant-optimization, use Array version in github.
+    - adjust LG = Log Size of Array.
 */
 
 $0
@@ -56,13 +54,14 @@ struct DynamicLazySeg{
         alloc.back().value.len = r - l + 1;
         return &alloc.back();
     }
+
     // Node Range: ex) -inf, inf
     DynamicLazySeg(Range l, Range r){
         root = make(l, r);
     }
 
     // i \in [l, r], A[i] => f(A[i])
-    void upd(int l, int r, F f, Node *nd = NULL){
+    void upd(Range l, Range r, F f, Node *nd = NULL){
         if(nd == NULL) nd = root;
         if(r < nd->ns or nd->ne < l) return;
         if(l <= nd->ns and nd->ne <= r){
@@ -75,8 +74,7 @@ struct DynamicLazySeg{
         pull(nd);
     }
 
-    // op(A[l], ... , A[r])
-    S qry(int l, int r, Node *nd = NULL){
+    S qry(Range l, Range r, Node *nd = NULL){
         if(nd == NULL) nd = root;
         if(r < nd->ns or nd->ne < l) return e();
         if(l <= nd->ns and nd->ne <= r) return nd->value;
@@ -90,8 +88,7 @@ struct DynamicLazySeg{
     Node *root;
     deque<Node> alloc;
     void pull(Node*nd){
-        // if we pushed appropriate
-        assert(nd -> l and nd -> r);
+        assert(nd -> l and nd -> r); // always pull after push
         nd->value = op(nd->l->value, nd->r->value);
     }
     void apply(Node*nd, F f){
@@ -102,8 +99,8 @@ struct DynamicLazySeg{
             // if(nd->value.fail) push(nd), pull(nd); // SegTree Beats, add mapping fail info to 'S' (necessary)
         }
     }
+    // should make all child nodes
     void push(Node*nd){
-        // if(nd -> lz == id()) return;
         if(not nd->l) nd->l = make(nd->ns, midpoint(nd->ns, nd->ne));
         apply(nd->l, nd->lz);
         if(not nd->r) nd->r = make(midpoint(nd->ns, nd->ne) + 1, nd->ne);
