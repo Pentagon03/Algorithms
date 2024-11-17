@@ -71,6 +71,7 @@ struct DynamicLazySeg{
         pull(nd);
     }
 
+    // op(A[l], ... , A[r])
     S qry(int l, int r, Node *nd = NULL){
         if(nd == NULL) nd = root;
         if(r < nd->ns or nd->ne < l) return e();
