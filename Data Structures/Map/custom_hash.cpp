@@ -21,4 +21,5 @@ struct custom_hash {
 };
 
 unordered_map<int64_t, int, custom_hash> safe_map;
-gp_hash_table<int64_t, int, custom_hash> safe_hash_table;
+#include <ext/pb_ds/assoc_container.hpp>
+__gnu_pbds::gp_hash_table<int64_t, int, custom_hash> safe_hash_table;
