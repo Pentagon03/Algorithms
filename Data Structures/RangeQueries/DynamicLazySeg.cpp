@@ -1,5 +1,5 @@
 /*
-# Dynamic Lazy Segtree
+# Dynamic Lazy Segtree - Memory Opt
 - same convention with LazySeg
 - Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 - `DynamicLazySeg seg(Range l, Range r);`

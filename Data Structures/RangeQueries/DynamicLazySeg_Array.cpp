@@ -1,5 +1,5 @@
 /*
-# Dynamic Lazy Segtree - Array (Memory Optimized)
+# Dynamic Lazy Segtree - Memory Opt
 - same convention with LazySeg
 - Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
 - `DynamicLazySeg seg(Range l, Range r);`
@@ -10,7 +10,6 @@
 - If you need constant-optimization, use Array version in github.
     - adjust LG = Log Size of Array.
 */
-
 $0
 // Example
 // https://www.acmicpc.net/problem/20212
