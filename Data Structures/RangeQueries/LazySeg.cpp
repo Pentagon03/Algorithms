@@ -83,7 +83,7 @@ struct LazySeg{
         mapping(f, tree[i]);
         if(i < n){
             composition(f, lz[i]);
-            // if(tree[i].fail) push(i), pull(i); // SegTree Beats, add mapping fail info (necessary)
+            // if(tree[i].fail) push(i), pull(i); // SegTree Beats, add mapping fail info to 'S'(necessary)
         }
     }
     void push(int i){
