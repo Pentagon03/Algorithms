@@ -1,12 +1,12 @@
 // hijkl2e
 class mf_graph {
 public:
+	static constexpr int iinf = numeric_limits<int>::max() / 2;
 	using edge = tuple<int, ll, ll>;
 	vector<edge> E;
 	vector<vector<int>> G;
 	vector<int> d, last;
-    const ll inf;
-	mf_graph(int V) : G(V), d(V), last(V), inf(numeric_limits<ll>::max() / 4) { }
+	mf_graph(int V) : G(V), d(V), last(V){ }
 	void add_edge(int u, int v, ll c, bool d = true) {
 		G[u].push_back(E.size());
 		E.push_back({v, c, 0});
@@ -17,7 +17,7 @@ public:
 		ll mf{};
 		while (bfs(s, t)) {
 			fill(last.begin(), last.end(), 0);
-			while (ll f = dfs(s, t, inf)) {
+			while (ll f = dfs(s, t, iinf)) {
 				mf += f;
 			}
 		}

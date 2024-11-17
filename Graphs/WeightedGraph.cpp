@@ -2,9 +2,9 @@
  * Graph with Weighted Edges
  * Bellman Ford Validation: https://www.acmicpc.net/source/share/066ba979355348c5aefde66f11aa2dae
  */
-using W = int;
-constexpr W INF_ = numeric_limits<W>::max() / 2; // INF + INF doesn't overflow
+template<typename W = int>
 struct WeightedGraph{
+    static constexpr W INF_ = numeric_limits<W>::max() / 2; // INF + INF doesn't overflow
     using Edge = tuple<int, int, W>;
     int n; // vertex from 0 to n-1
     vector<vector<pair<int, W>>> g;
@@ -35,7 +35,7 @@ struct WeightedGraph{
         vector<bool> vis(n);
         vector<int> t;
         auto dfs = [&](auto&self, int x)->void{
-            vis[x] = true; t.push_back(x); 
+            vis[x] = true; t.push_back(x);
             for(auto[nx, w]: g[x]) if(not vis[nx]) self(self, nx);
         };
         for(int i=0;i<n;i++){
@@ -76,6 +76,8 @@ struct WeightedGraph{
         vector<W> dis(n, INF);
         vector<int> d(n, -1);
         queue<pair<W, int>> q({{dis[src] = 0, src}}); // SPFA
+        vector<bool> inq(n, false);
+        inq[src] = true;
         auto detect_cycle = [&](int x)->vector<int>{
             vector<bool> vis(n);
             vector<int> t;
@@ -95,7 +97,8 @@ struct WeightedGraph{
             int sz = q.size();
             for(int j = 0; j < sz; j++){
                 auto [cur_dis, x] = q.front(); q.pop();
-                if(cur_dis > dis[x]) continue;
+                inq[x] = false;
+                // if(cur_dis > dis[x]) continue;
                 for(auto[nx, w]: g[x]){
                     if(dis[nx] > dis[x] + w){
                         dis[nx] = dis[x] + w;
@@ -104,7 +107,10 @@ struct WeightedGraph{
                             neg_cycle = true;
                             return {{}, detect_cycle(nx)};
                         }
-                        q.emplace(dis[nx], nx);
+                        if(not inq[nx]){
+                            q.emplace(dis[nx], nx);
+                            inq[nx] = true;
+                        }
                     }
                 }
             }
@@ -155,8 +161,8 @@ struct WeightedGraph{
         return move(ans);
     }
     pair<vector<vector<W>>, vector<vector<int>>> floyd_warshall(bool &neg_cycle, int max_node = -1, W INF = INF_){
-        vector<vector<W>> dis(n, vector<int>(n, INF)); 
-        vector<vector<int>> d(n, vector<int>(n, -1));
+        vector dis(n, vector<W>(n, INF));
+        vector d(n, vector<int>(n, -1));
         for(int x=0;x<n;x++)
             for(auto[nx, w]: g[x])
                 if(dis[x][nx] > w){
@@ -186,7 +192,7 @@ struct WeightedGraph{
             for(int s=0; s<n; s++)
                 for(int e=0; e<n; e++){
                     if(dis[s][m] == INF or dis[m][e] == INF) continue;
-                    int val = dis[s][m] + dis[m][e];
+                    auto val = dis[s][m] + dis[m][e];
                     if(dis[s][e] > val){
                         dis[s][e] = val;
                         d[s][e] = d[m][e];
