@@ -2157,8 +2157,8 @@
     ],
     "description": "RMQ"
   },
-  "Segtree.cpp": {
-    "prefix": "Segtree",
+  "Seg.cpp": {
+    "prefix": "Seg",
     "scope": "cpp",
     "body": [
       "/* Segtree with point update",
@@ -2210,7 +2210,7 @@
       "    }",
       "};"
     ],
-    "description": "Segtree"
+    "description": "Seg"
   },
   "SweepLineMaxUncovered_Segtree.cpp": {
     "prefix": "SweepLineMaxUncovered_Segtree",
