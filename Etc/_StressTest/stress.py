@@ -1,7 +1,6 @@
 '''
 # Stress Tester
-원본: https://github.com/Pentagon03/Algorithms/blob/master/Etc/stress.py
-사용법: https://github.com/Pentagon03/Algorithms/blob/master/Etc/stress_test_guide.md
+사용법: https://github.com/Pentagon03/Algorithms/blob/master/Etc/_StressTest/stress_test_guide.md
 '''
 import os
 import sys
