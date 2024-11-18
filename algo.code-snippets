@@ -1836,6 +1836,8 @@
     "body": [
       "/*",
       "# Dynamic Seg Generalized (Point Update)",
+      "- `void upd(point, unary function(S&x), combine function(S&x, S&l, S&r))`",
+      "- `V qry(point, unary function(S&x), fold function(V x, S&x), V init)`",
       "ex) https://www.acmicpc.net/source/share/1049c3d8d92f4f348e28d8af4a10795a",
       "*/",
       "template<   class Range,",
