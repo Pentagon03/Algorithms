@@ -77,7 +77,8 @@ struct DynamicSeg{
                 upd(i, unary, combine, nd->r, nm+1, ne);
             }
         }
-        combine(nd, nd->l, nd->r);
+        assert(nd->l or nd->r);
+        combine(nd->value, nd->l ? nd->l->value : eval, nd->r ? nd->r->value : eval);
     }
     template<class F, class C, class V>
     V qry(Range l, Range r, F &&unary, C &&fold, V init, Node *nd, Range ns, Range ne) const{
