@@ -3135,6 +3135,7 @@
     "prefix": "simple_solve",
     "scope": "cpp",
     "body": [
+      "#pragma GCC optimize(\"Ofast\")",
       "#include<bits/stdc++.h>",
       "using namespace std;",
       "using ll = int64_t;",
