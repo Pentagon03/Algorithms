@@ -2,9 +2,9 @@
 # Max Flow O(V^2 E)
 - mf_graph<int> fg(V = number of vertices)
 - fg.add_edge(u, v, cap)
-- fg.flow(source, sink, flow_limit = inf) 
+- fg.flow(source, sink, flow_limit = inf)
 - fg.min_cut() // flow should be called once, returns vector<bool>, true means in source
-- fg.get_edge(i) // returns ith edge added, can see how much flow it 
+- fg.get_edge(i) // returns ith edge added, can see how much flow it
 - fg.edges() // returns all edge
 - reference: hijkl2e
 */
@@ -78,7 +78,7 @@ struct mf_graph {
 		return vis;
 	}
 	struct edge{
-		int from, to; 
+		int from, to;
 		Cap cap, flow;
 	};
 	edge get_edge(int i){
@@ -95,12 +95,20 @@ struct mf_graph {
 		return move(es);
 	}
 	void change_edge(int i, Cap new_cap, Cap new_flow) {
-		i *= 2; 
+		i *= 2;
 		assert(0 <= i and i < E.size());
 		assert(0 <= new_flow and new_flow <= new_cap);
 		auto& e = E[i];
 		auto& re = E[i^1];
 		e.cap = new_cap - new_flow;
 		re.cap = new_flow;
+	}
+	void reset(){
+		for(int i=0;i<E.size();i+=2){
+			auto& e = E[i];
+			auto& re = E[i^1];
+			e.cap += re.cap;
+			re.cap = 0;
+		}
 	}
 };
