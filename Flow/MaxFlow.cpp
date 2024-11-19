@@ -1,3 +1,12 @@
+/*
+# Max Flow
+- mf_graph<int> fg(V = number of vertices)
+- fg.add_edge(u, v, cap)
+- fg.flow(source, sink, flow_limit = inf) 
+- fg.min_cut() // flow should be called once, returns vector<bool>, true means in source
+- fg.get_edge(i) // returns ith edge added, can see how much flow it 
+- fg.edges() // returns all edge
+*/
 template<class Cap = int64_t>
 class mf_graph {
 public:
@@ -9,6 +18,7 @@ public:
         G[v].push_back(E.size()); E.push_back({u, 0});
     }
     Cap flow(int s, int t) {
+		assert(s != t);
         return flow(s, t, numeric_limits<Cap>::max());
     }
     Cap flow(int s, int t, Cap flow_limit){
@@ -42,6 +52,12 @@ public:
         auto[from, rcap] = E[i^1];
         return edge{from, to, cap + rcap, rcap};
     }
+	vector<edge> edges(){
+		int m = ssize(E) / 2;
+		vector<edge> es(m);
+		for(int i=0;i<m;i++) es[i] = get_edge(i);
+		return move(es);
+	}
     void change_edge(int i, Cap new_cap, Cap new_flow) {
         i *= 2; 
         assert(0 <= i and i < E.size());
