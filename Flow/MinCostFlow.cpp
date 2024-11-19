@@ -11,8 +11,8 @@
 */
 // using Cap = int32_t; using Cost = int64_t;
 template<typename Cap, typename Cost>
-class mcf_graph {
-private:
+struct mcf_graph {
+// private:
 	struct _edge{int to; Cap cap; Cost cost;};
 	vector<_edge> E;
 	vector<vector<int>> G;
@@ -55,7 +55,7 @@ private:
 		vst[u] = false;
 		return 0;
 	}
-public:
+// public:
 	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
 	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
 	static constexpr int paths_inf = numeric_limits<int>::max();

@@ -10,8 +10,8 @@
 */
 // using Cap = int;
 template<class Cap>
-class mf_graph {
-private:
+struct mf_graph {
+// private:
 	struct _edge{ int to; Cap cap;};
 	vector<_edge> E; vector<vector<int>> G;
 	vector<int> d, last;
@@ -46,7 +46,7 @@ private:
 		}
 		return 0;
 	}
-public:
+// public:
 	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
 	// V = number of vertices
 	mf_graph(int V = 0) : G(V), d(V), last(V){ }
