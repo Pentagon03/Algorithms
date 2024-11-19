@@ -12,7 +12,7 @@ template<class Cap = int64_t>
 class mf_graph {
 public:
     // V = number of vertices
-    mf_graph(int V) : G(V), d(V), last(V){ }
+    mf_graph(int V = 0) : G(V), d(V), last(V){ }
     // just add 2 directed edges for bidirectional. doesn't matter.
     void add_edge(int u, int v, Cap c) {
         G[u].push_back(E.size()); E.push_back({v, c});
