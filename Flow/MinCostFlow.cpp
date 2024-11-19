@@ -1,5 +1,5 @@
 /*
-# Min Cost Flow
+# Min Cost Flow O(EVf), random data O(Ef)
 - mcf_graph<cap, cost> fg(V);
 - R: struct{Cap, Cost};
 - R fg.flow(source, sink, flow_limit, cost_limit, paths_limit)

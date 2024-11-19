@@ -1,5 +1,5 @@
 /*
-# Max Flow
+# Max Flow O(V^2 E)
 - mf_graph<int> fg(V = number of vertices)
 - fg.add_edge(u, v, cap)
 - fg.flow(source, sink, flow_limit = inf) 

@@ -3365,7 +3365,7 @@
     "scope": "cpp",
     "body": [
       "/*",
-      "# Max Flow",
+      "# Max Flow O(V^2 E)",
       "- mf_graph<int> fg(V = number of vertices)",
       "- fg.add_edge(u, v, cap)",
       "- fg.flow(source, sink, flow_limit = inf)",
@@ -3478,7 +3478,7 @@
     "scope": "cpp",
     "body": [
       "/*",
-      "# Min Cost Flow",
+      "# Min Cost Flow O(EVf), random data O(Ef)",
       "- mcf_graph<cap, cost> fg(V);",
       "- R: struct{Cap, Cost};",
       "- R fg.flow(source, sink, flow_limit, cost_limit, paths_limit)",
