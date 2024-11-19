@@ -13,11 +13,11 @@
 template<typename Cap, typename Cost>
 class mcf_graph {
 private:
-    struct _edge{int to; Cap cap; Cost cost;};
+	struct _edge{int to; Cap cap; Cost cost;};
 	vector<_edge> E;
 	vector<vector<int>> G;
 	vector<Cost> d; vector<bool> vst;
-    vector<int> last;
+	vector<int> last;
 	bool spfa(int s, int t, Cost cost_limit) {
 		fill(d.begin(), d.end(), cost_inf);
 		queue<int> q({s}); d[s] = 0; vst[s] = true;
@@ -56,67 +56,67 @@ private:
 		return 0;
 	}
 public:
-    static constexpr Cap flow_inf = numeric_limits<Cap>::max();
-    static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
-    static constexpr int paths_inf = numeric_limits<int>::max();
+	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
+	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
+	static constexpr int paths_inf = numeric_limits<int>::max();
 	mcf_graph(int V) : G(V), d(V), last(V), vst(V){}
 	void add_edge(int u, int v, Cap cap, Cost cost) {
-        assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
+		assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
 		G[u].push_back(E.size());
 		E.push_back({v, cap, cost});
 		G[v].push_back(E.size());
 		E.push_back({u, 0, -cost});
 	}
-    struct R{Cap cap; Cost cost;};
-    // returns a Convex down (x = Cap, y = cost) piecewise segments 
-    vector<R> slope(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf){
-        assert(s != t);
-        Cap flow{}; Cost cost{};
-        vector<R> ans({R{flow, cost}});
-        int path_count = 0;
-        while(flow < flow_limit and path_count < paths_limit){
-            if(bool res = spfa(s, t, cost_limit); not res) break;
-            fill(last.begin(), last.end(), 0);
-            while(flow < flow_limit and path_count < paths_limit){
-                Cap f = dfs(s, t, flow_limit - flow);
-                if(not f) break;
-                flow += f;
-                cost += f * d[t];
-                ans.push_back(R{flow, cost});
-                ++path_count;
-            }
-        }
+	struct R{Cap cap; Cost cost;};
+	// returns a Convex down (x = Cap, y = cost) piecewise segments 
+	vector<R> slope(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf){
+		assert(s != t);
+		Cap flow{}; Cost cost{};
+		vector<R> ans({R{flow, cost}});
+		int path_count = 0;
+		while(flow < flow_limit and path_count < paths_limit){
+			if(bool res = spfa(s, t, cost_limit); not res) break;
+			fill(last.begin(), last.end(), 0);
+			while(flow < flow_limit and path_count < paths_limit){
+				Cap f = dfs(s, t, flow_limit - flow);
+				if(not f) break;
+				flow += f;
+				cost += f * d[t];
+				ans.push_back(R{flow, cost});
+				++path_count;
+			}
+		}
 		return ans;
-    }
-	R flow(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf) {
-        assert(s != t);
-        return slope(s, t, flow_limit, cost_limit, paths_limit).back();
 	}
-    struct edge{
-        int from, to; 
-        Cap cap, flow;
-        Cost cost;
-    };
-    edge get_edge(int i){
-        i *= 2;
-        assert(0 <= i and i < E.size());
-        auto[to, cap, cost] = E[i];
-        auto[from, rcap, rcost] = E[i^1];
-        return edge{from, to, cap + rcap, rcap, cost};
-    }
+	R flow(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf) {
+		assert(s != t);
+		return slope(s, t, flow_limit, cost_limit, paths_limit).back();
+	}
+	struct edge{
+		int from, to; 
+		Cap cap, flow;
+		Cost cost;
+	};
+	edge get_edge(int i){
+		i *= 2;
+		assert(0 <= i and i < E.size());
+		auto[to, cap, cost] = E[i];
+		auto[from, rcap, rcost] = E[i^1];
+		return edge{from, to, cap + rcap, rcap, cost};
+	}
 	vector<edge> edges(){
 		int m = ssize(E) / 2;
 		vector<edge> es(m);
 		for(int i=0;i<m;i++) es[i] = get_edge(i);
 		return move(es);
 	}
-    void change_edge(int i, Cap new_cap, Cap new_flow, Cost new_cost) {
-        i *= 2; 
-        assert(0 <= i and i < E.size());
-        assert(0 <= new_flow and new_flow <= new_cap);
-        auto& e = E[i];
-        auto& re = E[i^1];
-        e.cap = new_cap - new_flow; e.cost = new_cost;
-        re.cap = new_flow; re.cost = -new_cost;
-    }
+	void change_edge(int i, Cap new_cap, Cap new_flow, Cost new_cost) {
+		i *= 2; 
+		assert(0 <= i and i < E.size());
+		assert(0 <= new_flow and new_flow <= new_cap);
+		auto& e = E[i];
+		auto& re = E[i^1];
+		e.cap = new_cap - new_flow; e.cost = new_cost;
+		re.cap = new_flow; re.cost = -new_cost;
+	}
 };
