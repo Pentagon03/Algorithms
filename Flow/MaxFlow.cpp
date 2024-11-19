@@ -6,6 +6,7 @@
 - fg.min_cut() // flow should be called once, returns vector<bool>, true means in source
 - fg.get_edge(i) // returns ith edge added, can see how much flow it 
 - fg.edges() // returns all edge
+- reference: hijkl2e
 */
 template<class Cap = int64_t>
 class mf_graph {
