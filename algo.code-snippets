@@ -3614,6 +3614,14 @@
       "\t\te.cap = new_cap - new_flow; e.cost = new_cost;",
       "\t\tre.cap = new_flow; re.cost = -new_cost;",
       "\t}",
+      "\tvoid reset(){",
+      "        for(int i=0;i<E.size();i+=2){",
+      "            auto& e = E[i];",
+      "            auto& re = E[i^1];",
+      "            e.cap += re.cap;",
+      "            re.cap = 0;",
+      "        }",
+      "    }",
       "};"
     ],
     "description": "MinCostFlow"
