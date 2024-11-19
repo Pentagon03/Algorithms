@@ -8,7 +8,8 @@
 - fg.edges() // returns all edge
 - reference: hijkl2e
 */
-template<class Cap = int64_t>
+// using Cap = int;
+template<class Cap>
 class mf_graph {
 private:
 	struct _edge{ int to; Cap cap;};
@@ -46,6 +47,7 @@ private:
         return 0;
     }
 public:
+	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
     // V = number of vertices
     mf_graph(int V = 0) : G(V), d(V), last(V){ }
     // just add 2 directed edges for bidirectional. doesn't matter.
@@ -54,11 +56,8 @@ public:
         G[u].push_back(E.size()); E.push_back({v, c});
         G[v].push_back(E.size()); E.push_back({u, 0});
     }
-    Cap flow(int s, int t) {
+    Cap flow(int s, int t, Cap flow_limit = flow_inf){
 		assert(s != t);
-        return flow(s, t, numeric_limits<Cap>::max());
-    }
-    Cap flow(int s, int t, Cap flow_limit){
         Cap flow{};
         while (flow < flow_limit) {
             if(bool res = bfs(s, t); not res) break;
