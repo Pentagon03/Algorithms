@@ -1,5 +1,5 @@
 /*
-# Min Cost Flow (zkw MCMF, faster on )
+# Min Cost Flow (zkw MCMF, faster on sparse graph)
 - mcf_graph<cap, cost> fg(V);
 - R: struct{Cap, Cost};
 - R fg.flow(source, sink, flow_limit, cost_limit, paths_limit)
@@ -7,11 +7,11 @@
 - finds flow until flow <= flow_limit.
 - find only paths such that cost per flow <= cost_limit.
 - finds Augmenting path less or equal to 'paths_limit' times.
-- reference: hijkl2e, https://www.acmicpc.net/source/62155473
+- reference: hijkl2e, https://www.acmicpc.net/source/62155473, https://justicehui.github.io/hard-algorithm/2020/03/24/effective-mcmf/
 ## Time Complexity
 - O(EV + F(E+V))
-- reference: hijkl2e
 */
+
 // using Cap = int32_t; using Cost = int64_t;
 template<typename Cap, typename Cost>
 struct mcf_graph {
