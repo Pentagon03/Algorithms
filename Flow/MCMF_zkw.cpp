@@ -25,14 +25,14 @@ struct mcf_graph {
 		fill(d.begin(), d.end(), cost_inf);
 		fill(inq.begin(), inq.end(), false);
 		queue<int> q({s}); d[s] = 0; inq[s] = true;
-		while(q.size()) {
+		while (q.size()) {
 			int u = q.front(); q.pop();
 			inq[u] = false;
-			for(int idx : G[u]) {
+			for (int idx : G[u]) {
 				auto &[v, cap, cost] = E[idx];
-				if(d[v] > d[u] + cost && cap > 0) {
+				if (d[v] > d[u] + cost and cap > 0) {
 					d[v] = d[u] + cost;
-					if(not inq[v]) {
+					if (not inq[v]) {
 						inq[v] = true;
 						q.push(v);
 					}
@@ -43,18 +43,21 @@ struct mcf_graph {
 	}
 	bool update(int s, int t, Cost cost_limit){
 		Cost mn = cost_inf;
-		for(int i=0;i<ssize(G);i++){
-			if(not vis[i]) continue;
+		for (int i=0;i<ssize(G);i++){
+			if (not vis[i]) continue;
 			// vis[i] means 'i' has been the augmenting path
-			for(int idx: G[i]){
+			for (int idx: G[i]){
 				auto &[j, cap, cost] = E[idx];
-				if(cap > 0 and not vis[j]) mn = min(mn, d[i] + cost - d[j]);
+				if (cap > 0 and not vis[j]) mn = min(mn, d[i] + cost - d[j]);
 			}
 		}
-		if(mn >= cost_inf) return 0;
-		for(int i=0;i<ssize(G);i++)
-			if(not vis[i])
+		if (mn >= cost_inf) return 0;
+		for (int i=0;i<ssize(G);i++){
+			if (not vis[i])
 				d[i] += mn;
+            else
+                vis[i] = false;
+        }
 		return d[t] <= cost_limit;
 	}
 	Cap dfs(int u, int t, Cap f) {
@@ -62,7 +65,7 @@ struct mcf_graph {
 		if (u == t) return f;
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap, cost] = E[G[u][i]];
-			if (not vis[v] and d[v] == d[u] + cost && cap > 0) {
+			if (not vis[v] and d[v] == d[u] + cost and cap > 0) {
 				if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
 					cap -= pushed;
 					auto &rcap = E[G[u][i] ^ 1].cap;
@@ -93,18 +96,19 @@ struct mcf_graph {
 		vector<R> ans({R{flow, cost}});
 		int path_count = 0;
 		if (not spfa(s, t, cost_limit)) return ans;
+        fill(vis.begin(), vis.end(), false);
 		while (flow < flow_limit and path_count < paths_limit){
-			if (not update(s, t, cost_limit)) break;
 			fill(last.begin(), last.end(), 0);
 			while (flow < flow_limit and path_count < paths_limit){
-				fill(vis.begin(), vis.end(), false);
 				Cap f = dfs(s, t, flow_limit - flow);
 				if (not (f > 0)) break;
 				flow += f;
 				cost += f * d[t];
 				ans.push_back(R{flow, cost});
 				++path_count;
+                fill(vis.begin(), vis.end(), false);
 			}
+            if (not update(s, t, cost_limit)) break;
 		}
 		return ans;
 	}
