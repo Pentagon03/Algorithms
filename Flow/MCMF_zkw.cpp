@@ -1,4 +1,19 @@
 /*
+# Min Cost Flow (zkw MCMF, faster on )
+- mcf_graph<cap, cost> fg(V);
+- R: struct{Cap, Cost};
+- R fg.flow(source, sink, flow_limit, cost_limit, paths_limit)
+- vector<R> fg.slope(source, sink, flow_limit, cost_limit, paths_limit)
+- finds flow until flow <= flow_limit.
+- find only paths such that cost per flow <= cost_limit.
+- finds Augmenting path less or equal to 'paths_limit' times.
+- reference: hijkl2e, https://www.acmicpc.net/source/62155473
+## Time Complexity
+- O(FEV)
+- O(FE) on random data
+- reference: hijkl2e
+*/
+/*
 # Min Cost Flow O(EV + F(V+E)), random data O(FE)
 - mcf_graph<cap, cost> fg(V);
 - R: struct{Cap, Cost};
@@ -22,14 +37,14 @@ struct mcf_graph {
 		fill(d.begin(), d.end(), cost_inf);
 		fill(inq.begin(), inq.end(), false);
 		queue<int> q({s}); d[s] = 0; inq[s] = true;
-		while (q.size()) {
+		while(q.size()) {
 			int u = q.front(); q.pop();
 			inq[u] = false;
-			for (int idx : G[u]) {
+			for(int idx : G[u]) {
 				auto &[v, cap, cost] = E[idx];
-				if (d[v] > d[u] + cost && cap > 0) {
+				if(d[v] > d[u] + cost && cap > 0) {
 					d[v] = d[u] + cost;
-					if (not inq[v]) {
+					if(not inq[v]) {
 						inq[v] = true;
 						q.push(v);
 					}
@@ -60,7 +75,7 @@ struct mcf_graph {
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap, cost] = E[G[u][i]];
 			if (not vis[v] and d[v] == d[u] + cost && cap > 0) {
-				if (Cap pushed = dfs(v, t, min(f, cap))) {
+				if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
 					cap -= pushed;
 					auto &rcap = E[G[u][i] ^ 1].cap;
 					rcap += pushed;
@@ -89,14 +104,14 @@ struct mcf_graph {
 		Cap flow{}; Cost cost{};
 		vector<R> ans({R{flow, cost}});
 		int path_count = 0;
-		if(not spfa(s, t, cost_limit)) return ans;
-		while(flow < flow_limit and path_count < paths_limit){
-			if(not update(s, t, cost_limit)) break;
+		if (not spfa(s, t, cost_limit)) return ans;
+		while (flow < flow_limit and path_count < paths_limit){
+			if (not update(s, t, cost_limit)) break;
 			fill(last.begin(), last.end(), 0);
-			while(flow < flow_limit and path_count < paths_limit){
+			while (flow < flow_limit and path_count < paths_limit){
 				fill(vis.begin(), vis.end(), false);
 				Cap f = dfs(s, t, flow_limit - flow);
-				if(not (f > 0)) break;
+				if (not (f > 0)) break;
 				flow += f;
 				cost += f * d[t];
 				ans.push_back(R{flow, cost});
@@ -112,7 +127,7 @@ struct mcf_graph {
 	// flow should be called first
 	vector<bool> min_cut(){
 		vector<bool> ans(ssize(G));
-		for(int i=0;i<ssize(G);i++){
+		for (int i=0;i<ssize(G);i++){
 			ans[i] = d[i] != cost_inf;
 		}
 		return ans;
@@ -132,7 +147,7 @@ struct mcf_graph {
 	vector<edge> edges(){
 		int m = ssize(E) / 2;
 		vector<edge> es(m);
-		for(int i=0;i<m;i++) es[i] = get_edge(i);
+		for (int i=0;i<m;i++) es[i] = get_edge(i);
 		return move(es);
 	}
 	void change_edge(int i, Cap new_cap, Cap new_flow, Cost new_cost) {
@@ -145,7 +160,7 @@ struct mcf_graph {
 		re.cap = new_flow; re.cost = -new_cost;
 	}
 	void reset(){
-		for(int i=0;i<E.size();i+=2){
+		for (int i=0;i<E.size();i+=2){
 			auto& e = E[i];
 			auto& re = E[i^1];
 			e.cap += re.cap;
