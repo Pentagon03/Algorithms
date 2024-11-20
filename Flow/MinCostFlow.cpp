@@ -16,6 +16,7 @@
 template<typename Cap, typename Cost>
 struct mcf_graph {
 // private:
+	int n;
 	struct _edge{int to; Cap cap; Cost cost;};
 	vector<_edge> E;
 	vector<vector<int>> G;
@@ -62,9 +63,9 @@ struct mcf_graph {
 	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
 	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
 	static constexpr int paths_inf = numeric_limits<int>::max();
-	mcf_graph(int V) : G(V), d(V), last(V), vis(V){}
+	mcf_graph(int V) : n(V), G(V), d(V), last(V), vis(V){}
 	void add_edge(int u, int v, Cap cap, Cost cost) {
-		assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
+		assert(0 <= u and u < n and 0 <= v and v < n);
 		G[u].push_back(E.size());
 		E.push_back({v, cap, cost});
 		G[v].push_back(E.size());
@@ -97,8 +98,8 @@ struct mcf_graph {
 	}
 	// flow should be called first
 	vector<bool> min_cut(){
-		vector<bool> ans(ssize(G));
-		for(int i=0;i<ssize(G);i++){
+		vector<bool> ans(n);
+		for(int i=0;i<n;i++){
 			ans[i] = d[i] != cost_inf;
 		}
 		return ans;
