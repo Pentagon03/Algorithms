@@ -132,11 +132,11 @@ struct mcf_graph {
 		re.cap = new_flow; re.cost = -new_cost;
 	}
 	void reset(){
-        for(int i=0;i<E.size();i+=2){
-            auto& e = E[i];
-            auto& re = E[i^1];
-            e.cap += re.cap;
-            re.cap = 0;
-        }
-    }
+		for(int i=0;i<E.size();i+=2){
+			auto& e = E[i];
+			auto& re = E[i^1];
+			e.cap += re.cap;
+			re.cap = 0;
+		}
+	}
 };
