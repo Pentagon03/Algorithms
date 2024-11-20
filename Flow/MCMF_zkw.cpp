@@ -91,17 +91,17 @@ struct mcf_graph {
 		int path_count = 0;
 		if(not spfa(s, t, cost_limit)) return ans;
 		while(flow < flow_limit and path_count < paths_limit){
+			if(not update(s, t, cost_limit)) break;
 			fill(last.begin(), last.end(), 0);
 			while(flow < flow_limit and path_count < paths_limit){
 				fill(vis.begin(), vis.end(), false);
 				Cap f = dfs(s, t, flow_limit - flow);
-				if(not f) break;
+				if(not (f > 0)) break;
 				flow += f;
 				cost += f * d[t];
 				ans.push_back(R{flow, cost});
 				++path_count;
 			}
-			if(not update(s, t, cost_limit)) break;
 		}
 		return ans;
 	}
