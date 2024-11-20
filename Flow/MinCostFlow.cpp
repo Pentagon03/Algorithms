@@ -30,7 +30,7 @@ struct mcf_graph {
 			vst[u] = false;
 			for (int idx : G[u]) {
 				auto &[v, cap, cost] = E[idx];
-				if (d[v] > d[u] + cost && cap > 0) {
+				if (d[v] > d[u] + cost and cap > 0) {
 					d[v] = d[u] + cost;
 					if (not vst[v]) {
 						vst[v] = true;
@@ -46,8 +46,8 @@ struct mcf_graph {
 		vst[u] = true;
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap, cost] = E[G[u][i]];
-			if (not vst[v] and d[v] == d[u] + cost && cap > 0) {
-				if (Cap pushed = dfs(v, t, min(f, cap))) {
+			if (not vst[v] and d[v] == d[u] + cost and cap > 0) {
+				if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
 					cap -= pushed;
 					auto &rcap = E[G[u][i] ^ 1].cap;
 					rcap += pushed;
@@ -79,11 +79,11 @@ struct mcf_graph {
 		vector<R> ans({R{flow, cost}});
 		int path_count = 0;
 		while(flow < flow_limit and path_count < paths_limit){
-			if(bool res = spfa(s, t, cost_limit); not res) break;
+			if(not spfa(s, t, cost_limit)) break;
 			fill(last.begin(), last.end(), 0);
 			while(flow < flow_limit and path_count < paths_limit){
 				Cap f = dfs(s, t, flow_limit - flow);
-				if(not f) break;
+				if(not (f > 0)) break;
 				flow += f;
 				cost += f * d[t];
 				ans.push_back(R{flow, cost});
