@@ -36,7 +36,7 @@ struct mf_graph {
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap] = E[G[u][i]];
 			if (d[v] == d[u] + 1 and cap > 0) {
-				if (Cap pushed = dfs(v, t, min(f, cap))) {
+				if (Cap pushed = dfs(v, t, min(f, cap); pushed > 0)) {
 					cap -= pushed;
 					auto &rflow = E[G[u][i] ^ 1].cap;
 					rflow += pushed;
@@ -60,7 +60,7 @@ struct mf_graph {
 		assert(s != t);
 		Cap flow{};
 		while (flow < flow_limit) {
-			if(bool res = bfs(s, t); not res) break;
+			if(not bfs(s, t)) break;
 			fill(last.begin(), last.end(), 0);
 			while (flow < flow_limit) {
 				Cap f = dfs(s, t, flow_limit - flow);
