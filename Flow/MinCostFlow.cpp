@@ -20,20 +20,20 @@ struct mcf_graph {
 	struct _edge{int to; Cap cap; Cost cost;};
 	vector<_edge> E;
 	vector<vector<int>> G;
-	vector<Cost> d; vector<bool> vst;
+	vector<Cost> d; vector<bool> vis;
 	vector<int> last;
 	bool spfa(int s, int t, Cost cost_limit) {
 		fill(d.begin(), d.end(), cost_inf);
-		queue<int> q({s}); d[s] = 0; vst[s] = true;
+		queue<int> q({s}); d[s] = 0; vis[s] = true;
 		while (q.size()) {
 			int u = q.front(); q.pop();
-			vst[u] = false;
+			vis[u] = false;
 			for (int idx : G[u]) {
 				auto &[v, cap, cost] = E[idx];
 				if (d[v] > d[u] + cost and cap > 0) {
 					d[v] = d[u] + cost;
-					if (not vst[v]) {
-						vst[v] = true;
+					if (not vis[v]) {
+						vis[v] = true;
 						q.push(v);
 					}
 				}
@@ -43,27 +43,27 @@ struct mcf_graph {
 	}
 	Cap dfs(int u, int t, Cap f) {
 		if (u == t) return f;
-		vst[u] = true;
+		vis[u] = true;
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap, cost] = E[G[u][i]];
-			if (not vst[v] and d[v] == d[u] + cost and cap > 0) {
+			if (not vis[v] and d[v] == d[u] + cost and cap > 0) {
 				if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
 					cap -= pushed;
 					auto &rcap = E[G[u][i] ^ 1].cap;
 					rcap += pushed;
-					vst[u] = false;
+					vis[u] = false;
 					return pushed;
 				}
 			}
 		}
-		vst[u] = false;
+		vis[u] = false;
 		return 0;
 	}
 // public:
 	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
 	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
 	static constexpr int paths_inf = numeric_limits<int>::max();
-	mcf_graph(int V) : G(V), d(V), last(V), vst(V){}
+	mcf_graph(int V) : G(V), d(V), last(V), vis(V){}
 	void add_edge(int u, int v, Cap cap, Cost cost) {
 		assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
 		G[u].push_back(E.size());
