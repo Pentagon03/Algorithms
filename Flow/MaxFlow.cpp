@@ -1,11 +1,15 @@
 /*
-# Max Flow O(V^2 E)
+# Max Flow
 - mf_graph<int> fg(V = number of vertices)
 - fg.add_edge(u, v, cap)
 - fg.flow(source, sink, flow_limit = inf)
 - fg.min_cut() // flow should be called once, returns vector<bool>, true means in source
 - fg.get_edge(i) // returns ith edge added, can see how much flow it
 - fg.edges() // returns all edge
+
+## Time Complexity
+- O((E+V)sqrt(V)) (if all capacity less than 1)
+- O(min(EV^2 , F(E+V)))
 - reference: hijkl2e
 */
 // using Cap = int;
