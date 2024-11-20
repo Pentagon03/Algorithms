@@ -11,7 +11,6 @@
 ## Time Complexity
 - O(FEV)
 - O(FE) on random data
-- reference: hijkl2e
 */
 // using Cap = int32_t; using Cost = int64_t;
 template<typename Cap, typename Cost>
