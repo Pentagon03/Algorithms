@@ -1,5 +1,5 @@
 /*
-# Min Cost Flow O(F(EV)), random data O(FE)
+# Min Cost Flow O(EV + F(V+E)), random data O(FE)
 - mcf_graph<cap, cost> fg(V);
 - R: struct{Cap, Cost};
 - R fg.flow(source, sink, flow_limit, cost_limit, paths_limit)
@@ -7,7 +7,7 @@
 - finds flow until flow <= flow_limit.
 - find only paths such that cost per flow <= cost_limit.
 - finds Augmenting path, less or equal to paths_limit times.
-- reference: hijkl2e, https://www.acmicpc.net/source/62155473
+- reference: hijkl2e, https://www.acmicpc.net/source/62155473, https://justicehui.github.io/hard-algorithm/2020/03/24/effective-mcmf/
 */
 // using Cap = int32_t; using Cost = int64_t;
 template<typename Cap, typename Cost>
@@ -16,20 +16,21 @@ struct mcf_graph {
 	struct _edge{int to; Cap cap; Cost cost;};
 	vector<_edge> E;
 	vector<vector<int>> G;
-	vector<Cost> d; vector<bool> vst;
+	vector<Cost> d; vector<bool> inq, vis;
 	vector<int> last;
 	bool spfa(int s, int t, Cost cost_limit) {
 		fill(d.begin(), d.end(), cost_inf);
-		queue<int> q({s}); d[s] = 0; vst[s] = true;
+		fill(inq.begin(), inq.end(), false);
+		queue<int> q({s}); d[s] = 0; inq[s] = true;
 		while (q.size()) {
 			int u = q.front(); q.pop();
-			vst[u] = false;
+			inq[u] = false;
 			for (int idx : G[u]) {
 				auto &[v, cap, cost] = E[idx];
 				if (d[v] > d[u] + cost && cap > 0) {
 					d[v] = d[u] + cost;
-					if (not vst[v]) {
-						vst[v] = true;
+					if (not inq[v]) {
+						inq[v] = true;
 						q.push(v);
 					}
 				}
@@ -37,29 +38,43 @@ struct mcf_graph {
 		}
 		return d[t] <= cost_limit;
 	}
+	bool update(int s, int t, Cost cost_limit){
+		Cost mn = cost_inf;
+		for(int i=0;i<ssize(G);i++){
+			if(not vis[i]) continue;
+			// vis[i] means 'i' has been the augmenting path
+			for(int idx: G[i]){
+				auto &[j, cap, cost] = E[idx];
+				if(cap > 0 and not vis[j]) mn = min(mn, d[i] + cost - d[j]);
+			}
+		}
+		if(mn >= cost_inf) return 0;
+		for(int i=0;i<ssize(G);i++)
+			if(not vis[i])
+				d[i] += mn;
+		return d[t] <= cost_limit;
+	}
 	Cap dfs(int u, int t, Cap f) {
+		vis[u] = true;
 		if (u == t) return f;
-		vst[u] = true;
 		for (int &i = last[u]; i < G[u].size(); ++i) {
 			auto &[v, cap, cost] = E[G[u][i]];
-			if (not vst[v] and d[v] == d[u] + cost && cap > 0) {
+			if (not vis[v] and d[v] == d[u] + cost && cap > 0) {
 				if (Cap pushed = dfs(v, t, min(f, cap))) {
 					cap -= pushed;
 					auto &rcap = E[G[u][i] ^ 1].cap;
 					rcap += pushed;
-					vst[u] = false;
 					return pushed;
 				}
 			}
 		}
-		vst[u] = false;
 		return 0;
 	}
 // public:
 	static constexpr Cap flow_inf = numeric_limits<Cap>::max();
 	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
 	static constexpr int paths_inf = numeric_limits<int>::max();
-	mcf_graph(int V) : G(V), d(V), last(V), vst(V){}
+	mcf_graph(int V) : G(V), d(V), last(V), vis(V), inq(V){}
 	void add_edge(int u, int v, Cap cap, Cost cost) {
 		assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
 		G[u].push_back(E.size());
@@ -74,10 +89,11 @@ struct mcf_graph {
 		Cap flow{}; Cost cost{};
 		vector<R> ans({R{flow, cost}});
 		int path_count = 0;
+		if(not spfa(s, t, cost_limit)) return ans;
 		while(flow < flow_limit and path_count < paths_limit){
-			if(bool res = spfa(s, t, cost_limit); not res) break;
 			fill(last.begin(), last.end(), 0);
 			while(flow < flow_limit and path_count < paths_limit){
+				fill(vis.begin(), vis.end(), false);
 				Cap f = dfs(s, t, flow_limit - flow);
 				if(not f) break;
 				flow += f;
@@ -85,6 +101,7 @@ struct mcf_graph {
 				ans.push_back(R{flow, cost});
 				++path_count;
 			}
+			if(not update(s, t, cost_limit)) break;
 		}
 		return ans;
 	}
@@ -128,11 +145,11 @@ struct mcf_graph {
 		re.cap = new_flow; re.cost = -new_cost;
 	}
 	void reset(){
-        for(int i=0;i<E.size();i+=2){
-            auto& e = E[i];
-            auto& re = E[i^1];
-            e.cap += re.cap;
-            re.cap = 0;
-        }
-    }
+		for(int i=0;i<E.size();i+=2){
+			auto& e = E[i];
+			auto& re = E[i^1];
+			e.cap += re.cap;
+			re.cap = 0;
+		}
+	}
 };
