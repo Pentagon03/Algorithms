@@ -82,13 +82,14 @@ struct mcf_graph {
 	static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
 	static constexpr int paths_inf = numeric_limits<int>::max();
 	mcf_graph(int V) : n(V), G(V), d(V), last(V), vis(V){}
-	void add_edge(int u, int v, Cap cap, Cost cost) {
+	void add_edge(int u, int v, Cap cap, Cost cost, bool directed = true) {
 		// assert(cap > 0); // why do you need cap == 0?
 		assert(0 <= u and u < n and 0 <= v and v < n);
 		G[u].push_back(E.size());
 		E.push_back({v, cap, cost});
 		G[v].push_back(E.size());
 		E.push_back({u, 0, -cost});
+		if(not directed) add_edge(v, u, cap, cost, true);
 	}
 	struct R{Cap cap; Cost cost;};
 	// returns a Convex down (x = Cap, y = cost) piecewise segments
