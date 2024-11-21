@@ -56,7 +56,7 @@ struct mf_graph {
     mf_graph(int V = 0) : G(V), d(V), last(V){ }
     // just add 2 directed edges for bidirectional. doesn't matter.
     void add_edge(int u, int v, Cap c) {
-        assert(c > 0); // why do you need c = 0?
+        // assert(c > 0); // why do you need c = 0?
         assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
         G[u].push_back(E.size()); E.push_back({v, c});
         G[v].push_back(E.size()); E.push_back({u, 0});

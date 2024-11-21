@@ -71,7 +71,7 @@ struct mcf_graph {
                 }
             }
         }
-        if (mn >= cost_inf) return 0;
+        if (mn >= cost_inf) return false;
         for (int i=0;i<n;i++){
             if (vis[i] < dfs_count)
                 d[i] += mn;
@@ -115,7 +115,7 @@ struct mcf_graph {
     static constexpr int paths_inf = numeric_limits<int>::max();
     mcf_graph(int V) : n(V), G(V), d(V), last(V), dfs_count(0), vis(V), deg(V), inq(V), init(true){}
     void add_edge(int u, int v, Cap cap, Cost cost) {
-        assert(cap > 0); // why do you need cap == 0?
+        // assert(cap > 0); // why do you need cap == 0?
         assert(0 <= u and u < n and 0 <= v and v < n);
         G[u].push_back(E.size());
         E.push_back({v, cap, cost});
