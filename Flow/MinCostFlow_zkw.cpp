@@ -158,7 +158,10 @@ struct mcf_graph {
         int m = ssize(E) / 2;
         vector<edge> es(m);
         for (int i=0;i<m;i++) es[i] = get_edge(i);
-        return move(es);
+        return es;
+    }
+    int edge_count() const{
+        return E.size() / 2;
     }
     void change_edge(int i, Cap new_cap, Cap new_flow, Cost new_cost) {
         i *= 2;
