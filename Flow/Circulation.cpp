@@ -1,6 +1,12 @@
 /*
 # Circulation
-Circulation(int V, int src, int sink)
+- prerequisite: Max Flow (mf_graph<Cap>)
+- Circulation(int V, int src, int sink)
+- add_edge(u, v, lower cap, upper cap)
+- is_feasible(Cap flow_limit, bool first_call, bool exact_flow)
+    - sets flow_limit such that atmost flow_limit can go from src to sink
+    - first_call: only set this true for first_call
+    - exact_call: only set this true when you want exact flow to be src -> sink
 */
 template<class Cap>
 struct Circulation{
@@ -20,9 +26,9 @@ struct Circulation{
         fg.add_edge(u, v, upper - lower);
     }
     // src -> sink flow_limit.
-    bool is_feasible(Cap flow_limit = flow_inf, bool init = true, bool exact_flow = false){
+    bool is_feasible(Cap flow_limit = flow_inf, bool first_call = true, bool exact_flow = false){
         assert(reduce(begin(demand), end(demand)) == 0); 
-        if(init){
+        if(first_call){
             fsum = Cap{};
             add_edge(t, s, exact_flow ? flow_limit : 0, flow_limit);
             for(int i=0;i<n;i++){
