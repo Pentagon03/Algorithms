@@ -41,6 +41,24 @@ struct mcf_graph {
 		}
 		return d[t] <= cost_limit;
 	}
+	bool dijkstra(int s, int t, Cost cost_limit){
+        fill(d.begin(), d.end(), cost_inf);
+        using pii = array<int, 2>;
+        priority_queue<pii, vector<pii>, greater<pii>> q;
+        q.push({d[s] = 0, s});
+        while (q.size()) {
+            auto[cd, u] = q.top(); q.pop();
+            if(cd > d[u]) continue;
+            for (int idx : G[u]) {
+                auto &[v, cap, cost] = E[idx];
+                if (d[v] > d[u] + cost and cap > 0) {
+                    d[v] = d[u] + cost;
+                    q.push({d[v], v});
+                }
+            }
+        }
+        return d[t] <= cost_limit;
+    }
 	Cap dfs(int u, int t, Cap f) {
 		if (u == t) return f;
 		vis[u] = true;
