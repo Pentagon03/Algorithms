@@ -16,7 +16,7 @@
 template<class Cap>
 struct mf_graph {
 // private:
-    struct _edge{ int to; Cap cap;};
+    struct _edge{ int to; Cap cap, flow;};
     vector<_edge> E; vector<vector<int>> G;
     vector<int> d, last;
     bool bfs(int s, int t) {
@@ -25,8 +25,8 @@ struct mf_graph {
         while (q.size()) {
             int u = q.front(); q.pop();
             for (int idx : G[u]) {
-                auto &[v, cap] = E[idx];
-                if (d[v] == -1 and cap > 0) {
+                auto &[v, cap, flow] = E[idx];
+                if (d[v] == -1 and cap - flow > 0) {
                     d[v] = d[u] + 1;
                     q.push(v);
                     if (v == t) return true;
@@ -38,12 +38,12 @@ struct mf_graph {
     Cap dfs(int u, int t, Cap f) {
         if (u == t) return f;
         for (int &i = last[u]; i < G[u].size(); ++i) {
-            auto &[v, cap] = E[G[u][i]];
-            if (d[v] == d[u] + 1 and cap > 0) {
+            auto &[v, cap, flow] = E[G[u][i]];
+            if (d[v] == d[u] + 1 and cap - flow > 0) {
                 if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
-                    cap -= pushed;
-                    auto &rflow = E[G[u][i] ^ 1].cap;
-                    rflow += pushed;
+                    flow += pushed;
+                    auto &rflow = E[G[u][i] ^ 1].flow;
+                    rflow -= pushed;
                     return pushed;
                 }
             }
@@ -53,10 +53,9 @@ struct mf_graph {
 // public:
     static constexpr Cap flow_inf = numeric_limits<Cap>::max();
     // V = number of vertices
-    mf_graph(int V = 0) : G(V), d(V), last(V){ }
-    // just add 2 directed edges for bidirectional. doesn't matter.
+    mf_graph(int V = 0) : G(V), d(V), last(V){}
     void add_edge(int u, int v, Cap c, bool directed = true) {
-        // assert(c > 0); // why do you need c = 0?
+        if(c<=0) return; // why do you need c <= 0?
         assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
         G[u].push_back(E.size()); E.push_back({v, c});
         G[v].push_back(E.size()); E.push_back({u, directed ? 0 : c});
@@ -89,9 +88,10 @@ struct mf_graph {
     edge get_edge(int i){
         i *= 2;
         assert(0 <= i and i < E.size());
-        auto[to, cap] = E[i];
-        auto[from, rcap] = E[i^1];
-        return edge{from, to, cap + rcap, rcap};
+        auto[to, cap, flow] = E[i];
+        auto[from, rcap, rflow] = E[i^1];
+        assert(rflow == -flow);
+        return edge{from, to, cap, flow};
     }
     vector<edge> edges(){
         int m = ssize(E) / 2;
@@ -102,21 +102,21 @@ struct mf_graph {
     int edge_count() const{
         return E.size() / 2;
     }
-    void change_edge(int i, Cap new_cap, Cap new_flow) {
+    void change_edge(int i, Cap new_cap, Cap new_flow, bool directed = true) {
         i *= 2;
         assert(0 <= i and i < E.size());
-        assert(0 <= new_flow and new_flow <= new_cap);
+        assert(-(directed ? 0 : new_cap) <= new_flow and new_flow <= new_cap);
         auto& e = E[i];
         auto& re = E[i^1];
-        e.cap = new_cap - new_flow;
-        re.cap = new_flow;
+        e.cap = new_cap; e.flow = new_flow;
+        re.cap = (directed ? 0 : new_cap); e.flow = -new_flow;
     }
     void reset(){
         for (int i=0;i<E.size();i+=2){
             auto& e = E[i];
             auto& re = E[i^1];
-            e.cap += re.cap;
-            re.cap = 0;
+            e.flow = 0;
+            re.flow = 0;
         }
     }
 };
