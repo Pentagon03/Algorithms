@@ -40,7 +40,7 @@ struct mf_graph {
         for (int &i = last[u]; i < G[u].size(); ++i) {
             auto &[v, cap, flow] = E[G[u][i]];
             if (d[v] == d[u] + 1 and cap - flow > 0) {
-                if (Cap pushed = dfs(v, t, min(f, cap)); pushed > 0) {
+                if (Cap pushed = dfs(v, t, min(f, cap - flow)); pushed > 0) {
                     flow += pushed;
                     auto &rflow = E[G[u][i] ^ 1].flow;
                     rflow -= pushed;
@@ -51,7 +51,7 @@ struct mf_graph {
         return 0;
     }
 // public:
-    static constexpr Cap flow_inf = numeric_limits<Cap>::max();
+    static constexpr Cap cap_inf = numeric_limits<Cap>::max();
     // V = number of vertices
     mf_graph(int V = 0) : G(V), d(V), last(V){}
     void add_edge(int u, int v, Cap c, bool directed = true) {
@@ -60,9 +60,9 @@ struct mf_graph {
         G[u].push_back(E.size()); E.push_back({v, c});
         G[v].push_back(E.size()); E.push_back({u, directed ? 0 : c});
     }
-    Cap flow(int s, int t, Cap flow_limit = flow_inf){
+    Cap flow(int s, int t, Cap flow_limit = cap_inf){
         assert(s != t);
-        Cap flow{};
+        Cap flow = 0;
         while (flow < flow_limit) {
             if(not bfs(s, t)) break;
             fill(last.begin(), last.end(), 0);
