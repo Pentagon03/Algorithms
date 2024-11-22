@@ -16,6 +16,7 @@
 template<class Cap>
 struct mf_graph {
 // private:
+    int n;
     struct _edge{ int to; Cap cap, flow;};
     vector<_edge> E; vector<vector<int>> G;
     vector<int> d, last;
@@ -53,10 +54,10 @@ struct mf_graph {
 // public:
     static constexpr Cap cap_inf = numeric_limits<Cap>::max();
     // V = number of vertices
-    mf_graph(int V = 0) : G(V), d(V), last(V){}
+    mf_graph(int V = 0) : n(V), G(V), d(V), last(V){}
     void add_edge(int u, int v, Cap c, bool directed = true) {
         if(c<=0) return; // why do you need c <= 0?
-        assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
+        assert(0 <= u and u < n and 0 <= v and v < n);
         G[u].push_back(E.size()); E.push_back({v, c, 0});
         G[v].push_back(E.size()); E.push_back({u, directed ? 0 : c, 0});
     }

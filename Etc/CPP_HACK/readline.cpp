@@ -1,4 +1,5 @@
 string readline(char delim = '\n'){
+    cin.ignore();
     string t; getline(cin, t, delim);
     return move(t);
 }
