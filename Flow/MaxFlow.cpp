@@ -57,8 +57,8 @@ struct mf_graph {
     void add_edge(int u, int v, Cap c, bool directed = true) {
         if(c<=0) return; // why do you need c <= 0?
         assert(0 <= u and u < ssize(G) and 0 <= v and v < ssize(G));
-        G[u].push_back(E.size()); E.push_back({v, c});
-        G[v].push_back(E.size()); E.push_back({u, directed ? 0 : c});
+        G[u].push_back(E.size()); E.push_back({v, c, 0});
+        G[v].push_back(E.size()); E.push_back({u, directed ? 0 : c, 0});
     }
     Cap flow(int s, int t, Cap flow_limit = cap_inf){
         assert(s != t);
