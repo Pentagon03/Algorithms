@@ -95,7 +95,7 @@ struct mcf_graph {
         return 0;
     }
 // public:
-    static constexpr Cap flow_inf = numeric_limits<Cap>::max();
+    static constexpr Cap cap_inf = numeric_limits<Cap>::max();
     static constexpr Cost cost_inf = numeric_limits<Cost>::max() / 2;
     static constexpr int paths_inf = numeric_limits<int>::max();
     mcf_graph(int V) : n(V), G(V), d(V), last(V), dfs_count(0), vis(V), inq(V){}
@@ -109,7 +109,7 @@ struct mcf_graph {
     }
     struct R{Cap cap; Cost cost;};
     // returns a Convex down (x = Cap, y = cost) piecewise segments
-    vector<R> slope(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf){
+    vector<R> slope(int s, int t, Cap flow_limit = cap_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf){
         assert(s != t);
         Cap flow{}; Cost cost{};
         vector<R> ans({R{flow, cost}});
@@ -130,7 +130,7 @@ struct mcf_graph {
         }
         return ans;
     }
-    R flow(int s, int t, Cap flow_limit = flow_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf) {
+    R flow(int s, int t, Cap flow_limit = cap_inf, Cost cost_limit = cost_inf - 1, int paths_limit = paths_inf) {
         assert(s != t);
         return slope(s, t, flow_limit, cost_limit, paths_limit).back();
     }
