@@ -12,7 +12,7 @@ template<class Cap>
 struct Circulation{
     int n;
     mf_graph<Cap> fg;
-    static constexpr Cap flow_inf = mf_graph<Cap>::flow_inf;
+    static constexpr Cap cap_inf = mf_graph<Cap>::cap_inf;
     vector<Cap> demand, L;
     Cap fsum;
     int s, t, gs, gt;
@@ -26,7 +26,7 @@ struct Circulation{
         fg.add_edge(u, v, upper - lower);
     }
     // src -> sink flow_limit.
-    bool is_feasible(Cap flow_limit = flow_inf, bool first_call = true, bool exact_flow = false){
+    bool is_feasible(Cap flow_limit = cap_inf, bool first_call = true, bool exact_flow = false){
         assert(reduce(begin(demand), end(demand)) == 0); 
         if(first_call){
             fsum = Cap{};
