@@ -39,7 +39,7 @@ struct LeftistHeap {
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 
-template <class Distance, class WeightedGraph>
+template <typename Distance, typename WeightedGraph>
 struct kShortestWalksSolver{
 private:
     const Distance MAX_DISTANCE, IDENTITY_DISTANCE;
@@ -50,7 +50,7 @@ private:
 
     template <typename T> using min_heap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
     std::vector<Distance> d; // d(x): shortest path from x to sink
-    std::vector<int> best; // best(x): next node in the shortest path from x to sink 
+    std::vector<int> best; // best(x): next node in the shortest path from x to sink
 
     // LeftistHeap: for edge (u, v, w),  sidetrack(u,v,w) weight will be key, edge (u, v) will be value
     using heap_t = LeftistHeap<Distance, std::pair<int, int>>;
@@ -66,14 +66,15 @@ private:
 public:
     /**
      * Graph g: vector<vector<pair<int,Distance>> or other similar structure.
-     * g shoule be given as Reference, should be valid until we use K_Shortest_Paths_Solver.
-     * is_dag: whether g is DAG or not.
+     * g should be given as Reference, should be valid until we use K_Shortest_Paths_Solver.
      * MAX_DISTANCE: maximum value of Distance
      * IDENTITY_DISTANCE: Identity value of Distance
+     * is_dag: whether g is DAG or not.
+     * negative_edge: whether there is a negative edge or not
      */
     explicit kShortestWalksSolver(const WeightedGraph& g_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_, bool is_dag_ = false, bool negative_edge_ = false)
             : g(g_), n(g_.size()), MAX_DISTANCE(MAX_DISTANCE_), IDENTITY_DISTANCE(IDENTITY_DISTANCE_), is_dag(is_dag_), negative_edge(negative_edge_) {}
-    
+
     // returns {distance vector, prev vertex vector}
     std::pair<std::vector<Distance>, std::vector<int>> dijkstra(const WeightedGraph& g_, int src) {
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
@@ -100,9 +101,9 @@ public:
     std::pair<std::vector<Distance>, std::vector<int>> bellman_ford(const WeightedGraph& g_, int src){
         std::vector<Distance> dis(n, MAX_DISTANCE);
         std::vector<int> prv(n, -1);
-        auto detect_cycle = [&](int x)->vector<int>{
-            vector<bool> vis(n);
-            vector<int> t;
+        auto detect_cycle = [&](int x)->std::vector<int>{
+            std::vector<bool> vis(n);
+            std::vector<int> t;
             while(true){
                 t.push_back(x);
                 if(vis[x]) break;
@@ -112,7 +113,7 @@ public:
             int last = t.back();
             reverse(t.begin(), t.end());
             while(t.back() != last) t.pop_back();
-            return move(t);
+            return std::move(t);
         };
 
         std::queue<std::pair<Distance, int>> q({{dis[src] = IDENTITY_DISTANCE, src}}); // SPFA
@@ -160,12 +161,12 @@ public:
                 if(--in_deg[v] == 0)
                     q.push(v);
         }
-        return move(order);
+        return std::move(order);
     }
 
     // O(|E| + |V|), Solves DAG shortest path problem
     // returns pair{vector of shortest paths, vector of previous node}
-    std::pair<vector<Distance>, vector<int>> shortest_path_dag(const WeightedGraph& g_, int s){
+    std::pair<std::vector<Distance>, std::vector<int>> shortest_path_dag(const WeightedGraph& g_, int s){
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
         d_[s] = IDENTITY_DISTANCE;
@@ -179,7 +180,7 @@ public:
                 }
             }
         }
-        return std::make_pair(move(d_), move(prv));
+        return std::make_pair(std::move(d_), std::move(prv));
     }
 
     // O(|E| log |V| + |K|)
@@ -192,7 +193,7 @@ public:
         if(is_dag) std::tie(d, best) = shortest_path_dag(g_rev, sink);
         else if(not negative_edge) std::tie(d, best) = dijkstra(g_rev, sink);
         else std::tie(d, best) = bellman_ford(g_rev, sink);
-        
+
         if (d[source] == MAX_DISTANCE)
             return move(std::vector<Distance>{});
 
@@ -200,7 +201,7 @@ public:
         for (int u = 0; u < n; ++u)
             if (best[u] != -1)
                 tree[best[u]].push_back(u); // u will adopt best[u]'s heap
-        
+
         h = std::vector<heap_t*>(n, nullptr);
         {
             std::queue<int> q({sink});
