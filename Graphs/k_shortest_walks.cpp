@@ -163,8 +163,8 @@ public:
         return move(order);
     }
 
-    // O(|E| + |V|)
-    // returns 
+    // O(|E| + |V|), Solves DAG shortest path problem
+    // returns pair{vector of shortest paths, vector of previous node}
     std::pair<vector<Distance>, vector<int>> shortest_path_dag(const WeightedGraph& g_, int s){
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
         std::vector<int> prv(g_.size(), -1);
@@ -258,7 +258,7 @@ public:
         return move(distances);
     }
 
-    // returns list of edges
+    // returns list of edges: {node a, node b, Distance w}
     std::vector<std::tuple<int, int, Distance>> kth_shortest_full_path(int source, int sink, int k, bool call_k_paths = false) {
         if (call_k_paths)
             k_shortest_paths(source, sink, k + 1);
