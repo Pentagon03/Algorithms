@@ -3173,8 +3173,6 @@
       "#include\"bits/stdc++.h\"",
       "// ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset",
       "using namespace std;",
-      "namespace R = std::ranges;",
-      "namespace V = std::ranges::views;",
       "string readline(char delim = '\\n'){",
       "    string t; getline(cin, t, delim);",
       "    return move(t);",
