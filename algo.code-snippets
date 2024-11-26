@@ -8539,7 +8539,7 @@
       "// source: kactl",
       "// z[i]: length of the longest common prefix of s[i:] and s (\ucd5c\ub300 \uacf5\ud1b5 \uc811\ub450\uc0ac)",
       "vector<int> Z(const auto& S) {",
-      "    int n = sz(S);",
+      "    int n = size(S);",
       "\tvector<int> z(n); z[0] = n;",
       "\tint l = -1, r = -1;",
       "\tfor(int i=1;i<n;i++){",
@@ -8554,7 +8554,7 @@
       "// max. pat's prefix = s's prefix",
       "vector<int> zmatch(const auto& s, const auto& pat) {",
       "\tauto z = Z(pat + char(0) + s);",
-      "\treturn vector<int>(z.begin() + sz(p) - sz(s), z.end());",
+      "\treturn vector<int>(z.begin() + size(p) - size(s), z.end());",
       "}"
     ],
     "description": "Z"

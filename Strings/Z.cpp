@@ -1,7 +1,7 @@
 // source: kactl
 // z[i]: length of the longest common prefix of s[i:] and s (최대 공통 접두사)
 vector<int> Z(const auto& S) {
-    int n = sz(S);
+    int n = size(S);
 	vector<int> z(n); z[0] = n;
 	int l = -1, r = -1;
 	for(int i=1;i<n;i++){
@@ -16,5 +16,5 @@ vector<int> Z(const auto& S) {
 // max. pat's prefix = s's prefix
 vector<int> zmatch(const auto& s, const auto& pat) {
 	auto z = Z(pat + char(0) + s);
-	return vector<int>(z.begin() + sz(p) - sz(s), z.end());
+	return vector<int>(z.begin() + size(p) - size(s), z.end());
 }
