@@ -1,4 +1,4 @@
-https://github.com/bqi343/cp-notebook/blob/master/Implementations/content/strings%20(14)/Light/SuffixArray%20(14.4).h
+// https://github.com/bqi343/cp-notebook/blob/master/Implementations/content/strings%20(14)/Light/SuffixArray%20(14.4).h
 /**
  * Description: Sort suffixes. First element of \texttt{sa} is \texttt{sz(S)},
  	* \texttt{isa} is the inverse of \texttt{sa}, and \texttt{lcp} stores
