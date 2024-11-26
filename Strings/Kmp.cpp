@@ -1,5 +1,6 @@
 /*
 getPi: get Failure function(Pi) of pattern p
+pi[i]: longest common prefix-suffix(excluding itself) of s[:i+1]
 kmp: get occurence of pattern p in string s
 */
 vector<int> getPi(const auto&p){
@@ -11,7 +12,7 @@ vector<int> getPi(const auto&p){
     return pi;
 }
 vector<int> kmp(const auto&s,const auto&p){
-    vector<int> pi = getPi(p);
+    auto pi = getPi(p);
     vector<int> ansv;
     for(int i=0,j=0;i<size(s);i++){
         while(j>0 && s[i]!=p[j]) j = pi[j-1];
