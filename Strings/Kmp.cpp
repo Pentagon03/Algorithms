@@ -1,6 +1,6 @@
 /*
 getPi: get Failure function(Pi) of pattern p
-pi[i]: longest common prefix-suffix(excluding itself) of s[:i+1]
+pi[i]: longest common prefix-suffix(excluding itself) of p[:i+1]
 kmp: get occurence of pattern p in string s
 */
 vector<int> getPi(const auto&p){
