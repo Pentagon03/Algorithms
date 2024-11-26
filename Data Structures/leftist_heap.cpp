@@ -1,7 +1,3 @@
-#include<deque>
-#include<cassert>
-#include<algorithm>
-
 /**
  * Title: "Min" Persistent Leftist Heap
  * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp
