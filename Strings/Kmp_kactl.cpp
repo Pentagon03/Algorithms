@@ -1,3 +1,4 @@
+// source: kactl
 // pi[i]: longest common prefix-suffix(excluding itself) of s[:i+1]
 vector<int> pi(const auto& s) {
 	vector<int> p(size(s));
@@ -10,6 +11,6 @@ vector<int> pi(const auto& s) {
 }
 // max. pat's prefix = s's suffix
 vector<int> match(const auto& s, const auto& pat) {
-	auto p = pi(pat + '\0' + s);
+	auto p = pi(pat + char(0) + s);
     return vi(p.begin() + size(p) - size(s), p.end());
 }

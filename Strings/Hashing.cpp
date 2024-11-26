@@ -1,3 +1,4 @@
+// source: kactl
 // Arithmetic mod 2^64-1. 2x slower than mod 2^64 and more code, but works on evil test data 
 // "typedef ull H;" instead if you think test data is random,
 // or work mod 10^9+7 if the Birthday paradox is not a problem.
