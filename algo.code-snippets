@@ -8266,6 +8266,28 @@
     ],
     "description": "Kmp"
   },
+  "Kmp_kactl.cpp": {
+    "prefix": "Kmp_kactl",
+    "scope": "cpp",
+    "body": [
+      "// pi[i]: longest common prefix-suffix(excluding itself) of s[:i+1]",
+      "vector<int> pi(const auto& s) {",
+      "\tvector<int> p(size(s));",
+      "\tfor(int i=1;i<size(s);i++){",
+      "\t\tint g = p[i-1];",
+      "\t\twhile (g && s[i] != s[g]) g = p[g-1];",
+      "\t\tp[i] = g + (s[i] == s[g]);",
+      "\t}",
+      "\treturn p;",
+      "}",
+      "// max. pat's prefix = s's suffix",
+      "vector<int> match(const auto& s, const auto& pat) {",
+      "\tauto p = pi(pat + '\\0' + s);",
+      "    return vi(p.begin() + size(p) - size(s), p.end());",
+      "}"
+    ],
+    "description": "Kmp_kactl"
+  },
   "Manacher.cpp": {
     "prefix": "Manacher",
     "scope": "cpp",
@@ -8462,5 +8484,31 @@
       ""
     ],
     "description": "Suffix_Array_Benq"
+  },
+  "Z.cpp": {
+    "prefix": "Z",
+    "scope": "cpp",
+    "body": [
+      "// z[i]: length of the longest common prefix of s[i:] and s (\ucd5c\ub300 \uacf5\ud1b5 \uc811\ub450\uc0ac)",
+      "vi Z(const string& S) {",
+      "        int n = sz(S);",
+      "\tvi z(n); z[0] = n;",
+      "\tint l = -1, r = -1;",
+      "\tfor(int i=1;i<n;i++){",
+      "\t\tz[i] = i >= r ? 0 : min(r - i, z[i - l]);",
+      "\t\twhile (i + z[i] < n && S[i + z[i]] == S[z[i]])",
+      "\t\t\tz[i]++;",
+      "\t\tif (i + z[i] > r)",
+      "\t\t\tl = i, r = i + z[i];",
+      "\t}",
+      "\treturn z;",
+      "}",
+      "// max. pat's prefix = s's prefix",
+      "vi zmatch(const string& s, const string& pat) {",
+      "\tvi p = Z(pat + '\\0' + s);",
+      "\treturn vi(p.begin() + sz(p) - sz(s), p.end());",
+      "}"
+    ],
+    "description": "Z"
   }
 }
