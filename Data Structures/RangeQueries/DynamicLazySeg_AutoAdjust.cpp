@@ -19,7 +19,7 @@ constexpr int LG = 21; // Log Size of Array
 using Range = int;
 using S = ll;
 constexpr S e(){return 0;}
-S op(S a, S b){return S{a + b};}
+S op(S l, S r){return S{l + r};}
 using F = ll; // add
 constexpr F id(){return 0;}
 // x = f(x)
