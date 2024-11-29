@@ -19,8 +19,8 @@ struct Seg{
     public:
     Seg(int n = 0): Seg(vector (n, e())){}
     Seg(const vector<S>&v){
-        // n = bit_ceil(size(v));
         n = ssize(v);
+        // n = bit_ceil(n);
         tree = vector (n<<1, e());
         ranges::copy(v, begin(tree)+n);
         for(int i=n-1;i>=1;i--) pull(i);
@@ -30,7 +30,10 @@ struct Seg{
         tree[i+=n] = val;
         for(i>>=1;i>=1;i>>=1) pull(i);
     }
-    S qry_all(){return tree[1];}
+    S qry_all(){
+        // return tree[1]; (make n = bit_ceil(n) on constructor)
+        return qry(0, n-1);
+    }
     //[l, r]
     S qry(int l,int r) const{
         S resL, resR;
