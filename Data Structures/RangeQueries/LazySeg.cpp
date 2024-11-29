@@ -22,10 +22,10 @@ struct S{
     int cnt;
 };
 constexpr S e(){return {0, 0};}
-S op(const S& a,const S& b){
+S op(const S& l,const S& r){
     return S{
-        a.sum + b.sum,
-        a.cnt + b.cnt
+        l.sum + r.sum,
+        l.cnt + r.cnt
     };
 };
 using F = ll; // add
