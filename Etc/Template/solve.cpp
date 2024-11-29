@@ -13,9 +13,11 @@
 // ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
 using namespace std;
 string readline(char delim = '\n'){
+    cin.ignore();
     string t; getline(cin, t, delim);
     return move(t);
 }
+// istringstream iss(s = "1 2 3 4 5"); // iss >> x;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
 template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}
 auto vec(int n, auto&&... s) {
