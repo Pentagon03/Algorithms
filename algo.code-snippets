@@ -1826,8 +1826,8 @@
     ],
     "description": "DynamicLazySeg_AutoAdjust"
   },
-  "DynamicSegGeneralized.cpp": {
-    "prefix": "DynamicSegGeneralized",
+  "DynamicSegGeneralized(MultiDimensional).cpp": {
+    "prefix": "DynamicSegGeneralized(MultiDimensional)",
     "scope": "cpp",
     "body": [
       "/*",
@@ -1976,7 +1976,7 @@
       "    }",
       "};"
     ],
-    "description": "DynamicSegGeneralized"
+    "description": "DynamicSegGeneralized(MultiDimensional)"
   },
   "LazySeg.cpp": {
     "prefix": "LazySeg",
