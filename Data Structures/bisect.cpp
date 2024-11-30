@@ -3,4 +3,4 @@ int lo = $1, hi = $2, mid;
 auto chk = [&](auto x)->bool{
     $0
 };
-while(lo + 1 < hi) chk(mid = midpoint(lo, hi)) ? lo = mid, hi = mid;
+while(lo + 1 < hi) chk(mid = midpoint(lo, hi)) ? lo = mid : hi = mid;
