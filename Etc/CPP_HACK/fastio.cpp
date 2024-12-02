@@ -7,12 +7,12 @@
  * you can call numeric_limits min/max // most implementations can't input or output numeric_limits<int>::min();
  * cin.geti() , cin.geti<ll>(), cin.getline() all works.
  * Special function: vector, pair input/output => vector<int> v(3); cin>>v; // Works!
- * 
+ *
  * TEST
     static const __uint128_t UINT128_MAX =__uint128_t(__int128_t(-1L));
     static const __int128_t INT128_MAX = UINT128_MAX >> 1;
     static const __int128_t INT128_MIN = -INT128_MAX - 1;
-    __int128_t x; 
+    __int128_t x;
     cin >> x; // works
     cout<< x << '\n'; // works
     cout<< INT128_MIN << '\n'; // works
@@ -31,7 +31,7 @@ class _IN{
         inline char read(){
             if(__END_FLAG__) return '\0';
             if(isEnd(*p)) {
-                buf[fread(buf,sizeof(char),SIZ,stdin)] = 0; 
+                buf[fread(buf,sizeof(char),SIZ,stdin)] = 0;
                 p = buf;
                 if(isEnd(*p)) return '\0';
             };
@@ -54,7 +54,7 @@ class _IN{
             if(c=='-') sign = false, c=read();
             else if(c == '+') c = read();
             while('0'<=c && c<='9'){
-                res = (res << 3) + (res << 1); 
+                res = (res << 3) + (res << 1);
                 c -= '0'; res += sign ? c : -c;
                 c = read();
             }
@@ -73,9 +73,9 @@ class _IN{
         template<typename T, typename... Args> inline void scan(T&n, Args&...args){
             scan(n); scan(args...);
         }
-        struct _tmp{void sync_with_stdio(int _){}}_t;
-        _tmp* tie(int _){return &_t;}
-        void exceptions(bool b){}
+        _IN* tie(int _){return this;}
+        void sync_with_stdio(int _){}
+        void exceptions(bool _){}
 } _in;
 class _OUT{
     private:
