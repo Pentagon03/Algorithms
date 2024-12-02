@@ -755,6 +755,38 @@
     ],
     "description": "Date"
   },
+  "DSU.cpp": {
+    "prefix": "DSU",
+    "scope": "cpp",
+    "body": [
+      "struct disjoint_set{",
+      "\tvector<int> par;",
+      "    vector<array<int, 3>> S; // rollback stack",
+      "\tdisjoint_set(int n = 0) : par(n, -1) {}",
+      "\tint find(int u) {",
+      "\t\treturn par[u] < 0 ? u : par[u] = find(par[u]);",
+      "\t}",
+      "\tbool merge(int u, int v) {",
+      "\t\tu = find(u), v = find(v);",
+      "\t\tif (u == v) return false;",
+      "\t\t// sz[u] <= sz[v]",
+      "\t\tif (par[u] < par[v]) swap(u, v);",
+      "        // S.push_back({u, v, par[u]});",
+      "\t\tpar[v] += par[u];",
+      "\t\tpar[u] = v;",
+      "\t\treturn true;",
+      "\t}",
+      "    void rollback(int n = 1){",
+      "        for(int i=0;i<n;i++){",
+      "\t\t\tassert(not empty(S));",
+      "\t\t\tauto [u,v,psz] = S.back(); S.pop_back();",
+      "\t\t\tpar[v] -= psz; par[u] = psz;",
+      "\t\t}",
+      "    }",
+      "};"
+    ],
+    "description": "DSU"
+  },
   "erasable_heap.cpp": {
     "prefix": "erasable_heap",
     "scope": "cpp",
@@ -883,38 +915,6 @@
       "};"
     ],
     "description": "LineContainer"
-  },
-  "UnionFindwithRollback.cpp": {
-    "prefix": "UnionFindwithRollback",
-    "scope": "cpp",
-    "body": [
-      "struct disjoint_set {",
-      "\tvector<int> par;",
-      "    vector<array<int, 3>> S;",
-      "\tdisjoint_set(int n = 0) : par(n+1, -1) {}",
-      "\tint find(int u) {",
-      "\t\treturn par[u] < 0 ? u : par[u] = find(par[u]);",
-      "\t}",
-      "\tbool merge(int u, int v) {",
-      "\t\tu = find(u), v = find(v);",
-      "\t\tif (u == v) return false;",
-      "\t\tif (par[u] < par[v]) swap(u, v);",
-      "\t\t// sz[u] <= sz[v]",
-      "        S.push_back({u, v, par[u]});",
-      "\t\tpar[v] += par[u];",
-      "\t\tpar[u] = v;",
-      "\t\treturn true;",
-      "\t}",
-      "    void rollback(int n = 1){",
-      "        for(int i=0;i<n;i++){",
-      "\t\t\tassert(not empty(S));",
-      "\t\t\tauto [u,v,psz] = S.back(); S.pop_back();",
-      "\t\t\tpar[v] -= psz; par[u] = psz;",
-      "\t\t}",
-      "    }",
-      "};"
-    ],
-    "description": "UnionFindwithRollback"
   },
   "[NOT_TESTED] Roll-back-able Line Container.cpp": {
     "prefix": "[NOT_TESTED] Roll-back-able Line Container",

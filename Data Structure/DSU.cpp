@@ -1,16 +1,16 @@
-struct disjoint_set {
+struct disjoint_set{
 	vector<int> par;
-    vector<array<int, 3>> S;
-	disjoint_set(int n = 0) : par(n+1, -1) {}
+    vector<array<int, 3>> S; // rollback stack
+	disjoint_set(int n = 0) : par(n, -1) {}
 	int find(int u) {
 		return par[u] < 0 ? u : par[u] = find(par[u]);
 	}
 	bool merge(int u, int v) {
 		u = find(u), v = find(v);
 		if (u == v) return false;
-		if (par[u] < par[v]) swap(u, v); 
 		// sz[u] <= sz[v]
-        S.push_back({u, v, par[u]});
+		if (par[u] < par[v]) swap(u, v); 
+        // S.push_back({u, v, par[u]});
 		par[v] += par[u];
 		par[u] = v;
 		return true;
