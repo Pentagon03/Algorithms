@@ -1,7 +1,7 @@
 struct DisjointSet{
+    int n;
     vector<int> par; // negative: size of set, otherwise: parent
     // additional info here
-    int n;
     DisjointSet(int _n = 0) : n(_n), par(_n, -1) {}
     void make_leader(int u){par[u] = -1;}
     int leader(int u) {
