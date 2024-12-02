@@ -1,4 +1,4 @@
-constexpr int SZ = 1 << 18;
+constexpr int SZ = 1 << 16;
 struct IN{
     char buf[SZ + 1], *p = buf;
     inline char read(){
@@ -10,6 +10,9 @@ struct IN{
     }
     inline void scan(char &x){
         do x = read(); while(x == ' ' or x == '\n');
+    }
+    inline void scan(string &s){
+        for(auto&c: s) scan(c);
     }
     template<typename T>
     inline void scan(T &x){
@@ -36,7 +39,7 @@ struct OUT{
         *p++ = c;
     }
     inline void print(const string& s){
-        for(char c: s) print(c);
+        for(auto c: s) print(c);
     }
     template<typename T>
     inline void print(T x){
