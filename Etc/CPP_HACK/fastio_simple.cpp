@@ -19,6 +19,9 @@ struct IN{
         while(isdigit(c)) ans = ans * 10 + c - '0', c = read();
         x = sign?ans:-ans;
     }
+    IN* tie(int _){return this;}
+    void sync_with_stdio(int _){}
+    void exceptions(bool _){}
 }_in;
 template<typename T> IN& operator >> (IN &in, T&x){in.scan(x); return in;}
 #define cin _in
@@ -31,6 +34,9 @@ struct OUT{
     inline void print(char c){
         if(p == buf + SZ) flush();
         *p++ = c;
+    }
+    inline void print(const string& s){
+        for(char c: s) print(c);
     }
     template<typename T>
     inline void print(T x){
