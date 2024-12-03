@@ -66,9 +66,11 @@ namespace geo { // https://victorlecomte.com/cp-geo.pdf
         if (orientation(a, c, b) < 0) swap(b, c);
         return orientation(a, c, p) >= 0 && orientation(a, b, p) <= 0;
     }
+    // returns true if p is in quadrant 3, 4 (only x < 0 if y == 0)
     bool half(PT p) {
-        return p.y > 0.0 || (p.y == 0.0 && p.x < 0.0);
+        return p.y < 0.0 || (p.y == 0.0 && p.x < 0.0);
     }
+    // Quadrant 1, 2 will come first then Quadrant 3, 4
     void polar_sort(vector<PT> &v) { // sort points in counterclockwise
         sort(v.begin(), v.end(), [](PT a, PT b) {
             return make_tuple(half(a), 0.0, a.norm2()) < make_tuple(half(b), cross(a, b), b.norm2());
