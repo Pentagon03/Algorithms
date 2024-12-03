@@ -10,7 +10,7 @@
 - (optional) `LazySeg<S, e, op, F, id, mapping, composition>`
 - `upd(l, r, f) : i \in [l, r], A[i] => f(A[i])`
 - `qry(l, r) : op(A[l], ... , A[r])`
-- Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
+- Tutorial(+Beats): https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structure/RangeQuery/LazySeg_Tutorial.md
 */
 
 $0
