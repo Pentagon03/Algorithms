@@ -1,7 +1,7 @@
 /*
 # Dynamic Lazy Segtree - Memory Opt
 - same convention with LazySeg
-- Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/RangeQueries/LazySeg_Tutorial.md
+- Lazy Seg Tutorial: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structure/RangeQuery/LazySeg_Tutorial.md
 - `DynamicLazySeg seg(Range l, Range r);`
 - If you need index information, consider one of following
     - 1. modify `make` function to put info.
