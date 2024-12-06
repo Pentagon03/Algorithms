@@ -1,10 +1,11 @@
 /* Segtree with point update
-S: monoid for tree
-S e() : identity of S
-S op(S a, S b): monoid action
-Seg<S, e, op>
-`upd(i, val);`
-`qry(l, r);`
+- 0-based!
+- S: monoid for tree
+- S e() : identity of S
+- S op(S a, S b): monoid action
+- Seg<S, e, op>
+- `upd(i, val);`
+- `qry(l, r);`
 */
 
 $0
