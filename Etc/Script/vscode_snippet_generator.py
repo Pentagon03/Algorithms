@@ -12,7 +12,7 @@ for subdir in os.walk('.'):
   if subdir[0] == '.' or '.git' in subdir[0]:
     continue
   for filename in subdir[2]:
-    print(filename)
+    # print(filename)
     name, *extension = filename.split('.')
     if not name or name[0] == '_' or len(extension) != 1:
       continue
@@ -34,9 +34,9 @@ for subdir in os.walk('.'):
       }
       snippets[filename] = snippet
 
-    print(f'generated snippet {filename}', file=sys.stderr)
+    # print(f'generated snippet {filename}', file=sys.stderr)
 
 with open('algo.code-snippets', 'w') as f:
   f.write(json.dumps(snippets, indent=2))
 
-print('done', file=sys.stderr)
+print(f'{len(snippets)} Snippet Generated!', file=sys.stderr)
