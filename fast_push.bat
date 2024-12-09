@@ -1,6 +1,6 @@
 @echo off
 :: 커밋 메시지 인자 확인
-if "%~1"=="" (
+if "%1"=="" (
     set COMMIT_MESSAGE=modify
 ) else (
     set COMMIT_MESSAGE=%*
