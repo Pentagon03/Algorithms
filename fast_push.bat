@@ -10,7 +10,7 @@ if "%~1"=="" (
 echo Commit message: %COMMIT_MESSAGE%
 @echo on
 
-call _make_snippet.bat
+@REM call _make_snippet.bat
 
 :: Git 명령어 실행 (이 부분은 echo off 상태로 진행)
 git pull
