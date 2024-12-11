@@ -41,6 +41,7 @@ template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::ste
 #define repd(i, b, a) for(int i=(b);i>=(a);i--)
 #define int int64_t
 using ll = int64_t; using pii = pair<int,int>; int cur_tc;
+template<int SZ> using ia = array<int, SZ>;
 constexpr int inf = (int) 1e9 + 3; constexpr ll infl = (ll) 1e18 + 3;
 
 
