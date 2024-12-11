@@ -1,6 +1,6 @@
 // from: https://codeforces.com/contest/1936/submission/249350779
 namespace geo { // https://victorlecomte.com/cp-geo.pdf
-    using ld = long double;
+    using ld = long double; // = long long
     const ld inf = 1e100;
     const ld eps = 1e-12;
     const ld PI = acos((ld) -1.0);
@@ -730,6 +730,7 @@ namespace geo { // https://victorlecomte.com/cp-geo.pdf
         vector<PT> v = p;
         sort(v.begin(), v.end());
         vector<PT> up, dn;
+        // change equalities for same line segments
         for (auto &p: v) {
             while (up.size() > 1 && orientation(up[up.size() - 2], up.back(), p) >= 0) {
                 up.pop_back();
