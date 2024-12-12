@@ -755,8 +755,8 @@
     ],
     "description": "Date"
   },
-  "DSU.cpp": {
-    "prefix": "DSU",
+  "DisjointSet.cpp": {
+    "prefix": "DisjointSet",
     "scope": "cpp",
     "body": [
       "struct DisjointSet{",
@@ -773,8 +773,7 @@
       "    bool merge(int u, int v) {",
       "        u = leader(u); v = leader(v);",
       "        if (u == v) return false;",
-      "        // make sz[u] >= sz[v]",
-      "        if ((-par[u]) < (-par[v])) swap(u, v);",
+      "        if ((-par[u]) < (-par[v])) swap(u, v); // make sz[u] >= sz[v]",
       "        // S.push_back({u, v, par[v]}); // rollback info",
       "        par[u] += par[v];",
       "        par[v] = u;",
@@ -799,17 +798,17 @@
       "        return res;",
       "    }",
       "",
-      "    vector<array<int, 3>> S; // rollback stack",
-      "    void rollback(int cnt = 1){",
-      "        for(int i=0;i<cnt;i++){",
-      "            assert(not empty(S));",
-      "            auto [u,v,psz] = S.back(); S.pop_back();",
-      "            par[u] -= psz; par[v] = psz;",
-      "        }",
-      "    }",
+      "    // vector<array<int, 3>> S; // rollback stack",
+      "    // void rollback(int cnt = 1){",
+      "    //     for(int i=0;i<cnt;i++){",
+      "    //         assert(not empty(S));",
+      "    //         auto [u,v,psz] = S.back(); S.pop_back();",
+      "    //         par[u] -= psz; par[v] = psz;",
+      "    //     }",
+      "    // }",
       "};"
     ],
-    "description": "DSU"
+    "description": "DisjointSet"
   },
   "erasable_heap.cpp": {
     "prefix": "erasable_heap",
@@ -6723,6 +6722,28 @@
       "};"
     ],
     "description": "k_shortest_walks"
+  },
+  "MST_Kruskal.cpp": {
+    "prefix": "MST_Kruskal",
+    "scope": "cpp",
+    "body": [
+      "// Disjoint Set here.",
+      "",
+      "template<typename T, typename E = tuple<int, int, T>>",
+      "vector<E> MST(int n, const vector<E>& edges){",
+      "    DisjointSet dsu(n);",
+      "    vector<E> mst;",
+      "    auto _edges = edges;",
+      "    ranges::sort(_edges);",
+      "    for(auto&[a, b, w]: _edges){",
+      "        if(dsu.merge(a, b)){",
+      "            mst.push_back({a, b, w});",
+      "        }",
+      "    }",
+      "    return mst;",
+      "}"
+    ],
+    "description": "MST_Kruskal"
   },
   "SCC_Kosaraju.cpp": {
     "prefix": "SCC_Kosaraju",

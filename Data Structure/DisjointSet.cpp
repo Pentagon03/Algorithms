@@ -12,8 +12,7 @@ struct DisjointSet{
     bool merge(int u, int v) {
         u = leader(u); v = leader(v);
         if (u == v) return false;
-        // make sz[u] >= sz[v]
-        if ((-par[u]) < (-par[v])) swap(u, v);
+        if ((-par[u]) < (-par[v])) swap(u, v); // make sz[u] >= sz[v]
         // S.push_back({u, v, par[v]}); // rollback info
         par[u] += par[v];
         par[v] = u;
@@ -38,12 +37,12 @@ struct DisjointSet{
         return res;
     }
 
-    vector<array<int, 3>> S; // rollback stack
-    void rollback(int cnt = 1){
-        for(int i=0;i<cnt;i++){
-            assert(not empty(S));
-            auto [u,v,psz] = S.back(); S.pop_back();
-            par[u] -= psz; par[v] = psz;
-        }
-    }
+    // vector<array<int, 3>> S; // rollback stack
+    // void rollback(int cnt = 1){
+    //     for(int i=0;i<cnt;i++){
+    //         assert(not empty(S));
+    //         auto [u,v,psz] = S.back(); S.pop_back();
+    //         par[u] -= psz; par[v] = psz;
+    //     }
+    // }
 };
