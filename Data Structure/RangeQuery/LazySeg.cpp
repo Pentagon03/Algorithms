@@ -49,7 +49,7 @@ struct LazySeg{
         tree = vector (n<<1, e());
         lz = vector (n, id());
         ranges::copy(v, begin(tree) + n);
-        for(int i=n-1;i>=0;i--) pull(i);
+        for(int i=n-1;i>=1;i--) pull(i);
     }
     // i \in [l, r], A[i] => f(A[i])
     void upd(int l, int r, F f, int nd = 1, int ns = 0, int ne = -1){
