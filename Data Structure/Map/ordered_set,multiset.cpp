@@ -15,12 +15,10 @@ struct ordered_set : Parent{
     using iterator = typename Parent::iterator;
     // this returns the element of idx-th index in O(log n)
     iterator kth_element(int idx){
-        assert(0 <= idx && idx < Parent::size());
         return Parent::find_by_order(idx);
     }
     // this returns the index of lower bound of val in O(log n)
     int index(Typename val){
-        assert(Parent::size() > 0);
         return Parent::order_of_key(val);
     }
 };
@@ -50,12 +48,10 @@ struct ordered_multiset : Parent{
     }
     // this returns the element of idx-th index in O(log n)
     iterator kth_element(int idx){
-        assert(0 <= idx && idx < Parent::size());
         return Parent::find_by_order(idx);
     }
     // this returns the index of lower bound of val in O(log n)
     int index(Typename val){
-        assert(Parent::size() > 0);
         return Parent::order_of_key(val);
     }
 };
