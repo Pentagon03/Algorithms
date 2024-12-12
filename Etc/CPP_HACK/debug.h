@@ -150,7 +150,6 @@ namespace __DEBUG_UTIL__
 
 
 #ifdef _DEBUG
-
 #define debug(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printer(#__VA_ARGS__, __VA_ARGS__)
 #define debugArr(...) std::cerr << __LINE__ << ": [", __DEBUG_UTIL__::printerArr(#__VA_ARGS__, __VA_ARGS__)
 #else
@@ -160,10 +159,11 @@ namespace __DEBUG_UTIL__
 
 #ifdef Pentagon03
 #define dbg(...) std::cerr<<"tc"<<cur_tc<<" > "; debug(__VA_ARGS__)
-#define dbgArr(...) std::cerr<<"tc"<<cur_tc<<" > "; debugArr(__VA_ARGS__)
+#define dbg_n(...) std::cerr<<"tc"<<cur_tc<<" > "; debugArr(__VA_ARGS__)
 #else
 #define dbg(...) debug(__VA_ARGS__)
-#define dbgArr(...) debugArr(__VA_ARGS__)
+#define dbg_n(...) debugArr(__VA_ARGS__)
 #endif
+
 
 #endif
