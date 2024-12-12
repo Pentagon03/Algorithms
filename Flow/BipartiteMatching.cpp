@@ -8,13 +8,14 @@ max_matching for matching value
 get_max_matching for actual matchings (vector<pii>)
 get_min_vertex_cover: [groupA/B, vertex]
 get_max_independent_set: [groupA/B, vertex], complement of min_vertex_cover.
+Time Complexity: O(N |E|)
 */
 struct BipartiteMatching{
     using pii = pair<int,int>;
     vector<int> vis, A, B;
     vector<vector<int>> g;
     int pv;
-    BipartiteMatching(int n,int m): vis(m, 0), A(n,-1), B(m,-1), g(n), pv(0) {};
+    BipartiteMatching(int n = 1,int m = 1): vis(m, 0), A(n,-1), B(m,-1), g(n), pv(0) {};
     void add_edge(int a,int b){
         g[a].push_back(b);
     }
