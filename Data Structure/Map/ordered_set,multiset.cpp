@@ -42,7 +42,7 @@ struct ordered_multiset : Parent{
     iterator upper_bound(Typename val){return Parent::lower_bound(val);}
     void erase(iterator it){Parent::erase(it);}
     bool erase(Typename val){
-        auto it = Parent::lower_bound(val);
+        auto it = lower_bound(val);
         if(it != Parent::end() && *it == val){
             Parent::erase(it); return true;
         }
