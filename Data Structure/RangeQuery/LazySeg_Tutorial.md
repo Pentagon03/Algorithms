@@ -1,4 +1,5 @@
 # Lazy Segtree Tutorial
+- LazySeg seg(vector) or seg(size)
 - S: monoid for tree
 - S e() : identity of S
 - S op(S a, S b): monoid action
@@ -34,17 +35,21 @@
 # Examples
 ## Example 1
 ```cpp
+// Example 1
 // https://www.acmicpc.net/problem/10999
 // S: range sum, F: range add
+// WARNING: should initialize by LazySeg(vector(n, S{0, 1}));
 struct S{
     ll sum;
     int cnt;
 };
 constexpr S e(){return {0, 0};}
-S op(S a, S b){return {
-    a.sum + b.sum,
-    a.cnt + b.cnt
-};};
+S op(const S& l,const S& r){
+    return S{
+        l.sum + r.sum,
+        l.cnt + r.cnt
+    };
+};
 using F = ll; // add
 constexpr F id(){return 0;}
 // x = f(x)
