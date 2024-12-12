@@ -21,6 +21,10 @@ struct ordered_set : Parent{
     int index(Typename val){
         return Parent::order_of_key(val);
     }
+    int index(iterator it){
+        if(it == Parent::end()) return Parent::size();
+        return index(*it);
+    }
 };
 // ORDERED_SET END
 
@@ -53,6 +57,11 @@ struct ordered_multiset : Parent{
     // this returns the index of lower bound of val in O(log n)
     int index(Typename val){
         return Parent::order_of_key(val);
+    }
+    // doesn't support exact location of iteraetor. only the index range.
+    int index(iterator it){
+        if(it == Parent::end()) return Parent::size();
+        return index(*it);
     }
 };
 // ORDERED_MULTISET END
