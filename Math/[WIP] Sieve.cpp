@@ -1,7 +1,7 @@
 //Number Theory
 namespace Sieve{
-    template<typename T=int>
-    T fpow(T a,T b,int mod=0){
+    template<typename T=int, typename U=int64_t>
+    T fpow(T a,T b,U mod=0){
         T ans = 1;
         while(b){
             if(b&1) mod?(ans=ans*a%mod):(ans*=a);
@@ -20,50 +20,25 @@ namespace Sieve{
         vector<int> p, spf, e, phi, mu, tau, sigma;
         vector<bool> isp;
         //mode 1: linear, mode 2: get other factors
-        Sieve(int n=1e6,int mode = 1){
+        Sieve(int n=1e6){
             SZ = n+1;
-            spf = vector<int>(SZ);
-            if(mode==2){
-                //e: n의 spf의 지수
-                e=phi=mu=tau=sigma=spf;
-                phi[1]=mu[1]=tau[1]=sigma[1]=1;
-            }
+            spf.resize(SZ);
+            e=phi=mu=tau=sigma=spf;
+            phi[1]=mu[1]=tau[1]=sigma[1]=1;
             for(int i=2;i<SZ;i++){
                 if(!spf[i]){
                     p.push_back(i);
                     spf[i] = i;
-                    if(mode==2){
-                        e[i]=1;
-                        phi[i]=i-1;
-                        mu[i]=-1;
-                        tau[i]=2;
-                        sigma[i]=i+1;
-                    }
+                    initPrime(i);
                 }
-                //j is a prime
                 for(auto j:p){ 
-                    int nxt = i*j;
-                    if(nxt>=SZ) break;
-                    spf[nxt] = j;
-                    // j | i
+                    if(i*j>=SZ) break;
+                    spf[i*j] = j;
                     if(i%j==0){
-                        if(mode==2){
-                            e[nxt] = e[i] + 1;
-                            phi[nxt] = phi[i] * j;
-                            mu[nxt] = 0;
-                            tau[nxt] = tau[i] / (e[i]+1) * (e[nxt]+1);
-                            sigma[nxt] = sigma[i]*(j-1)/(fpow(j, e[nxt])-1)*(fpow(j, e[nxt]+1)-1)/(j-1);
-                        }
+                        handleDivisibleCase(i, j);
                         break;
                     }
-                    if(mode==2){
-                        // j \| = i, 곱셈함수의 성질 이용 가능
-                        e[nxt] = 1;
-                        phi[nxt] = phi[i] * phi[j];
-                        mu[nxt] = mu[i] *  mu[j];
-                        tau[nxt] = tau[i] * tau[j];
-                        sigma[nxt] = sigma[i] * sigma[j];
-                    }
+                    handleCoprimePCase(i, j);
                 }
             }
         }
@@ -95,6 +70,32 @@ namespace Sieve{
                 if(isp[i-A]) v.push_back(i);
             }
             return v;
+        }
+    private:
+        void initPrime(int i) {
+            e[i] = 1;
+            phi[i] = i-1;
+            mu[i] = -1;
+            tau[i] = 2;
+            sigma[i] = i+1;
+        }
+
+        void handleDivisibleCase(int i, int j) {
+            int nxt = i*j;
+            e[nxt] = e[i] + 1;
+            phi[nxt] = phi[i] * j;
+            mu[nxt] = 0;
+            tau[nxt] = tau[i] / (e[i]+1) * (e[nxt]+1);
+            sigma[nxt] = sigma[i]*(j-1)/(fpow(j, e[nxt])-1)*(fpow(j, e[nxt]+1)-1)/(j-1);
+        }
+
+        void handleCoprimePCase(int i, int j) {
+            int nxt = i*j;
+            e[nxt] = 1;
+            phi[nxt] = phi[i] * phi[j];
+            mu[nxt] = mu[i] * mu[j];
+            tau[nxt] = tau[i] * tau[j];
+            sigma[nxt] = sigma[i] * sigma[j];
         }
     };
 }
