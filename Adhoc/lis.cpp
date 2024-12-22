@@ -1,5 +1,5 @@
 template<typename T = int, typename cmp = less<T>>
-int lis(vector<T> &v){
+int lis(const vector<T> &v){
     vector<T> t;
     for(auto &i:v){
         auto it = lower_bound(all(t), i, cmp());
@@ -9,7 +9,7 @@ int lis(vector<T> &v){
     return t.size();
 }
 template<typename T = int, typename cmp = less<T>>
-vector<int> lis_recover(vector<T> &v){
+vector<int> lis_recover(const vector<T> &v){
     int n = v.size();
     vector<T> t(n);
     vector<int> idx(n), before(n);
