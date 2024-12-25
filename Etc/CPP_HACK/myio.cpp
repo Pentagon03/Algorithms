@@ -10,8 +10,8 @@
  */
 constexpr bool debug_ = 0;
 
-void input(auto&...x){((cin>>x),...);}
-void print(auto &&x) { (debug_?cerr:cout)<<x; }
+void input(auto &x){cin >> x;}
+void print(auto &&x){(debug_ ?cerr : cout) << x;}
 
 template <class T>
 concept is_string =
@@ -23,10 +23,12 @@ template <class T>
 concept is_iterable = requires(T &&x) { begin(x); end(x); } && !is_string<T>;
 
 template<is_iterable T>
-void input(T &&container){
-    for(auto &&element : container)
+void input(T &container){
+    for(auto &element : container)
         input(element);
 }
+
+void input(auto &...x){(input(x),...);}
 
 template<is_iterable T>
 void print(T &&container) {
