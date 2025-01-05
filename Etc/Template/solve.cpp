@@ -1,10 +1,9 @@
 // https://github.com/Pentagon03/Algorithms
 #pragma GCC optimize("Ofast", "unroll-loops")
-// #pragma GCC target("avx2", "popcnt")
+// #pragma GCC target("avx2", "popcnt") // for bitset
 #include"bits/stdc++.h"
-// ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
+// ext headers before any define: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
 using namespace std;
-// istringstream iss(s = "1 2 3 4 5"); // iss >> x;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
 template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}
 template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}

@@ -7,3 +7,9 @@
 # References
 - https://github.com/the-tourist/algo/tree/master  
 - https://github.com/kth-competitive-programming/kactl  
+
+# How to use
+- Clone this Repo
+- Change `example_make_snippet.bat` Folders
+- Run `example_make_snippet.bat` after changing your Algorithm Repo.
+- You can now use snippets in your own Algorithm Repo.
