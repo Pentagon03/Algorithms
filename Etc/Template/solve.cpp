@@ -1,36 +1,12 @@
 // https://github.com/Pentagon03/Algorithms
-// g++ -std=c++20 -D _DEBUG
-#ifdef _DEBUG
-#define Pentagon03
-#include<Pentagon03/debug.h>
-#else
-#define dbg(...)
-#define dbgArr(...)
-#endif
 #pragma GCC optimize("Ofast", "unroll-loops")
 // #pragma GCC target("avx2", "popcnt")
 #include"bits/stdc++.h"
 // ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset
 using namespace std;
-string readline(char delim = '\n'){
-    cin.ignore();
-    string t; getline(cin, t, delim);
-    return move(t);
-}
 // istringstream iss(s = "1 2 3 4 5"); // iss >> x;
 template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}
 template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}
-auto vec(int n, auto&&... s) {
-    static_assert(sizeof...(s) >= 1 and "last parameter should be initial value");
-    if constexpr (sizeof...(s) == 1) return vector (n, s...);
-    else return vector (n, vec(s...));
-}
-void assign(auto&A, auto&&n, auto&&...v){
-    if constexpr(sizeof...(v) == 0) A = n;
-    else for(int i=0;i<n;i++) assign(A[i], v...);
-}
-void append(auto&x, auto&&y){x.reserve(x.size()+y.size()), x.insert(x.end(), y.begin(), y.end());}
-void addv(auto&v, auto&&...x){(v.push_back(x),...);}
 template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}
 #define all(v) (v).begin(),(v).end()
 #define nl '\n'

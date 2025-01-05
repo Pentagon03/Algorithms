@@ -879,6 +879,48 @@
     ],
     "description": "erasable_heap"
   },
+  "IntervalContainer.cpp": {
+    "prefix": "IntervalContainer",
+    "scope": "cpp",
+    "body": [
+      "// source: https://github.com/kth-competitive-programming/kactl/blob/main/content/various/IntervalContainer.h",
+      "",
+      "// Interval: [L, R)",
+      "class IntervalSet : public set<pii> {",
+      "public:",
+      "\tusing set<pii>::set; // \uc0dd\uc131\uc790 \uc0c1\uc18d",
+      "",
+      "\tset<pii>::iterator add(int L, int R) {",
+      "\t\tif (L == R) return end();",
+      "\t\tauto it = lower_bound({L, R}), before = it;",
+      "\t\t// not necessary starts",
+      "\t\tif(it != end() and it->first == L) return it;",
+      "\t\tif(it != begin() and prev(it)->second >= R) return it;",
+      "\t\t// not necessary ends",
+      "\t\twhile (it != end() && it->first <= R) {",
+      "\t\t\tR = max(R, it->second);",
+      "\t\t\tbefore = it = erase(it);",
+      "\t\t}",
+      "\t\tif (it != begin() && (--it)->second >= L) {",
+      "\t\t\tL = min(L, it->first);",
+      "\t\t\tR = max(R, it->second);",
+      "\t\t\terase(it);",
+      "\t\t}",
+      "\t\treturn insert(before, {L, R});",
+      "\t}",
+      "",
+      "\tvoid remove(int L, int R) {",
+      "\t\tif (L == R) return;",
+      "\t\tauto it = add(L, R);",
+      "\t\tauto r2 = it->second;",
+      "\t\tif (it->first == L) erase(it);",
+      "\t\telse (int&)it->second = L;",
+      "\t\tif (R != r2) emplace(R, r2);",
+      "\t}",
+      "};"
+    ],
+    "description": "IntervalContainer"
+  },
   "leftist_heap.cpp": {
     "prefix": "leftist_heap",
     "scope": "cpp",
@@ -2560,6 +2602,27 @@
     ],
     "description": "SweepLine_SegTree"
   },
+  "stringstream.cpp": {
+    "prefix": "stringstream",
+    "scope": "cpp",
+    "body": [
+      "#include<sstream>",
+      "#include<iostream>",
+      "// Examples",
+      "void test(){",
+      "    std::stringstream iss(\"1 2 3\"); // iss << \"1 2 3\";",
+      "    int a, b, c;",
+      "    iss >> a >> b >> c; // 1 2 3",
+      "    std::cout << a << ' ' << b << ' ' << c << std::endl;",
+      "",
+      "    std::stringstream oss;",
+      "    oss << \"Hello \" << \"World\\n\";",
+      "    std::string res = oss.str(); // getline(oss, res);",
+      "    std::cout << res << std::endl; // Hello World",
+      "}"
+    ],
+    "description": "stringstream"
+  },
   "array_assign.cpp": {
     "prefix": "array_assign",
     "scope": "cpp",
@@ -2658,21 +2721,6 @@
       "constexpr long double inf<long double> = 1e300;"
     ],
     "description": "constants"
-  },
-  "debug_my.cpp": {
-    "prefix": "debug_my",
-    "scope": "cpp",
-    "body": [
-      "// g++ -std=c++20 -D _DEBUG",
-      "#ifdef _DEBUG",
-      "#define Pentagon03",
-      "#include<Pentagon03/debug.h>",
-      "#else",
-      "#define dbg(...)",
-      "#define dbgArr(...)",
-      "#endif"
-    ],
-    "description": "debug_my"
   },
   "debug_simple.cpp": {
     "prefix": "debug_simple",
@@ -2885,8 +2933,23 @@
     ],
     "description": "fastio_simple"
   },
-  "myio.cpp": {
-    "prefix": "myio",
+  "my_debug.cpp": {
+    "prefix": "my_debug",
+    "scope": "cpp",
+    "body": [
+      "// g++ -std=c++20 -D _DEBUG",
+      "#ifdef _DEBUG",
+      "#define Pentagon03",
+      "#include<Pentagon03/debug.h>",
+      "#else",
+      "#define dbg(...)",
+      "#define dbgArr(...)",
+      "#endif"
+    ],
+    "description": "my_debug"
+  },
+  "my_io.cpp": {
+    "prefix": "my_io",
     "scope": "cpp",
     "body": [
       "/** input,print functions that can print any element or iterable",
@@ -2938,7 +3001,7 @@
       "    if constexpr(sizeof...(args) == 1) print('\\n');",
       "}"
     ],
-    "description": "myio"
+    "description": "my_io"
   },
   "my_vec.cpp": {
     "prefix": "my_vec",
@@ -2952,7 +3015,12 @@
       "    static_assert(sizeof...(s) >= 1 and \"last parameter should be initial value\");",
       "    if constexpr (sizeof...(s) == 1) return vector (n, s...);",
       "    else return vector (n, vec(s...));",
-      "}"
+      "}",
+      "// array_assign.cpp",
+      "// append vector into vector",
+      "void append(auto&x, auto&&y){x.reserve(x.size()+y.size()), x.insert(x.end(), y.begin(), y.end());}",
+      "// add values into vector",
+      "void addv(auto&v, auto&&...x){(v.push_back(x),...);}"
     ],
     "description": "my_vec"
   },
@@ -3179,12 +3247,11 @@
     "prefix": "readline",
     "scope": "cpp",
     "body": [
-      "string readline(char delim = '\\n'){",
-      "    cin.ignore();",
+      "string readline(char delim = '\\n') {",
+      "    while(cin.peek() == delim) cin.ignore();",
       "    string t; getline(cin, t, delim);",
       "    return move(t);",
-      "}",
-      "// istringstream iss(s = \"1 2 3 4 5\"); // iss >> x;"
+      "}"
     ],
     "description": "readline"
   },
@@ -3318,38 +3385,14 @@
     "scope": "cpp",
     "body": [
       "// https://github.com/Pentagon03/Algorithms",
-      "// g++ -std=c++20 -D _DEBUG",
-      "#ifdef _DEBUG",
-      "#define Pentagon03",
-      "#include<Pentagon03/debug.h>",
-      "#else",
-      "#define dbg(...)",
-      "#define dbgArr(...)",
-      "#endif",
       "#pragma GCC optimize(\"Ofast\", \"unroll-loops\")",
       "// #pragma GCC target(\"avx2\", \"popcnt\")",
       "#include\"bits/stdc++.h\"",
       "// ext headers here: ext/pb_ds/assoc_container.hpp, tr2/dynamic_bitset",
       "using namespace std;",
-      "string readline(char delim = '\\n'){",
-      "    cin.ignore();",
-      "    string t; getline(cin, t, delim);",
-      "    return move(t);",
-      "}",
       "// istringstream iss(s = \"1 2 3 4 5\"); // iss >> x;",
       "template<typename T> istream& operator>> (istream&in, vector<T>&v){for(auto&x:v)in>>x; return in;}",
       "template<typename T> ostream& operator<< (ostream&out, vector<T>&v){for(auto&x:v)out<<x<<' '; return out;}",
-      "auto vec(int n, auto&&... s) {",
-      "    static_assert(sizeof...(s) >= 1 and \"last parameter should be initial value\");",
-      "    if constexpr (sizeof...(s) == 1) return vector (n, s...);",
-      "    else return vector (n, vec(s...));",
-      "}",
-      "void assign(auto&A, auto&&n, auto&&...v){",
-      "    if constexpr(sizeof...(v) == 0) A = n;",
-      "    else for(int i=0;i<n;i++) assign(A[i], v...);",
-      "}",
-      "void append(auto&x, auto&&y){x.reserve(x.size()+y.size()), x.insert(x.end(), y.begin(), y.end());}",
-      "void addv(auto&v, auto&&...x){(v.push_back(x),...);}",
       "template<typename T> T randint(T l, T r) {static std::mt19937_64 gen(chrono::steady_clock::now().time_since_epoch().count()); return std::uniform_int_distribution<T>(l,r)(gen);}",
       "#define all(v) (v).begin(),(v).end()",
       "#define nl '\\n'",
