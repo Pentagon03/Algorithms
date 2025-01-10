@@ -1,6 +1,6 @@
 /**
  * Title: "Min" Persistent Leftist Heap
- * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structures/leftist_heap.cpp
+ * Repository: https://github.com/Pentagon03/Algorithms/blob/master/Data%20Structure/leftist_heap.cpp
  * Reference: nor( https://judge.yosupo.jp/submission/87297 )
  */
 template <typename Key, typename Value>
