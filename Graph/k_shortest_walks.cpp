@@ -21,8 +21,13 @@ public:
      * is_dag: whether g is DAG or not.
      * negative_edge: whether there is a negative edge or not
      */
-    explicit kShortestWalksSolver(const WeightedGraph& g_, Distance MAX_DISTANCE_, Distance IDENTITY_DISTANCE_, bool is_dag_ = false, bool negative_edge_ = false)
+    explicit kShortestWalksSolver(const WeightedGraph& g_, 
+                                    Distance MAX_DISTANCE_, 
+                                    Distance IDENTITY_DISTANCE_, 
+                                    bool is_dag_ = false, 
+                                    bool negative_edge_ = false)
             : g(g_), n(g_.size()), MAX_DISTANCE(MAX_DISTANCE_), IDENTITY_DISTANCE(IDENTITY_DISTANCE_), is_dag(is_dag_), negative_edge(negative_edge_) {}
+
 
     // O(|E| log |V| + |K|)
     // returns vector of distances
@@ -37,6 +42,8 @@ public:
 
         if (d[source] == MAX_DISTANCE)
             return std::move(std::vector<Distance>{});
+
+        alloc = std::deque<heap_t>();
 
         std::vector<std::basic_string<int>> tree(n);
         for (int u = 0; u < n; ++u)
@@ -58,11 +65,12 @@ public:
                         seen_p = true; // we can only skip once.
                         continue;
                     }
-                    h[u] = heap_insert(h[u], c, {u, v});
+                    h[u] = heap_insert(h[u], c, {u, v}, alloc);
                 }
                 for (auto p : tree[u]) h[p] = h[u], q.push(p); // This works fast since this is basically a pointer
             }
         }
+        
 
         distances = std::vector<Distance>{d[source]};
         distances.reserve(k);
@@ -139,7 +147,7 @@ public:
         return std::move(path);
     }
 
-    
+
     // returns {distance vector, prev vertex vector}
     std::pair<std::vector<Distance>, std::vector<int>> dijkstra(const WeightedGraph& g_, int src) {
         std::vector<Distance> d_(g_.size(), MAX_DISTANCE);
@@ -261,6 +269,7 @@ private:
     // PersistentLeftistHeap: for edge (u, v, w),  sidetrack(u,v,w) weight will be key, edge (u, v) will be value
     using heap_t = PersistentLeftistHeap<Distance, std::pair<int, int>>;
     std::vector<heap_t*> h; // contains heap pointer for each node
+    std::deque<heap_t> alloc; // alloc container for PersistentLeftistHeap
 
     std::vector<Distance> distances; // distance of K-shortest path
 
