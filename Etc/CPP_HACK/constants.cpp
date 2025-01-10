@@ -1,5 +1,5 @@
-template<typename T = long double> constexpr T PI = numbers::pi_v<ld>;
-template<typename T = long double> constexpr T E = numbers::e_v<ld>;
+template<typename T = long double> constexpr T PI = numbers::pi_v<T>;
+template<typename T = long double> constexpr T E = numbers::e_v<T>;
 
 // source: dadas08
 template<typename T>
