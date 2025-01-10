@@ -1,18 +1,12 @@
-using ld = long double;
-constexpr ld PI = numbers::pi_v<ld>;
-constexpr ld E = numbers::e_v<ld>;
+template<typename T = long double> constexpr T PI = numbers::pi_v<ld>;
+template<typename T = long double> constexpr T E = numbers::e_v<ld>;
 
-template <typename T>
-constexpr T inf;
-
-template <>
-constexpr int32_t inf<int32_t> = 1'000'000'009;
-
-template <>
-constexpr int64_t inf<int64_t> = 1'000'000'000'000'000'009LL;
-
-template<>
-constexpr double inf<double> = 1e300;
-
-template<>
-constexpr long double inf<long double> = 1e300;
+// source: dadas08
+template<typename T>
+struct infinity {
+	static constexpr T max_real = std::numeric_limits<T>::max();
+	static constexpr T min_real = std::numeric_limits<T>::min();
+	static constexpr T max = max_real / 2;
+	static constexpr T min = min_real / 2;
+};
+template<typename T = int> constexpr T INF = infinity<T>::max;
