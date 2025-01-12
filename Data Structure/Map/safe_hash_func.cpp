@@ -15,8 +15,7 @@ struct safe_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
     size_t operator()(pair<u64, u64> x) const{
-        static const u64 FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-		return splitmix64(x.first + FIXED_RANDOM)^(splitmix64(x.second + FIXED_RANDOM) >> 1);
+        return (*this)(x.first) ^ ((*this)(x.second) >> 1);
     }
 };
 
