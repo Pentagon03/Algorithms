@@ -10,7 +10,7 @@
  */
 
 
-template <typename Distance, typename WeightedGraph>
+template <typename WeightedGraph, typename Distance>
 struct kShortestWalksSolver{
 public:
     /**
