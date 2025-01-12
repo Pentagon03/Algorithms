@@ -1,6 +1,6 @@
 // source: https://codeforces.com/blog/entry/62393
 
-struct custom_hash {
+struct safe_hash {
     using u64 = uint64_t;
     static u64 splitmix64(u64 x) {
         // http://xorshift.di.unimi.it/splitmix64.c
@@ -20,6 +20,6 @@ struct custom_hash {
     }
 };
 
-unordered_map<int64_t, int, custom_hash> safe_map;
-#include <ext/pb_ds/assoc_container.hpp>
-__gnu_pbds::gp_hash_table<int64_t, int, custom_hash> safe_hash_table;
+// unordered_map<int64_t, int, safe_hash> safe_map;
+// #include <ext/pb_ds/assoc_container.hpp>
+// __gnu_pbds::gp_hash_table<int64_t, int, safe_hash> safe_hash_table;
