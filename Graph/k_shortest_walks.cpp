@@ -280,4 +280,4 @@ private:
     std::vector<int> path_last_node; // last sidetrack index of "nodes" in K-shortest path
 };
 
-${0: using Graph = vector<basic_string<ia<2>>>;}
+${0:using Graph = vector<basic_string<ia<2>>>;}
