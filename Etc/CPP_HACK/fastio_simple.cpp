@@ -30,7 +30,7 @@ template<typename T> IN& operator >> (IN &in, T&x){in.scan(x); return in;}
 #define cin _in
 
 struct OUT{
-    char buf[OSZ + 1], *p = buf, tmp[42];
+    char buf[OSZ + 1], *p = buf, tmp[42]{};
     inline void flush(){
         fwrite(buf, sizeof(char), p - buf, stdout); p = buf;
     }
@@ -43,7 +43,7 @@ struct OUT{
     }
     template<typename T>
     inline void print(T x){
-        if(x < 0) print('-');
+        if(x < 0) print('-'), x *= -1;
         int cnt = 0;
         do tmp[cnt++] = x % 10 + '0', x /= 10; while(x > 0);
         for(int i=cnt-1;i>=0;i--) print(tmp[i]);
