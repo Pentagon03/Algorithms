@@ -1,3 +1,6 @@
+#include "ext/pb_ds/assoc_container.hpp"
+using namespace __gnu_pbds;
+
 /*
 ordered set and ordered multiset inheritted by gnu policy-based-structures
 kth_element(idx): get iterator of idx-th element. O(log |size|) => ex) {0,1,3,6,7}, auto it = kth_element(3); cout<< (*it); // prints 6
@@ -8,8 +11,6 @@ code help(class inherittence): frozenca (https://github.com/frozenca)
 */
 
 // ORDERED_SET START
-#include "ext/pb_ds/assoc_container.hpp"
-using namespace __gnu_pbds;
 template <typename Typename = int, class Parent = tree<Typename, null_type, less<Typename>, rb_tree_tag,tree_order_statistics_node_update>>
 struct ordered_set : Parent{
     using iterator = typename Parent::iterator;
