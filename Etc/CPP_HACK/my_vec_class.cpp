@@ -1,5 +1,6 @@
 // source: somewhere from codeforces
 
+template<size_t D, typename T>
 struct Vec : public vector<Vec<D - 1, T>> {
     static_assert(D >= 1, "Dimension must be positive");
     template <typename... Args>

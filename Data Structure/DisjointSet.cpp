@@ -22,8 +22,11 @@ struct DisjointSet{
     bool same(int u, int v) {
         return leader(u) == leader(v);
     }
+    int leader_size(int u){
+        return -par[u];
+    }
     int size(int u){
-        return -par[leader(u)];
+        return -leader_size(leader(u));
     }
     // don't do this with make_leader, or it will be bugged.
     vector<vector<int>> groups(){
