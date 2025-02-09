@@ -1,9 +1,9 @@
-constexpr int SZ = 1 << 16;
+constexpr int ISZ = 1 << 19, OSZ = 1 << 19;
 struct IN{
-    char buf[SZ + 1], *p = buf;
+    char buf[ISZ + 1], *p = buf;
     inline char read(){
         if(*p == 0){
-            buf[fread(buf, sizeof(char), SZ, stdin)] = 0;
+            buf[fread(buf, sizeof(char), ISZ, stdin)] = 0;
             p = buf;
         }
         return *p++;
@@ -30,12 +30,12 @@ template<typename T> IN& operator >> (IN &in, T&x){in.scan(x); return in;}
 #define cin _in
 
 struct OUT{
-    char buf[SZ + 1], *p = buf, tmp[42];
+    char buf[OSZ + 1], *p = buf, tmp[42];
     inline void flush(){
         fwrite(buf, sizeof(char), p - buf, stdout); p = buf;
     }
     inline void print(char c){
-        if(p == buf + SZ) flush();
+        if(p == buf + OSZ) flush();
         *p++ = c;
     }
     inline void print(const string& s){
