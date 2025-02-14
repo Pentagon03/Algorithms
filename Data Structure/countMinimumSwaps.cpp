@@ -1,9 +1,9 @@
 /*
-countInversion: number of swap operations to make nums from original
+countMinimumSwaps: number of minimum swap operations to make nums from original
 O(n log n)
 */
 // put BIT(fenwick tree) struct here
-ll countInversion(const vector<int>&original,const vector<int>&nums){
+ll countMinimumSwaps(const vector<int>&original,const vector<int>&nums){
     assert(original.size() == nums.size());
     int n = nums.size();
     vector<int> t(original);

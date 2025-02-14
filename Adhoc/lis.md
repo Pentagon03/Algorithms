@@ -1,24 +1,25 @@
-# lis.cpp
+# Adhoc/lis.cpp
 
-```cpp
-/*
- * Function: lis
- * Description: Calculates the length of the longest increasing subsequence.
- * Parameters:
- *   - v: The input vector.
- *   - cmp: Comparator function (default: less<T>).
- * Returns: The length of the longest increasing subsequence.
- */
-template<typename T = int, typename cmp = less<T>>
-int lis(const vector<T> &v);
+This file defines functions for finding the Longest Increasing Subsequence (LIS).
 
-/*
- * Function: lis_recover
- * Description: Recovers one of the longest increasing subsequences.
- * Parameters:
- *   - v: The input vector.
- *   - cmp: Comparator function (default: less<T>).
- * Returns: A vector representing one of the longest increasing subsequences.
- */
-template<typename T = int, typename cmp = less<T>>
-vector<int> lis_recover(const vector<T> &v);
+## Longest Increasing Subsequence Functions
+
+*   **Description:** This file defines functions `lis` and `lis_recover` for finding the length and recovering the elements of the Longest Increasing Subsequence (LIS) in a given vector.
+
+*   **Functions:**
+    *   `lis(const vector<T> &v)`: Finds the length of the LIS in a given vector.
+        ```cpp
+        template<typename T = int, typename cmp = less<T>>
+        int lis(const vector<T> &v);
+        ```
+        *   **Parameters:**
+            *   `v`: The input vector.
+        *   **Returns:** The length of the LIS.
+    *   `lis_recover(const vector<T> &v)`: Finds the elements of the LIS in a given vector.
+        ```cpp
+        template<typename T = int, typename cmp = less<T>>
+        vector<int> lis_recover(const vector<T> &v);
+        ```
+        *   **Parameters:**
+            *   `v`: The input vector.
+        *   **Returns:** A vector containing the elements of the LIS.
