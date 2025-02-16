@@ -1,9 +1,9 @@
 # Manacher.cpp
 
-This file implements Manacher's algorithm for finding the longest palindromic substring in a string.
+This file implements Manacher's algorithm for finding all palindromic substrings in a string in O(n) time.
 
 ## Usage
 
-*   **Description:** This file implements Manacher's algorithm for finding the longest palindromic substring in a string.
+*   **Description:** This file implements Manacher's algorithm for finding all palindromic substrings in a string in O(n) time.
 *   **Functions:**
-    *   `manacher(s)`: Finds the longest palindromic substring in the given string s using Manacher's algorithm.
+    *   `manacher(T s)`: Finds all palindromic substrings in the string s using Manacher's algorithm.

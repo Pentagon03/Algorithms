@@ -6,4 +6,5 @@ This file implements the Knuth-Morris-Pratt (KMP) algorithm for efficient string
 
 *   **Description:** This file implements the Knuth-Morris-Pratt (KMP) algorithm for efficient string matching.
 *   **Functions:**
-    *   `kmp_search(text, pattern)`: Searches the given text for occurrences of the pattern using the KMP algorithm.
+    *   `getPi(const auto& p)`: Calculates the prefix function (Pi) for the pattern p.
+    *   `kmp(const auto& s, const auto& p)`: Finds all occurrences of the pattern p in the string s using the KMP algorithm.

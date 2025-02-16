@@ -6,4 +6,4 @@ This file implements an algorithm for finding the prime factorization of a given
 
 *   **Description:** This file implements an algorithm for finding the prime factorization of a given integer.
 *   **Functions:**
-    *   `prime_factorization(n)`: Returns a list of prime factors of the given integer n.
+    *   `Factorize(ull n)`: Returns a vector of pairs representing the prime factorization of the given integer n.
