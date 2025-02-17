@@ -12,8 +12,15 @@ $0
 // Example:
 // S : Range add
 using S = int;
-constexpr S e(){return 0;}
-S op(const S&l, const S&r){return l + r;}
+// struct S{
+
+// };
+constexpr S e(){
+    return 0;
+}
+S op(const S&l, const S&r){
+    return l + r;
+}
 
 // template<class S, S (*e)(), S (*op)(S, S)>
 struct Seg{
@@ -21,7 +28,7 @@ struct Seg{
     Seg(int n = 0): Seg(vector (n, e())){}
     Seg(const vector<S>&v){
         n = ssize(v);
-        // n = bit_ceil(size(v));
+        n = bit_ceil(size(v));
         tree = vector (n<<1, e());
         ranges::copy(v, begin(tree)+n);
         for(int i=n-1;i>=1;i--) pull(i);
@@ -32,8 +39,8 @@ struct Seg{
         for(i>>=1;i>=1;i>>=1) pull(i);
     }
     S qry_all(){
-        // return tree[1]; (uncomment bit_ceil on constructor)
-        return qry(0, n-1);
+        return tree[1];
+        // return qry(0, n-1);
     }
     //[l, r]
     S qry(int l,int r) const{
