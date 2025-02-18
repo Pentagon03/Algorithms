@@ -13,7 +13,7 @@ param (
 # 커밋 메시지 출력
 Write-Host "Commit message: $CommitMessage"
 
-& _make_snippet.bat
+.\_make_snippet.bat
 
 # Git 명령어 실행
 git pull
