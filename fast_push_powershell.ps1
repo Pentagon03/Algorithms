@@ -17,6 +17,7 @@ Write-Host "Commit message: $CommitMessage"
 
 # Git 명령어 실행
 git pull
+# git rm -r --cached .
 git add .
 git commit -m "$CommitMessage"
 git push
